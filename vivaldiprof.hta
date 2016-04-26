@@ -1,0 +1,105 @@
+<head>
+<title>Vivaldi Profile Selector</title>
+<HTA:APPLICATION 
+	APPLICATIONNAME="VivaldiProf"
+	BORDER="thin"
+	ICON="3.ico"
+	MAXIMIZEBUTTON="no"
+	SCROLL="no"
+	SELECTION="no"
+	SINGLEINSTANCE="yes"
+	WINDOWSTATE="normal"
+>
+<style type="text/css">
+html {
+	background: black;
+}
+body{
+	border: none;
+	background: rgb(240,56,56);
+	width: 320px;
+	height: 260px;
+}
+#info {
+	width: 200px;
+	height: 100%;
+	float: left;
+}
+#instruct {
+	padding: 10px;
+	font-family: Segoe UI, sans-serif;
+	text-align: center;
+	color: white;
+}
+#inputs {
+	width: 120px;
+	height: 100%;
+	float: right;
+}
+#buttons {
+	margin: 25px auto auto auto;
+	width: 100px;
+	height: 100px;
+}
+input {
+	margin: 0 auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	padding: 5px;
+}
+input:hover {
+	background: #ddd;
+}
+.spacer {
+	height: 40px;
+}
+img {
+	width: 180px;
+	padding: 10px;
+}
+</style>
+</head>
+
+<script language="VBScript">
+	window.resizeTo 360,300
+	
+    Sub LoadDefault
+		Set oShell = CreateObject("WSCript.shell")
+		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault"
+		self.close
+    End Sub
+	
+    Sub LoadAlt
+		Set oShell = CreateObject("WSCript.shell")
+		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\AltProf"
+		self.close
+    End Sub
+	
+    Sub LoadExt
+		Set oShell = CreateObject("WSCript.shell")
+		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\ExtDev"
+		self.close
+    End Sub
+	
+	Sub CloseMe
+		self.close
+	End Sub
+</script>
+
+<body>
+<div id="info">
+	<img src="sd_vivaldi.png" />
+	<div id="instruct">
+	Select a profile with which to start vivaldi.
+	</div>
+</div>
+<div id="inputs">
+	<div id="buttons">
+		<input type="button" value="User Default" name="run_button"  onClick="LoadDefault"><p>
+		<input type="button" value="AltProf" name="run_button"  onClick="LoadAlt"><p>
+		<input type="button" value="Ext Dev" name="run_button"  onClick="LoadExt"><p>
+		<div class="spacer"></div>
+		<input type="button" value="Quit" name="run_button"  onClick="CloseMe">
+	</div>
+</div>
+</body>
