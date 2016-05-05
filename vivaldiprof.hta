@@ -65,19 +65,19 @@ img {
 	
     Sub LoadDefault
 		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault"
+		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault"
+		self.close
+    End Sub
+	
+    Sub LoadDInspect
+		Set oShell = CreateObject("WSCript.shell")
+		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault --flag-switches-begin --debug-packed-apps --silent-debugger-extension-api --flag-switches-end"
 		self.close
     End Sub
 	
     Sub LoadAlt
 		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\AltProf"
-		self.close
-    End Sub
-	
-    Sub LoadExt
-		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\ExtDev"
+		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\AltProf"
 		self.close
     End Sub
 	
@@ -96,8 +96,8 @@ img {
 <div id="inputs">
 	<div id="buttons">
 		<input type="button" value="User Default" name="run_button"  onClick="LoadDefault"><p>
+		<input type="button" value="Inspect UD" name="run_button"  onClick="LoadDInspect"><p>
 		<input type="button" value="AltProf" name="run_button"  onClick="LoadAlt"><p>
-		<input type="button" value="Ext Dev" name="run_button"  onClick="LoadExt"><p>
 		<div class="spacer"></div>
 		<input type="button" value="Quit" name="run_button"  onClick="CloseMe">
 	</div>
