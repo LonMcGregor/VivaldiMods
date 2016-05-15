@@ -11,9 +11,6 @@
 	WINDOWSTATE="normal"
 >
 <style type="text/css">
-html {
-	background: black;
-}
 body{
 	border: none;
 	background: rgb(240,56,56);
@@ -25,30 +22,26 @@ body{
 	height: 100%;
 	float: left;
 }
-#instruct {
+.instruct {
 	padding: 10px;
 	font-family: Segoe UI, sans-serif;
 	text-align: center;
 	color: white;
 }
-#inputs {
+button {
+	margin: 10px auto;
 	width: 120px;
-	height: 100%;
-	float: right;
-}
-#buttons {
-	margin: 25px auto auto auto;
-	width: 100px;
-	height: 100px;
+	height: 30px;
+    border: 1px solid #ddd;
+    background: #fff;
 }
 input {
+	width: 120px;
 	margin: 0 auto;
 	border: 1px solid #ddd;
 	background: #fff;
 	padding: 5px;
-}
-input:hover {
-	background: #ddd;
+    height: 25px;
 }
 .spacer {
 	height: 40px;
@@ -63,24 +56,20 @@ img {
 <script language="VBScript">
 	window.resizeTo 360,300
 	
-    Sub LoadDefault
+    Sub LoadNormal
 		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault"
+        runString = "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\" + profile_name.Value
+        oShell.run runString
 		self.close
     End Sub
 	
-    Sub LoadDInspect
+    Sub LoadInspect
 		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\UserDefault --flag-switches-begin --debug-packed-apps --silent-debugger-extension-api --flag-switches-end"
+		runString = "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\" + profile_name.Value + "--flag-switches-begin --debug-packed-apps --silent-debugger-extension-api --flag-switches-end"
+		oShell.run runString
 		self.close
     End Sub
-	
-    Sub LoadAlt
-		Set oShell = CreateObject("WSCript.shell")
-		oShell.run "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\AltProf"
-		self.close
-    End Sub
-	
+		
 	Sub CloseMe
 		self.close
 	End Sub
@@ -89,17 +78,18 @@ img {
 <body>
 <div id="info">
 	<img src="sd_vivaldi.png" />
-	<div id="instruct">
+	<div class="instruct">
 	Select a profile with which to start vivaldi.
 	</div>
 </div>
 <div id="inputs">
 	<div id="buttons">
-		<input type="button" value="User Default" name="run_button"  onClick="LoadDefault"><p>
-		<input type="button" value="Inspect UD" name="run_button"  onClick="LoadDInspect"><p>
-		<input type="button" value="AltProf" name="run_button"  onClick="LoadAlt"><p>
+		<button onClick="LoadNormal">Load Profile</button>
+		<button onClick="LoadInspect">Load Inspector</button>
+		<div class="instruct" >Profile Name: </div>
+        <input type="text" value="UserDefault" name="profile_name">
 		<div class="spacer"></div>
-		<input type="button" value="Quit" name="run_button"  onClick="CloseMe">
+		<button onClick="CloseMe">Quit</button>
 	</div>
 </div>
 </body>
