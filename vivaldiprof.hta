@@ -65,7 +65,7 @@ img {
 	
     Sub LoadInspect
 		Set oShell = CreateObject("WSCript.shell")
-		runString = "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\" + profile_name.Value + "--flag-switches-begin --debug-packed-apps --silent-debugger-extension-api --flag-switches-end"
+		runString = "%LOCALAPPDATA%\Vivaldi\Application\vivaldi.exe --user-data-dir=%LOCALAPPDATA%\Vivaldi\" + profile_name.Value + " --flag-switches-begin --debug-packed-apps --silent-debugger-extension-api --flag-switches-end"
 		oShell.run runString
 		self.close
     End Sub
