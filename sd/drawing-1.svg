@@ -17,7 +17,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="drawing-1.svg"
-   inkscape:export-filename="C:\Users\lonm\AppData\Local\Vivaldi\Application\VivaldiMods\sd\amazon-music.png"
+   inkscape:export-filename="C:\Users\lonm\AppData\Local\Vivaldi\Application\VivaldiMods\sd\discord.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -139,10 +139,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="210.39609"
-     inkscape:cy="191.29003"
+     inkscape:cx="187.76867"
+     inkscape:cy="158.05601"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer14"
      showgrid="false"
      borderlayer="true"
      units="px"
@@ -809,7 +809,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="amazon_musc"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <rect
        style="opacity:1;fill:#232f3e;fill-opacity:1;stroke:none;stroke-width:2.0999999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4750"
@@ -1285,4 +1286,35 @@
        x="408.70767"
        y="-11.938167" />
   </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer14"
+     inkscape:label="discord">
+    <rect
+       style="opacity:1;fill:#7289da;fill-opacity:1;stroke:none;stroke-width:0.99999988;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4354"
+       width="492.85336"
+       height="398.10104"
+       x="-27.57716"
+       y="-18.302116" />
+    <g
+       id="g4350"
+       transform="matrix(1.0969746,0,0,1.0969746,85.620585,48.363027)"
+       style="fill:#ffffff">
+      <path
+         id="path4339"
+         d="m 104.4,103.9 c -5.7,0 -10.2,5 -10.2,11.1 0,6.1 4.6,11.1 10.2,11.1 5.7,0 10.2,-5 10.2,-11.1 0.1,-6.1 -4.5,-11.1 -10.2,-11.1 z m 36.5,0 c -5.7,0 -10.2,5 -10.2,11.1 0,6.1 4.6,11.1 10.2,11.1 5.7,0 10.2,-5 10.2,-11.1 0,-6.1 -4.5,-11.1 -10.2,-11.1 z"
+         class="st0"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         id="path4341"
+         d="m 189.5,20 -134,0 C 44.2,20 35,29.2 35,40.6 l 0,135.2 c 0,11.4 9.2,20.6 20.5,20.6 l 113.4,0 -5.3,-18.5 12.8,11.9 12.1,11.2 21.5,19 0,-179.4 C 210,29.2 200.8,20 189.5,20 Z m -38.6,130.6 c 0,0 -3.6,-4.3 -6.6,-8.1 13.1,-3.7 18.1,-11.9 18.1,-11.9 -4.1,2.7 -8,4.6 -11.5,5.9 -5,2.1 -9.8,3.5 -14.5,4.3 -9.6,1.8 -18.4,1.3 -25.9,-0.1 -5.7,-1.1 -10.6,-2.7 -14.7,-4.3 -2.3,-0.9 -4.8,-2 -7.3,-3.4 -0.3,-0.2 -0.6,-0.3 -0.9,-0.5 -0.2,-0.1 -0.3,-0.2 -0.4,-0.3 -1.8,-1 -2.8,-1.7 -2.8,-1.7 0,0 4.8,8 17.5,11.8 -3,3.8 -6.7,8.3 -6.7,8.3 -22.1,-0.7 -30.5,-15.2 -30.5,-15.2 0,-32.2 14.4,-58.3 14.4,-58.3 14.4,-10.8 28.1,-10.5 28.1,-10.5 l 1,1.2 c -18,5.2 -26.3,13.1 -26.3,13.1 0,0 2.2,-1.2 5.9,-2.9 10.7,-4.7 19.2,-6 22.7,-6.3 0.6,-0.1 1.1,-0.2 1.7,-0.2 6.1,-0.8 13,-1 20.2,-0.2 9.5,1.1 19.7,3.9 30.1,9.6 0,0 -7.9,-7.5 -24.9,-12.7 l 1.4,-1.6 c 0,0 13.7,-0.3 28.1,10.5 0,0 14.4,26.1 14.4,58.3 0,0 -8.5,14.5 -30.6,15.2 z"
+         class="st0"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+  <style
+     id="style4337">.st0{fill:#7289DA;}</style>
 </svg>
