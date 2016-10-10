@@ -17,7 +17,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="drawing-1.svg"
-   inkscape:export-filename="C:\Users\lonm\AppData\Local\Vivaldi\Application\VivaldiMods\sd\f28pl.png"
+   inkscape:export-filename="C:\Users\lonm\AppData\Local\Vivaldi\Application\VivaldiMods\sd\f20cn.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -139,10 +139,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="434.26209"
-     inkscape:cy="107.90073"
+     inkscape:cx="-141.23791"
+     inkscape:cy="157.90073"
      inkscape:document-units="px"
-     inkscape:current-layer="g4444"
+     inkscape:current-layer="g4372"
      showgrid="false"
      borderlayer="true"
      units="px"
@@ -1432,10 +1432,11 @@
        style="fill:#ff6600;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
   <g
-     style="display:inline"
+     style="display:none"
      inkscape:label="f28pl"
      id="g4444"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect4371"
@@ -1494,6 +1495,70 @@
        d="m -117.37971,-33.858463 104.65179,167.584283 70.71066,0 -95.13687,-164.781907 z"
        id="path4462"
        inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g4372"
+     inkscape:label="f20cn"
+     style="display:inline">
+    <rect
+       y="70.999992"
+       x="-14.999998"
+       height="318.99997"
+       width="481.99994"
+       id="rect4374"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       style="opacity:1;fill:#22d600;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4376"
+       width="494.26758"
+       height="150.61371"
+       x="-24.04163"
+       y="-31.737141" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:104.83377838px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#178f00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="60.676174"
+       y="275.6803"
+       id="text4378"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4380"
+         x="60.676174"
+         y="275.6803"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#178f00;fill-opacity:1">F20CN</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4382"
+       y="238.4532"
+       x="29.732822"
+       style="font-style:normal;font-weight:normal;font-size:79.27661896px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
+         y="238.4532"
+         x="29.732822"
+         id="tspan4384"
+         sodipodi:role="line" /></text>
+    <path
+       style="fill:#178f00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 13.19933,-33.858463 104.65179,167.584283 70.71066,0 -95.136873,-164.781907 z"
+       id="path4386"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4388"
+       d="m 143.77838,-33.858463 104.65179,167.584283 70.71066,0 -95.13687,-164.781907 z"
+       style="fill:#178f00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#178f00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 274.35742,-33.858463 104.65179,167.584283 70.71066,0 L 354.583,-31.056087 Z"
+       id="path4390"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4392"
+       d="m -117.37971,-33.858463 104.65179,167.584283 70.71066,0 -95.13687,-164.781907 z"
+       style="fill:#178f00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
   <style
      id="style4337">.st0{fill:#7289DA;}</style>
