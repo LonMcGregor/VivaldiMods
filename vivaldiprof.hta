@@ -11,8 +11,11 @@
 	WINDOWSTATE="normal"
 >
 <style type="text/css">
+html, body{
+    margin: 0px;
+    border: 0px;
+}
 body{
-	border: none;
 	background: rgb(240,56,56);
 	width: 320px;
 	height: 260px;
@@ -44,7 +47,7 @@ input {
     height: 25px;
 }
 .spacer {
-	height: 40px;
+	height: 20px;
 }
 img {
 	width: 180px;
@@ -84,10 +87,11 @@ img {
 </div>
 <div id="inputs">
 	<div id="buttons">
-		<button onClick="LoadNormal">Load Profile</button>
-		<button onClick="LoadInspect">Load Inspector</button>
 		<div class="instruct" >Profile Name: </div>
         <input type="text" value="UserDefault" name="profile_name">
+		<div class="spacer"></div>
+		<button onClick="LoadNormal">Load Profile</button>
+		<button onClick="LoadInspect">Load Inspector</button>
 		<div class="spacer"></div>
 		<button onClick="CloseMe">Quit</button>
 	</div>
