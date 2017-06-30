@@ -1,1 +1,18 @@
-.button-toolbar.home{display: none}.tab-position .tab .close {order:-1}.tab-position .tab:hover.tab:not(.button-off) .favicon{display:none}.theme-dark #switch button.webviewbtn img{background-color:transparent;-webkit-filter:grayscale(100%)}#switch button.webviewbtn.active img{-webkit-filter:grayscale(0%)}
+/* Hide Buttons */
+.button-toolbar.home{display: none}
+
+/* Reposition Close Tab Button */
+.tab-position .tab .close {order:-1}
+.tab-position .tab:hover.tab:not(.button-off) .favicon{display:none}
+
+/* Better Panel Switches */
+.theme-dark #switch button.webviewbtn img{background-color:transparent;-webkit-filter:grayscale(100%)}
+#switch button.webviewbtn.active img{-webkit-filter:grayscale(0%)}
+
+/* Hide Ugly Borders */
+#footer{box-shadow:none}
+#switch button.active,#panels-container,#switch,#panels .panel-group{border-color: transparent}
+#panels-container.left #switch{box-shadow: none}
+#footer .zoom-control {border-left-color: transparent}
+#footer .button-toolbar-small {box-shadow: none}
+#panels-container .fullheight {background-color: black}
