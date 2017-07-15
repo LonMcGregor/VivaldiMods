@@ -24,6 +24,7 @@
 #footer .zoom-control {border-left-color: transparent}
 .zoom-control input {border-width: 0px}
 #footer .button-toolbar-small {box-shadow: none}
+#panels-container:after {background-color: transparent}
 
 /* Tab Favicon fixes */
 .tab-position .tab.active .tab-header .favicon {background-color: transparent}
