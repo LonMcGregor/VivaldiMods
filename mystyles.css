@@ -28,3 +28,6 @@
 
 /* Tab Favicon fixes */
 .tab-position .tab.active .tab-header .favicon {background-color: transparent}
+
+/* Actually transparent speed dials */
+.dials .dial .thumbnail-image {background-color:transparent}
