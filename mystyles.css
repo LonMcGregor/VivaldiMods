@@ -1,14 +1,27 @@
 /* Hide Buttons */
 .button-toolbar.home{display: none}
 
-/* Reposition Close Tab Button */
+/* Reposition Close Tab Button & use small audio indicator */
 .tab .close {
     order: 0;
-    margin-right: 0px !important;
+    margin-right: 0px !important
 }
 .tab:hover .close {order:-2}
-.tab:hover .tab-audio {order:-1; position: relative !important}
 .tab:hover .favicon{display:none}
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio{
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    transform: scale(0.8) !important;
+    background: none
+}
+
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio:hover, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio:hover {
+    transform: scale(1.2) !important
+}
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon{
+    transform: scale(1) !important
+}
 
 /* Better Panel Switches */
 .theme-dark #switch button.webviewbtn img{
