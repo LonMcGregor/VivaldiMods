@@ -1,5 +1,10 @@
-/* Hide Buttons */
+/* Nicer General Control Buttons */
 .button-toolbar.home{display: none}
+.button-toolbar.rewind{order: 1}
+.button-toolbar.back{order: 2}
+.button-toolbar.reload{order: 3}
+.button-toolbar.forward{order: 4}
+.button-toolbar.next{order: 5}
 
 /* Reposition Close Tab Button & use small audio indicator */
 .tab .close {
