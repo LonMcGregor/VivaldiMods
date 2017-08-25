@@ -16,7 +16,5 @@ setInterval(function () {
             }
         }
     }
-    // Repeat on sparse interval as I suspect bug
-    // manifests whenever there is a change of icon
-    // as made by the extension background task
-}, 2000);
+    // Repeat on sparse interval as I dont know what exactly causes the bug
+}, 10000);

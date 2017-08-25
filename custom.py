@@ -19,7 +19,7 @@ def update_browser(resources_loc):
         if file[::-1][0:4] == "ssc.":
             contents = contents.replace('</head>', '<link rel="stylesheet" href="user_modfiles/%s" /></head>' % file)
         if file[::-1][0:3] == "sj.":
-            contents = contents.replace('</body>', '<script src="user_modfiles/%s" /></body>' % file)
+            contents = contents.replace('</body>', '<script src="user_modfiles/%s"></script></body>' % file)
         print("Registered %s" % file)
     with open(browser_loc, 'w') as htmlfile:
         htmlfile.write(contents)
