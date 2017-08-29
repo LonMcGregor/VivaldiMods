@@ -54,7 +54,14 @@
 .speeddial .draggable.dial {
     -webkit-filter:grayscale(100%) brightness(80%)
 }
-
 .speeddial .draggable.dial:hover {
     -webkit-filter:grayscale(0%) brightness(100%)
 }
+
+/* Move Vivaldi Button to address bar */
+#browser:not(.minimal-ui) #header button.vivaldi {top: 35px; z-index: 2}
+#browser:not(.minimal-ui).maximized #header button.vivaldi {top: 32px }
+#browser:not(.minimal-ui) #main .toolbar-addressbar .toolbar {margin-left: 30px}
+#browser:not(.minimal-ui) #tabs-container {margin-left: -30px}
+#titlebar button.vivaldi span.application-icon {display: none}
+#titlebar button.vivaldi span.vivaldi-v {display: block}
