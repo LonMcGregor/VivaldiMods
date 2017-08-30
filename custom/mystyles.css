@@ -69,3 +69,6 @@
 #titlebar button.vivaldi span.vivaldi-v {display: block}
 .acc-light #titlebar button.vivaldi span.vivaldi-v svg {fill: #000}
 .acc-dark #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
+
+/* Use Dark BG Background tabs */
+.tab:not(.active) { background: var(--colorAccentBgDarker) !important}
