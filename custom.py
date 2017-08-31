@@ -27,7 +27,8 @@ def update_browser(resources_loc):
 
 def copy_files(resources_loc, own_files_loc):
     target_location = os.path.join(resources_loc, 'user_modfiles')
-    shutil.rmtree(target_location)
+    if os.path.exists(target_location):
+        shutil.rmtree(target_location)
     print("Erased old files")
     os.makedirs(target_location)
     for file in os.listdir(own_files_loc):
