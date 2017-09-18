@@ -43,6 +43,7 @@
 .zoom-control input {border-width: 0px}
 #footer .button-toolbar-small {box-shadow: none}
 #panels-container:after {background-color: transparent}
+#switch button:hover:not(:disabled):not(.active), #switch button:focus:not(.active) {box-shadow: none !important}
 
 /* Tab Favicon fixes */
 .tab-position .tab.active .tab-header .favicon {background-color: transparent}
@@ -59,10 +60,11 @@
 }
 
 /* Move Vivaldi Button to address bar */
-#browser:not(.minimal-ui) #header button.vivaldi {top: 35px; z-index: 2}
-#browser:not(.minimal-ui).maximized #header button.vivaldi {top: 32px }
-#browser:not(.minimal-ui) #main .toolbar-addressbar .toolbar {margin-left: 30px}
-#browser:not(.minimal-ui) #tabs-container {margin-left: -30px}
+#browser:not(.minimal-ui.horizontal-menu) #header button.vivaldi {top: 35px; z-index: 2}
+#browser:not(.minimal-ui.horizontal-menu).maximized #header button.vivaldi,
+#browser:not(.minimal-ui.horizontal-menu).tabs-left #header button.vivaldi {top: 32px}
+#browser:not(.minimal-ui.horizontal-menu) #main .toolbar-addressbar .toolbar {margin-left: 30px}
+#browser:not(.minimal-ui.horizontal-menu) #tabs-container.top {margin-left: -30px}
 
 /* Use regular v icon not snapshot one */
 #titlebar button.vivaldi span.application-icon {display: none}
@@ -72,3 +74,13 @@
 
 /* Use Dark BG Background tabs */
 .tab:not(.active) { background: var(--colorAccentBgDarker) !important}
+
+/* Allow tabs to not be rounded when the rest of the theme is */
+.tabs-left .tab, .tabs-right .tab {border-radius: 0px !important}
+
+/* Make extensions bar not be light colour */
+.toolbar-addressbar .button-toolbar.browserAction-button,
+.toolbar-mailbar .button-toolbar.browserAction-button {background: none}
+
+/* Dont bother with icon if horizontal menu */
+#header .topmenu .vivaldi-horizontal-icon {display: none}
