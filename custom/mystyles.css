@@ -69,8 +69,8 @@
 /* Use regular v icon not snapshot one */
 #titlebar button.vivaldi span.application-icon {display: none}
 #titlebar button.vivaldi span.vivaldi-v {display: block}
-.acc-light #titlebar button.vivaldi span.vivaldi-v svg {fill: #000}
-.acc-dark #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
+.theme-light #titlebar button.vivaldi span.vivaldi-v svg {fill: #000}
+.theme-dark #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
 
 /* Use Dark BG Background tabs */
 .tab:not(.active) { background: var(--colorAccentBgDarker) !important}
