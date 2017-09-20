@@ -1,0 +1,30 @@
+.tabs-top .tab.active::before, .tabs-top .tab.active::after {
+    content: 'mm';
+    background: var(--colorAccentBg);
+    height: 30px;
+    width: 33px;
+    position: absolute;
+    left: -33px;
+    color: transparent;
+    bottom: 0px;
+    clip-path: url(#tab_rounder_clip);
+}
+.tabs-top .tab.active::after {
+    left: auto;
+    right: -32px;
+    transform: rotateY(180deg);
+}
+.tabs-top .tab.active {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px
+}
+
+@media screen and (max-width: 700px) {
+    .tabs-top .tab.active::before, .tabs-top .tab.active::after {
+        display: none
+    }
+    .tabs-top .tab.active { 
+        border-top-left-radius: var(--radiusHalf);
+        border-top-right-radius: var(--radiusHalf)
+    }
+}
