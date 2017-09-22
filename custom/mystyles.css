@@ -85,3 +85,9 @@
 
 /* Dont bother with icon if horizontal menu */
 #header .topmenu .vivaldi-horizontal-icon {display: none}
+
+/* scheduled speed dial themes */
+.theme-dark div.active.internal.visible.webpageview div.startpage {
+    background-color: rgb(0, 0, 0) !important;
+    background-image: none !important
+}
