@@ -29,8 +29,8 @@
 }
 
 /* Better Panel Switches */
-.theme-dark #switch button.webviewbtn img{
-    background-color:transparent;
+#switch button.webviewbtn img{
+    background-color:transparent !important;
     -webkit-filter:grayscale(100%)
 }
 #switch button.webviewbtn.active img{-webkit-filter:grayscale(0%)}
@@ -58,6 +58,7 @@
 .speeddial .draggable.dial:hover {
     -webkit-filter:grayscale(0%) brightness(100%)
 }
+.dials .dial .thumbnail-image {box-shadow: none !important}
 
 /* Move Vivaldi Button to address bar */
 #browser:not(.minimal-ui.horizontal-menu) #header button.vivaldi {top: 35px; z-index: 2}
