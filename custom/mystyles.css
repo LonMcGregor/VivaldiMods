@@ -72,9 +72,10 @@
 #titlebar button.vivaldi span.vivaldi-v {display: block}
 .theme-light #titlebar button.vivaldi span.vivaldi-v svg {fill: #000}
 .theme-dark #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
+.acc-dark.color-behind-tabs-on #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
 
 /* Use Dark BG Background tabs */
-.tab:not(.active) { background: var(--colorAccentBgDarker) !important}
+/*.tab:not(.active) { background: var(--colorAccentBgDarker) !important}*/
 
 /* Allow tabs to not be rounded when the rest of the theme is */
 .tabs-left .tab, .tabs-right .tab {border-radius: 0px !important}
