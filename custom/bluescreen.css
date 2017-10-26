@@ -1,0 +1,24 @@
+#vivaldi-tooltip:only-child {
+	background-color:  blue !important;
+    background-image: url('../resources/vivaldi-splash-icon.svg');
+    background-size: 16%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+#vivaldi-tooltip:only-child::before,
+#vivaldi-tooltip:only-child::after {
+	content: 'Vivaldi encountered a problem and crashed.';
+	color: white;
+	content: block;
+	width: 24;
+	font-size: large;
+	font-family: consolas;
+}
+
+#vivaldi-tooltip:only-child::before {
+	content: 'Press Alt+F4 to quit vivaldi.';
+	position: fixed;
+	top: 1em;
+}
