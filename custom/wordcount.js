@@ -51,7 +51,7 @@ function addWordCountSpan(){
     wordcountwrapper.innerHTML = '\
         <div class="meta-icon word-count fieldset" title="Word Count">\
             <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 40 37">\
-                <path fill="none" stroke="#321" stroke-width="3" d="m10,18 9-9 14,14-19-19-9,9 19,19 11,2-2-11-1-1m1,4-6,6 3,1 4-4"/>\
+                <path fill="none" stroke="var(--colorFg)" stroke-width="3" d="m10,18 9-9 14,14-19-19-9,9 19,19 11,2-2-11-1-1m1,4-6,6 3,1 4-4"/>\
             </svg>\
         </div>\
         <span id="note-word-count" title="Word Count">Select a note to see word count</span>';
@@ -91,7 +91,7 @@ function updateWordCount(m, o){
     const wordsMatches = notetext.match(/\S+/g);
     const words = wordsMatches ? wordsMatches.length : 0;
     const lineMatches = notetext.match(/\n/g);
-    const lines = lineMatches ? lineMatches.length : 0;
+    const lines = lineMatches ? lineMatches.length+1 : (characters==0 ? 0 : 1);
     const message = "Chars: "+characters+" Words: "+words+" Lines: "+lines;
     wordcountspan.textContent = message;
 }
