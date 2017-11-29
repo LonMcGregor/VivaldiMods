@@ -1,7 +1,8 @@
 import os, re, shutil
 
 def get_newest_app_resource_dir():
-    appdir = os.path.join('C:\\','Users','lonm','AppData','Local','Vivaldi','Application')
+    appdir = os.path.join('C:\\','Program Files','Vivaldi','Application')
+    #appdir = os.path.join('C:\\','Users','lonm','AppData','Local','Vivaldi','Application')
     dir = os.listdir(appdir)
     matches = [item for item in dir if re.match('([0-9]+\.){3}[0-9]+', item)]
     matches.sort()
