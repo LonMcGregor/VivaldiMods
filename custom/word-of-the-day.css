@@ -1,0 +1,8 @@
+#app:only-child:before {
+	content: 'candor\a   noun\a   KAN-der\a   1 : whiteness, brilliance\a   2 : freedom from prejudice or malice : fairness\a   3 : unreserved, honest, or sincere expression : forthrightness';
+    font-weight: bold;
+    font-size: 100px;
+	position: fixed;
+	top: 0px;
+    white-space: pre;
+}
