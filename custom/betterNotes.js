@@ -1,3 +1,8 @@
+/*
+* BETTER NOTES (a mod for Vivaldi)
+* Written by LonM
+* No Copyright Reserved
+*/
 "use strict";
 
 // Observers
@@ -7,6 +12,7 @@ const noteTextChangeObserver = new MutationObserver(noteTextChanged);
 
 // Globals
 const monospaceFontDeclaration = "DejaVu Sans Mono, Courier New, monospace";
+const childListObserverConfig = { childList: true };
 let fontState = "regular";
 let wrapState = "normal";
 
@@ -18,9 +24,8 @@ let wrapState = "normal";
 // Register the observer once the browser is fully loaded
 setTimeout(function observePanelChanges(){
     const panels = document.querySelector("#panels > div.panel-group > div");
-    if (panels != null) {
-        const config = { childList: true };
-        panelChangeObserver.observe(panels, config);
+    if (panels) {
+        panelChangeObserver.observe(panels, childListObserverConfig);
         panelChanged();
     } else {
         setTimeout(observePanelChanges, 500);
@@ -30,17 +35,15 @@ setTimeout(function observePanelChanges(){
 // Look for if a user selectes a new note or folder
 function observeNoteChanges(){
     const notecard = document.querySelector("#notes-panel > div > div");
-    const config = {childList:true};
-    noteChangeObserver.observe(notecard, config);
+    noteChangeObserver.observe(notecard, childListObserverConfig);
     newNoteSelected();
 }
 
 // Look for if a user edits a note
 function observeNoteTextChanges(){
     const notetext = document.querySelector("#notes-panel > div > div > textarea");
-    const config = {childList:true};
-    if(notetext != null){
-        noteTextChangeObserver.observe(notetext, config);
+    if(notetext){
+        noteTextChangeObserver.observe(notetext, childListObserverConfig);
         noteTextChanged();
     }
 }
@@ -56,16 +59,12 @@ function panelChanged(m, o){
     //Identify Panel
     const notes = document.querySelector("#notes-panel");
     if(notes){
-        try {
-            // Add DOM Elements
-            addWordCountSpan();
-            fontToggleAddButton();
-            wrapToggleAddButton();
-            // Observe note changes
-            observeNoteChanges();
-        } catch (e) { //panel toggled before function completed
-            return;
-        }
+        // Add DOM Elements
+        addWordCountSpan();
+        fontToggleAddButton();
+        wrapToggleAddButton();
+        // Observe note changes
+        observeNoteChanges();
     }
 }
 
@@ -182,24 +181,24 @@ function addWordCountSpan(){
     wordcountwrapper.className = "dateCreated";
     wordcountwrapper.id = "note-word-count-container";
     //icon from https://commons.wikimedia.org/wiki/File:Revision_of_policy.svg 
-    wordcountwrapper.innerHTML = '\
-        <div class="meta-icon word-count fieldset" title="Word Count">\
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 40 37">\
-                <path fill="none" stroke="var(--colorFg)" stroke-width="3" d="m10,18 9-9 14,14-19-19-9,9 19,19 11,2-2-11-1-1m1,4-6,6 3,1 4-4"/>\
-            </svg>\
-        </div>\
-        <span id="note-word-count" title="Word Count">Select a note to see word count</span>';
+    wordcountwrapper.innerHTML = `
+        <div class="meta-icon word-count fieldset" title="Word Count">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 40 37">
+                <path fill="none" stroke="var(--colorFg)" stroke-width="3" d="m10,18 9-9 14,14-19-19-9,9 19,19 11,2-2-11-1-1m1,4-6,6 3,1 4-4"/>
+            </svg>
+        </div>
+        <span id="note-word-count" title="Word Count">Select a note to see word count</span>`;
     metawrapper.appendChild(wordcountwrapper);
 }
 
 // Trigger a word count update
 function updateWordCount(){
     const wordcountspan = document.querySelector("#note-word-count");
-    if(wordcountspan === null){
+    if(!wordcountspan){
         return;
     }
     const notetextarea = document.querySelector("#notes-panel > div > div > textarea");
-    if(notetextarea===null || notetextarea.value===null || notetextarea.value.length===0){
+    if(!notetextarea || !notetextarea.value || !notetextarea.value.length){
         wordcountspan.textContent = "Chars: 0 Words: 0 Lines: 0";
         return;
     }
