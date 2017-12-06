@@ -26,21 +26,18 @@ def update_browser(resources_loc):
         htmlfile.write(contents)
         print("Updated browser.html")
 
-def copy_files(resources_loc, own_files_loc):
+def link_files(resources_loc, own_files_loc):
     target_location = os.path.join(resources_loc, 'user_modfiles')
-    if os.path.exists(target_location):
-        shutil.rmtree(target_location)
-    print("Erased old files")
-    os.makedirs(target_location)
-    for file in os.listdir(own_files_loc):
-        shutil.copyfile(os.path.join(own_files_loc, file), os.path.join(target_location, file))
-        print("Copied %s" % file)
+    if not os.path.exists(target_location):
+        os.symlink(own_files_loc, target_location, target_is_directory=True)
+        print("Linked Files to %s"%target_location)
+    print("Files already linked at %s"%target_location)
 
 
 resources_loc = get_newest_app_resource_dir()
 own_files_loc = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'custom')
 print("Working in %s" % resources_loc)
-copy_files(resources_loc, own_files_loc)
+link_files(resources_loc, own_files_loc)
 update_browser(resources_loc)
 
     
