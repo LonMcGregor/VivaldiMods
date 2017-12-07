@@ -52,12 +52,12 @@
 .dials .dial .thumbnail-image {background-color:transparent}
 
 /* Fancy Colour Highlighting Dials */
-.speeddial .draggable.dial {
+/*.speeddial .draggable.dial {
     -webkit-filter:grayscale(100%) brightness(80%)
 }
 .speeddial .draggable.dial:hover {
     -webkit-filter:grayscale(0%) brightness(100%)
-}
+}*/
 .dials .dial .thumbnail-image {box-shadow: none !important}
 
 /* Move Vivaldi Button to address bar */
@@ -88,10 +88,10 @@
 #header .topmenu .vivaldi-horizontal-icon {display: none}
 
 /* scheduled speed dial themes */
-.theme-dark div.active.internal.visible.webpageview div.startpage {
+/*.theme-dark div.active.internal.visible.webpageview div.startpage {
     background-color: rgb(0, 0, 0) !important;
     background-image: none !important
-}
+}*/
 
 /* If screen is narrow and panel is open, just show the panel */
 @media screen and (max-width: 600px){
