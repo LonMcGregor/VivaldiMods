@@ -29,9 +29,11 @@ def update_browser(resources_loc):
 def link_files(resources_loc, own_files_loc):
     target_location = os.path.join(resources_loc, 'user_modfiles')
     if not os.path.exists(target_location):
-        os.symlink(own_files_loc, target_location, target_is_directory=True)
-        print("Linked Files to %s"%target_location)
-    print("Files already linked at %s"%target_location)
+        os.mkdir(target_location)
+    for file in os.listdir(own_files_loc):
+        if not os.path.exists(os.path.join(target_location, file)):
+            os.symlink(os.path.join(own_files_loc, file), os.path.join(target_location, file), target_is_directory=False)
+            print("Linked File to %s"%file)
 
 
 resources_loc = get_newest_app_resource_dir()
