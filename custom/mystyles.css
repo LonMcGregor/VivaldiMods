@@ -98,9 +98,9 @@
     #panels-container.left:not(.icons) + #webview-container{
         display: none
     }
-    #panels-container.left:not(.icons) {
+    #panels-container.left:not(.icons), .panel-collapse-guard {
         width: 100% !important;
-        max-width: 100%
+        max-width: 100% !important;
     }
 }
 
