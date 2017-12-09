@@ -126,3 +126,15 @@
 .webviewbtn img {
     max-height: 20px
 }
+
+/* make window border match accent */
+#browser.win.normal:not(.native).hasfocus::after {
+    border: 1px solid var(--colorAccentBg) !important;
+}
+
+/* use accented header in minimal mode even if accent is behind ui  */
+.minimal-ui #header {
+    background-color: var(--colorAccentBg);
+    color: var(--colorAccentFg); fill: var(--colorAccentFg);
+    border-bottom: 1px solid var(--colorAccentBg) !important;
+}
