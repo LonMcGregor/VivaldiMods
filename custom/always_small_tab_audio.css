@@ -1,0 +1,15 @@
+/* use small audio indicator like pinned tabs*/
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio{
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    transform: scale(0.8) !important;
+    background: none
+}
+
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio:hover, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio:hover {
+    transform: scale(1.2) !important
+}
+#tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon, #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon{
+    transform: scale(1) !important
+}

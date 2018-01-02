@@ -1,0 +1,5 @@
+/* scheduled speed dial themes */
+.theme-dark div.active.internal.visible.webpageview div.startpage {
+    background-color: rgb(0, 0, 0) !important;
+    background-image: none !important
+}

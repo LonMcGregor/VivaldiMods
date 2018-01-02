@@ -1,0 +1,13 @@
+/* Better Panel Switches */
+#switch button.webviewbtn img{
+    background-color:transparent !important;
+    -webkit-filter:grayscale(100%)
+}
+#switch button.webviewbtn.active img{-webkit-filter:grayscale(0%)}
+
+/* Tab Favicon fixes */
+.tab-position .tab.active .tab-header .favicon {background-color: transparent}
+
+/* Actually transparent speed dials */
+.dials .dial .thumbnail-image {background-color:transparent}
+.dials .dial .thumbnail-image {box-shadow: none !important}

@@ -1,0 +1,7 @@
+/* Reposition Close Tab Button to favicon*/
+.tab .close {
+    order: 0;
+    margin-right: 0px !important
+}
+.tab:hover .close {order:-2}
+.tab:hover .favicon{display:none}

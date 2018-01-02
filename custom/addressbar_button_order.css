@@ -1,0 +1,7 @@
+/* Nicer General Control Buttons */
+#main .toolbar-addressbar .button-toolbar.home{display: none}
+#main .toolbar-addressbar .button-toolbar.rewind{order: 1}
+#main .toolbar-addressbar .button-toolbar.back{order: 2}
+#main .toolbar-addressbar .button-toolbar.reload{order: 3}
+#main .toolbar-addressbar .button-toolbar.forward{order: 4}
+#main .toolbar-addressbar .button-toolbar.next{order: 5}

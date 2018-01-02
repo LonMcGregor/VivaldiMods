@@ -1,0 +1,2 @@
+/* Allow vertical tabs to not be rounded when the rest of the theme is */
+.tabs-left .tab, .tabs-right .tab {border-radius: 0px !important}

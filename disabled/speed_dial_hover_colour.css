@@ -1,0 +1,7 @@
+/* Fancy Colour Highlighting Dials */
+.speeddial .draggable.dial {
+    -webkit-filter:grayscale(100%) brightness(80%)
+}
+.speeddial .draggable.dial:hover {
+    -webkit-filter:grayscale(0%) brightness(100%)
+}

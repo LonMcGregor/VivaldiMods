@@ -1,0 +1,10 @@
+/* If screen is narrow and panel is open, just show the panel */
+@media screen and (max-width: 600px){
+    #panels-container.left:not(.icons) + #webview-container{
+        display: none
+    }
+    #panels-container.left:not(.icons), .panel-collapse-guard {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}

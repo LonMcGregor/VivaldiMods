@@ -1,0 +1,9 @@
+/* Hide extra borders included in vivaldi */
+#footer{box-shadow:none}
+#switch button.active,#panels-container,#switch,#panels .panel-group{border-color: transparent}
+#panels-container.left #switch{box-shadow: none}
+#footer .zoom-control {border-left-color: transparent}
+.zoom-control input {border-width: 0px}
+#footer .button-toolbar-small {box-shadow: none}
+#panels-container:after {background-color: transparent}
+#switch button:hover:not(:disabled):not(.active), #switch button:focus:not(.active) {box-shadow: none !important}

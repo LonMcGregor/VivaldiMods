@@ -1,0 +1,8 @@
+/* Use the following to hide the site info text*/
+button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
+    display: none
+}
+/* Include the following to display the full name on hovering */
+button.button-addressfield.addressfield-siteinfo.certified:hover .siteinfo-text {
+    display: block
+}

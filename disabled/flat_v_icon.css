@@ -1,0 +1,6 @@
+/* Use regular v icon not snapshot one */
+#titlebar button.vivaldi span.application-icon {display: none}
+#titlebar button.vivaldi span.vivaldi-v {display: block}
+.theme-light #titlebar button.vivaldi span.vivaldi-v svg {fill: #000}
+.theme-dark #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}
+.acc-dark.color-behind-tabs-on #titlebar button.vivaldi span.vivaldi-v svg {fill: #fff}

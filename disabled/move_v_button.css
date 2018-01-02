@@ -1,0 +1,6 @@
+/* Move Vivaldi Button to address bar */
+#browser:not(.minimal-ui.horizontal-menu) #header button.vivaldi {top: 35px; z-index: 2}
+#browser:not(.minimal-ui.horizontal-menu).maximized #header button.vivaldi,
+#browser:not(.minimal-ui.horizontal-menu).tabs-left #header button.vivaldi {top: 32px}
+#browser:not(.minimal-ui.horizontal-menu) #main .toolbar-addressbar .toolbar {margin-left: 30px}
+#browser:not(.minimal-ui.horizontal-menu) #tabs-container.top {margin-left: -30px}
