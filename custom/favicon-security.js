@@ -1,5 +1,5 @@
 /*
-* Site Security Info Favicon (a mod for Vivaldi)
+* Site Security Box Favicons (a mod for Vivaldi)
 * Written by LonM
 * No Copyright Reserved
 * This mod takes the favicon from a tab and places it into the address bar site info box
@@ -25,6 +25,7 @@ const differentTabActivatedObserver = new MutationObserver(tab_changed);
 // May need to re-observe deleted elements
 // E.g. if enter and exit of fullscreen / hide UI mode
 function browser_state_changed(m, o){
+    //console.log("BROWSER STATE CHANGE");
     remove_existing_cloned_favicon();
     clone_favicon_and_add_to_security();
     differentTabActivatedObserver.disconnect();
@@ -36,6 +37,7 @@ function browser_state_changed(m, o){
 // this will cover changes to the .active tab AND
 // cover changes to the favicon span thru subtree
 function tab_changed(m, o){
+    //console.log("TAB STRIP ATTRIBUTE CHANGE");
     clone_favicon_and_add_to_security();
 }
 
