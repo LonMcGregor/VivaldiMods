@@ -27,6 +27,9 @@ const GUIDELINES_CSS = `
     cursor: ns-resize;
     left: 0px !important;
 }
+#footer > div.status-toolbar > span.captureactions {
+    display: flex;
+}
 `;
 
 let GUIDE_COUNT = 0;
@@ -55,7 +58,7 @@ function create_buttons(){
     new_button_h.addEventListener("click", function(e){
         new_guide_clicked(e, "browser-guide-horizontal");
     });
-    
+
     const new_button_v = document.createElement("button");
     new_button_v.innerHTML = "|";
     new_button_v.className = "button-toolbar-small";
