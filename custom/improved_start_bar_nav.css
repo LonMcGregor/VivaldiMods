@@ -1,0 +1,33 @@
+/* Improved start page navigation bar
+make it transparent on start page
+regular on bookmarks, history*/
+.startpage .startpage-navigation {
+    background-color: transparent;
+    box-shadow: none;
+    min-height: 30px;
+    z-index: 1;
+}
+.startpage .startpage-navigation .startpage-navigation-group:last-of-type {
+    border-color: transparent;
+}
+button.button-startpage svg{
+    fill: var(--colorHighlightBg);
+}
+.startpage .startpage-navigation, button.button-startpage.active {
+    color: #999; /* You'll need to fiddle with this value to find one that work swith your theme */
+}
+
+.startpage .manager {
+    background: var(--colorBgLightIntense);
+    padding-top:  30px;
+    top: -30px;
+}
+
+.startpage .startpage-content {
+    overflow: visible !important;
+}
+
+nav.startpage-navigation > div.startpage-navigation-group:nth-child(2) > button {
+    max-width: 38px;
+    color: transparent;
+}
