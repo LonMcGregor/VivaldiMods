@@ -7,7 +7,7 @@ def get_newest_app_resource_dir():
     matches = [item for item in dir if re.match('([0-9]+\.){3}[0-9]+', item)]
     matches.sort()
     return os.path.join(appdir, matches[-1], 'resources', 'vivaldi')
-    
+
 def update_browser(resources_loc):
     browser_loc = os.path.join(resources_loc, 'browser.html')
     modfiles_loc = os.path.join(resources_loc, 'user_modfiles')
@@ -26,20 +26,35 @@ def update_browser(resources_loc):
         htmlfile.write(contents)
         print("Updated browser.html")
 
-def link_files(resources_loc, own_files_loc):
+def copy_files(resources_loc, own_files_loc):
     target_location = os.path.join(resources_loc, 'user_modfiles')
-    if not os.path.exists(target_location):
-        os.mkdir(target_location)
+    if os.path.exists(target_location):
+        shutil.rmtree(target_location)
+    print("Erased old files")
+    os.makedirs(target_location)
     for file in os.listdir(own_files_loc):
-        if not os.path.exists(os.path.join(target_location, file)):
-            os.symlink(os.path.join(own_files_loc, file), os.path.join(target_location, file), target_is_directory=False)
-            print("Linked File to %s"%file)
+        shutil.copyfile(os.path.join(own_files_loc, file), os.path.join(target_location, file))
+        print("Copied %s" % file)
 
+def update_splash_screen(resources_loc, background, foreground):
+    browser_loc = os.path.join(resources_loc, 'browser.html')
+    svg_loc = os.path.join(resources_loc, 'resources', 'vivaldi-splash-icon.svg')
+    with open(browser_loc, 'r') as htmlfile:
+        html_contents = htmlfile.read()
+    with open(svg_loc, 'r') as svgfile:
+        svg_contents = svgfile.read()
+    print("Updating browser splash background")
+    html_contents = re.sub("background-color: .+;", 'background-color: %s;' % background, html_contents)
+    with open(browser_loc, 'w') as htmlfile:
+        htmlfile.write(html_contents)
+    print("Updating browser splash foreground")
+    svg_contents = re.sub('g fill=".+"', 'g fill="%s"' % foreground, svg_contents)
+    with open(svg_loc, 'w') as svgfile:
+        svgfile.write(svg_contents)
 
 resources_loc = get_newest_app_resource_dir()
 own_files_loc = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'custom')
 print("Working in %s" % resources_loc)
-link_files(resources_loc, own_files_loc)
+copy_files(resources_loc, own_files_loc)
 update_browser(resources_loc)
-
-    
+update_splash_screen(resources_loc, '#222', '#67d0ea')
