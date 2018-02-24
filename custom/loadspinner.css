@@ -1,0 +1,77 @@
+/*
+* Loading Spinner for Vivaldi
+* Written by LonM, with some original concepts from Isildir
+* No Copyright Reserved
+*/
+
+
+/* set up and animate the loading spinner element */
+span.progress-indicator,
+.addressfield .progressing .pageload-indicator::before {
+    animation: loadspinner 1s infinite;
+    animation-duration: 1s !important;
+    background-color: var(--colorAccentBg) !important;
+    border-radius: 5px;
+    transform-origin: center !important;
+    width: 10px;
+    height: 10px !important;
+    transform: scaleX(1) !important;
+    position: absolute;
+    top:10px;
+}
+
+/* make the progress bar in the
+address bar support an opaque child*/
+.addressfield .progressing .pageload-indicator {
+    opacity: 1;
+    background-color: var(--colorAccentBgAlpha);
+}
+
+/* Make the spinner in the address
+bar appear on top of the site info box,
+and give it an opaque colour */
+.addressfield .progressing .pageload-indicator::before {
+    content: '';
+    z-index: 2;
+    top: 7px;
+    background-color: var(--colorAccentBg);
+}
+div.addressfield > button.button-addressfield.addressfield-siteinfo {
+    z-index: 1;
+}
+
+/* hide the icons in the site info box until load complete
+but maintain colour (e.g. green or red ) for security */
+/* additional note: if using my address bar favicons mod,
+replace the final part of the following selector with a
+"span" instead of an "svg" */
+.addressfield .progressing + .addressfield-siteinfo .siteinfo-symbol span{
+    opacity: 0;
+}
+
+/* hide the favicon in loading background tabs */
+span.progress-indicator.progressing + .favicon {
+    opacity: 0;
+}
+
+/* define the animation function for the spinner */
+@keyframes loadspinner {
+    0% {
+        left: 0px;
+        transform: scale(0.75);
+    }
+    25%{
+        transform: scale(0.5);
+    }
+    50% {
+        left: 20px;
+        transform: scale(0.75);
+    }
+    75%{
+        transform: scale(0.5);
+    }
+    100% {
+        left: 0px;
+        transform: scale(0.75);
+    }
+}
