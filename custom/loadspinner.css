@@ -6,7 +6,7 @@
 
 
 /* set up and animate the loading spinner element */
-span.progress-indicator,
+span.progress-indicator.progressing,
 .addressfield .progressing .pageload-indicator::before {
     animation: loadspinner 1s infinite;
     animation-duration: 1s !important;
