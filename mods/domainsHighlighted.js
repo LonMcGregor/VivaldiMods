@@ -43,11 +43,11 @@ function domainsHighlighted(addressBarElement){
     function getDomainTextPositions(text){
 
         /* voiski ip checkers */
-        const ipv6 = /.*:\/\/((([a-fA-F0-9]{1,4}|):){1,7}([a-fA-F0-9]{1,4}|:))/g;
-        const ipv4 = /.*:\/\/(((25[0-5]|2[0-4]\d|[01]?\d{1,2}|\*)\.){3}(25[0-5]|2[0-4]\d|[01]?\d{1,2}|\*))/g;
+        const ipv6 = /https?:\/\/((([a-fA-F0-9]{1,4}|):){1,7}([a-fA-F0-9]{1,4}|:))/g;
+        const ipv4 = /https?:\/\/(((25[0-5]|2[0-4]\d|[01]?\d{1,2}|\*)\.){3}(25[0-5]|2[0-4]\d|[01]?\d{1,2}|\*))/g;
 
         /* generic catch-all for domains */
-        const domain = /.+:\/\/([\w\.:\-]*)\/?/g;
+        const domain = /https?:\/\/([\w\.:\-]*)\/?/g;
 
         if(!text || text === ""){
             return;
@@ -72,7 +72,7 @@ function domainsHighlighted(addressBarElement){
             return;
         }
 
-        const styleOffsetStart = 6;
+        const styleOffsetStart = 0;
         const styleOffsetEnd = 6;
         const fullWidth = checkTextWidth(full);
         const importantWidth = checkTextWidth(important);
