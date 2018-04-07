@@ -19,17 +19,17 @@ to change how long tab texts are displayed.
 .tab-group:hover .tab-group-indicator {
   flex-direction: column;
   position: relative;
-  top: 26px !important;
 }
 
 /* Prevent CSS Hover Spam if mouse is above tab header */
 .tab-group:hover .tab-group-indicator:before {
   content: '';
-  height: 12px;
-  width: 100%;
+  height: 1px;
+  width: calc(100% - 4px);
   position: absolute;
-  top: -32px;
-  left: -2px;
+  left: 0px;
+  background-color: var(--colorBg);
+  border: 1px solid transparent;
 }
 
 /* Space tab indicators vertically */
@@ -44,8 +44,8 @@ to change how long tab texts are displayed.
   background: var(--colorBgInverser);
   display: flex;
   height: 26px;
-  border-radius: var(--radiusHalf);
   width: 172px;
+  border-radius: var(--radiusHalf);
 }
 
 /* Foreground (text) of tab indicator */
@@ -66,10 +66,63 @@ to change how long tab texts are displayed.
   /*text-overflow: ellipsis;*/
 }
 
+.tab-group:hover .tab-indicator {
+  background: transparent !important;
+}
+
+/* Highlight Currently selected tab group indicator */
+.tab-group:hover .tab-indicator.active {
+  height: 26px;
+  width: 172px;
+  border-bottom: 1px solid var(--colorAccentBg) !important;
+  border-radius: var(--radiusHalf);
+  background: transparent !important;
+}
+
 /* Change active indicator colours */
 .tab-group:hover .tab-indicator:hover:before {
   background: var(--colorHighlightBg);
 }
 .tab-group:hover .tab-indicator:hover:after {
   color: var(--colorHighlightFg);
+}
+
+/* different tab positions */
+.tabs-right .tab-group:hover .tab-group-indicator,
+.tabs-left  .tab-group:hover .tab-group-indicator{
+  top: 30px !important;
+  bottom: unset !important;
+}
+.tabs-right .tab-group:hover .tab-group-indicator:before,
+.tabs-left  .tab-group:hover .tab-group-indicator:before{
+  top: -27px;
+  bottom: unset !important;
+}
+
+.tabs-top .tab-group:hover .tab-group-indicator{
+  top: 26px !important;
+  bottom: unset !important;
+  left: -6px;
+}
+.tabs-top .tab-group:hover .tab-group-indicator:before {
+  top: -30px;
+  bottom: unset !important;
+  left: 6px;
+  width: calc(100% - 10px);
+}
+
+.tabs-bottom .tab-group:hover .tab-group-indicator{
+  top: unset !important;
+  bottom: 26px !important;
+}
+.tabs-bottom .tab-group:hover .tab-group-indicator:before {
+  top: unset !important;
+  bottom: -30px;
+}
+
+/* Prevent side tabs z-index upsetting the
+ layering of the tab group indicators */
+.tabs-right .tab-position:hover,
+.tabs-left  .tab-position:hover {
+  z-index: 3 !important;
 }
