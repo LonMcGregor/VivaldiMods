@@ -1,0 +1,75 @@
+/*
+Drop-Down Tab Stacks
+LonM.vivaldi.net
+NoCopyright Reserved
+*/
+
+/*
+A Tab group is presented as a normal tab header,
+but with a group of "indicators" positioned above
+the tab header in a horizontal fashion.
+On hover, we want to make these vertical, show
+the title of the indicator, and drop them down
+below the existing tab header.
+Toggle the comments on lines (62,63) and (65)
+to change how long tab texts are displayed.
+*/
+
+/* Make the tab group indicator vertical below tab header */
+.tab-group:hover .tab-group-indicator {
+  flex-direction: column;
+  position: relative;
+  top: 26px !important;
+}
+
+/* Prevent CSS Hover Spam if mouse is above tab header */
+.tab-group:hover .tab-group-indicator:before {
+  content: '';
+  height: 12px;
+  width: 100%;
+  position: absolute;
+  top: -32px;
+  left: -2px;
+}
+
+/* Space tab indicators vertically */
+.tab-group:hover .tab-indicator {
+  height: 30px !important;
+  margin-top: 2px;
+}
+
+/* Background (shape) of tab indicator */
+.tab-group:hover .tab-indicator:before {
+  content: '';
+  background: var(--colorBgInverser);
+  display: flex;
+  height: 26px;
+  border-radius: var(--radiusHalf);
+  width: 172px;
+}
+
+/* Foreground (text) of tab indicator */
+.tab-group:hover .tab-indicator:after {
+  content: attr(title);
+  display: block;
+  width: 168px;
+  position: relative;
+  top: -20px;
+  left: 4px;
+  color: var(--colorFg);
+  white-space: nowrap;
+  overflow: hidden;
+  /** Toggle for fade out long text */
+  -webkit-mask-image: -webkit-linear-gradient(180deg, transparent 0, #fff 16px);
+  -webkit-mask-position: top right;
+  /*  or clip with ... */
+  /*text-overflow: ellipsis;*/
+}
+
+/* Change active indicator colours */
+.tab-group:hover .tab-indicator:hover:before {
+  background: var(--colorHighlightBg);
+}
+.tab-group:hover .tab-indicator:hover:after {
+  color: var(--colorHighlightFg);
+}
