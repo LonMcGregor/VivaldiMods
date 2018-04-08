@@ -174,11 +174,15 @@ Changes to popup thumbnails
 */
 
 /* Inital settings */
-#browser:not(.animation-off) #vivaldi-tooltip .tooltip .tooltip-item {
+#vivaldi-tooltip .tooltip .tooltip-item {
   top: 0px;
   width: calc(226px/1.13); /* Default = 226px */
   margin: 0 2px 10px 2px;
   transition: 100ms ease;
+}
+
+#browser.animation-off ~ #vivaldi-tooltip .tooltip .tooltip-item {
+  transition-duration: 0s !important;
 }
 
 /* Smaller Thumbnails Default = 160px */
