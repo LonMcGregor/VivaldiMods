@@ -11,7 +11,7 @@
     Dictionary of additional actions.
     They will be added to the toolbar in the order specified below.
     Enabled: Whether the action is enabled
-    Content Script: Wheter this action should execute on the web page o rin the browser
+    Content Script: Wheter this action should execute on the web page or in the browser
     Script: A function(){}
     Display: The innerHTML of the toolbar button
     Display Class: One or more classes to give the button
@@ -68,7 +68,7 @@
                 document.body.appendChild(style_element);
                 document.body.classList.toggle("inverted");
             }, /* eye icon stolen from vivaldi */
-            display: `<svg viewBox="0 -2 20 20" xmlns="http://www.w3.org/2000/svg">
+            display: `<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" height="10px" width="10px">
                 <path fill-rule="evenodd" d="M8 13c3.636 0 6.764-2.067 8-5-1.236-2.933-4.364-5-8-5s-6.764 2.067-8 5c1.236 3.035 4.364 5 8 5zm0-1c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm0-2c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z"></path>
             </svg>`,
             display_class: "panel-action-invert"
@@ -87,9 +87,9 @@
 
     /* Observe chages to the active panel */
     const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
-        const panelHeader = document.querySelector(".panel.webpanel.visible header");
-        if(panelHeader){
-            add_panel_controls(panelHeader);
+        const panel = document.querySelector(".panel.webpanel.visible");
+        if(panel){
+            add_panel_controls(panel);
         }
     });
 
@@ -121,28 +121,29 @@
     }
 
     /* Create a panel header toolbar button */
-    function panel_header_button(className, event, display){
+    function panel_mod_button(className, event, display){
         const newBtn = document.createElement("button");
-        newBtn.className = className+" button-toolbar mod-panel-action";
+        newBtn.className = className+" button-toolbar-small mod-panel-action";
         newBtn.innerHTML = display;
         newBtn.addEventListener("click", event);
         return newBtn;
     }
 
     /* Create the control buttons for the actions and add them to the specified header */
-    function add_panel_controls(panelHeader){
-        const panelButtons = panelHeader.querySelector(".toolbar");
-        const alreadyAdded = panelButtons.querySelector(".mod-panel-action");
+    function add_panel_controls(panel){
+        const alreadyAdded = panel.querySelector("footer");
         if(alreadyAdded){return;}
+        const footer = document.createElement("footer");
         for(const key in ACTIONS){
             const action = ACTIONS[key];
             if(action.enabled){
                 const newButton = action.content_script ?
-                    panel_header_button(action.display_class, event => {content_script(action.script);}, action.display) :
-                    panel_header_button(action.display_class, action.script, action.display);
-                panelButtons.appendChild(newButton);
+                    panel_mod_button(action.display_class, event => {content_script(action.script);}, action.display) :
+                    panel_mod_button(action.display_class, action.script, action.display);
+                footer.appendChild(newButton);
             }
         }
+        panel.appendChild(footer);
     }
 
     /* Start 500ms after the browser is opened */
