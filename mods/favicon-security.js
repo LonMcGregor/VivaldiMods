@@ -57,6 +57,7 @@ function clone_favicon_and_add_to_security(){
     favicon.style.height = "16px";
     favicon.style.display = "block";
     favicon.style.margin = "3px";
+    favicon.style.backgroundSize = "contain";
     siteinfo.style.display = "flex";
     sz_icon.parentNode.insertBefore(favicon, sz_icon);
 }
