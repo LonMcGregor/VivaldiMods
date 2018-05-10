@@ -1,29 +1,30 @@
+#browser.color-behind-tabs-on.tabs-top .tab.active::before,
+#browser.color-behind-tabs-on.tabs-top .tab.active::after {
+    background-color: var(--colorBg);
+}
 .tabs-top .tab.active::before, .tabs-top .tab.active::after {
-    content: 'mm';
+    content: ' ';
     background: var(--colorAccentBg);
     height: 30px;
-    width: 33px;
+    width: 20px;
     position: absolute;
-    left: -33px;
+    left: -18px;
     color: transparent;
     bottom: 0px;
     clip-path: url(#tab_rounder_clip);
 }
 .tabs-top .tab.active::after {
     left: auto;
-    right: -32px;
+    right: -18px;
     transform: rotateY(180deg);
-}
-.tabs-top .tab.active {
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px
+    bottom: -1px;
 }
 
 @media screen and (max-width: 700px) {
     .tabs-top .tab.active::before, .tabs-top .tab.active::after {
         display: none
     }
-    .tabs-top .tab.active { 
+    .tabs-top .tab.active {
         border-top-left-radius: var(--radiusHalf);
         border-top-right-radius: var(--radiusHalf)
     }
