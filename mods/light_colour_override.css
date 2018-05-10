@@ -1,6 +1,0 @@
-#titlebar svg {fill: grey}
-#titlebar .vivaldi-v svg {fill: black}
-#titlebar .window-buttongroup button:hover svg {fill: white}
-.color-behind-tabs-on.acc-dark .tab-position .tab:not(.active) .favicon.internal {
-    filter: invert(0);
-}

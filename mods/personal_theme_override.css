@@ -1,0 +1,24 @@
+.theme-light #titlebar svg {fill: grey}
+.theme-light #titlebar .vivaldi-v svg {fill: black}
+.theme-light #titlebar .window-buttongroup button:hover svg {fill: white}
+.theme-light.color-behind-tabs-on.acc-dark .tab-position .tab:not(.active) .favicon.internal {
+    filter: invert(0);
+}
+
+.theme-dark #tabs-container {
+    background-image: none !important;
+    background-color: black;
+    --colorImageForeground: white !important;
+    --colorImageBackgroundAlpha: rgba(0,0,0,0.6) !important;
+    --colorImageBackgroundAlphaHeavy: rgba(0,0,0,0.3) !important;
+}
+.theme-dark #titlebar svg {fill: white}
+.theme-dark #titlebar .vivaldi-v svg {fill: white}
+.theme-dark #titlebar .window-buttongroup button:hover svg {fill: white}
+.theme-dark.color-behind-tabs-on.acc-dark .tab-position .tab:not(.active) .favicon.internal {
+    filter: invert(1);
+}
+
+.theme-dark .internal-page .startpage{
+    background-image: url("chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/personal_theme_override.jpg") !important
+}
