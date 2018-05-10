@@ -1,4 +1,4 @@
-import os, re, shutil, json
+import os, re, shutil, json, glob
 
 def load_config(location="mod_config.json"):
     with open(location) as configfile:
@@ -36,13 +36,19 @@ def copy_mods(resources_loc, mod_path, active_mods):
         shutil.rmtree(target_location)
         print("Erased old mods")
     os.makedirs(target_location)
+    successful = []
+    for modfile in glob.glob(os.path.join(mod_path, "*")):
+        mod = modfile.split(os.path.sep)[-1]
+        modname = mod.split(".")[0]
+        if modname in active_mods:
+            shutil.copyfile(modfile, os.path.join(target_location, mod))
+            print("Copied %s" % mod)
+            if modname not in successful:
+                successful.append(modname)
     for mod in active_mods:
-        mod_file = os.path.join(mod_path, mod)
-        if not os.path.exists(mod_file):
+        if mod not in successful:
             print("/!\\ Could not install mod %s" % mod)
-            continue
-        shutil.copyfile(mod_file, os.path.join(target_location, mod))
-        print("Copied %s" % mod_file)
+            input("Press any key to continue...")
 
 def update_splash_screen(resources_loc, background, foreground):
     browser_loc = os.path.join(resources_loc, 'browser.html')
