@@ -18,7 +18,8 @@
     */
     const ACTIONS = {
 
-        zoom_out: { /* Decrease zoom*/
+        zoom_out: {
+            title: "Decrease zoom",
             enabled: true,
             content_script: false,
             script: function(){
@@ -31,7 +32,8 @@
             display_class: `zoom-out`
         },
 
-        zoom_reset: { /* Set zoom to 100% */
+        zoom_reset: {
+            title: "Set zoom to 100%",
             enabled: true,
             content_script: false,
             script: function(){
@@ -42,7 +44,8 @@
             display_class: `zoom-reset`
         },
 
-        zoom_in: { /* Increase zoom*/
+        zoom_in: {
+            title: "Increase zoom",
             enabled: true,
             content_script: false,
             script: function(){
@@ -55,7 +58,8 @@
             display_class: `zoom-in`
         },
 
-        invert: {/* Invert the colours on the page */
+        invert: {
+            title: "Invert the colours on the page",
             enabled: true,
             content_script: true,
             script: function(){
@@ -74,7 +78,37 @@
             display_class: "panel-action-invert"
         },
 
-        template: { /* */
+        terminate: {
+            title: "Kills the panel to free memory",
+            enabled: true,
+            content_script: false,
+            script: function(){
+                const webview = document.querySelector(".panel.webpanel.visible webview");
+                webview.terminate();
+            },
+            display: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="1 -1 26 26" height="10px" width="10px">
+                <path d="M9.4 18l-1.4-1.4 4.6-4.6-4.6-4.6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4-4.6 4.6 4.6 4.6-1.4 1.4-4.6-4.6z"></path>
+            </svg>`,
+            display_class: `panel-action-terminate`
+        },
+
+        mute: {
+            title: "Toggle mute state",
+            enabled: true,
+            content_script: false,
+            script: function(){
+                const webview = document.querySelector(".panel.webpanel.visible webview");
+                webview.isAudioMuted(mute => {
+                    webview.setAudioMuted(!mute);
+                    document.querySelector(".panel.webpanel.visible .panel-action-mute").textContent = mute ? `🔊` : `🔇`;
+                });
+            },
+            display: `🔊`,
+            display_class: `panel-action-mute`
+        },
+
+        template: {
+            title: "",
             enabled: false,
             content_script: false,
             script: function(){
@@ -121,11 +155,16 @@
     }
 
     /* Create a panel header toolbar button */
-    function panel_mod_button(className, event, display){
+    function panel_mod_button(action){
         const newBtn = document.createElement("button");
-        newBtn.className = className+" button-toolbar-small mod-panel-action";
-        newBtn.innerHTML = display;
-        newBtn.addEventListener("click", event);
+        newBtn.className = action.display_class+" button-toolbar-small mod-panel-action";
+        newBtn.innerHTML = action.display;
+        if(action.content_script){
+            newBtn.addEventListener("click", event => {content_script(action.script);});
+        } else {
+            newBtn.addEventListener("click", action.script);
+        }
+        newBtn.title = action.title;
         return newBtn;
     }
 
@@ -137,9 +176,7 @@
         for(const key in ACTIONS){
             const action = ACTIONS[key];
             if(action.enabled){
-                const newButton = action.content_script ?
-                    panel_mod_button(action.display_class, event => {content_script(action.script);}, action.display) :
-                    panel_mod_button(action.display_class, action.script, action.display);
+                const newButton = panel_mod_button(action);
                 footer.appendChild(newButton);
             }
         }
