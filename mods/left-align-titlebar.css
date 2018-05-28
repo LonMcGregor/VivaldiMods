@@ -1,0 +1,8 @@
+#pagetitle {
+    text-align: left;
+    padding-left: 40px;
+}
+
+.topmenu .horizontal-menu-pagetitle {
+    justify-content: left;
+}
