@@ -84,13 +84,13 @@ function domainsHighlighted(addressBarElement){
 
     /* Make a special element to check the expected width of text */
     function checkTextWidth(text){
-        const dummyElement = document.createElement("span");
-        dummyElement.style = "font-family: 'Segoe UI'; font-size: 13px; font-weight: 400; opacity: 1;";
-        const vivaldiTooltip = document.getElementById("vivaldi-tooltip");
-        vivaldiTooltip.appendChild(dummyElement);
+        const dummyElement = document.createElement("div");
+        dummyElement.style = "font-family: 'Segoe UI'; font-size: 13px; font-weight: 400; opacity: 0;";
         dummyElement.innerText = text;
+        const dummyParent = document.getElementById("status_info");
+        dummyParent.appendChild(dummyElement);
         const textWidth = dummyElement.getBoundingClientRect().width;
-        vivaldiTooltip.removeChild(dummyElement);
+        dummyParent.removeChild(dummyElement);
         return textWidth;
     }
 
