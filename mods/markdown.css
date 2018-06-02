@@ -1,0 +1,39 @@
+.lonmd .col {
+    flex-grow: 1 !important;
+    min-width: unset !important;
+}
+.lonmd .full {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.lonmd textarea, .lonmd #preview{
+    overflow: auto;
+    font-size: 13px;
+}
+.lonmd .dual {
+    display: flex !important;
+    flex-direction: row !important;
+}
+.lonmd textarea {
+    font-family: monospace;
+}
+.lonmd h1 {
+    font-size: large;
+}
+@media screen and (max-width: 800px){
+    .lonmd .dual {
+        flex-direction: column !important;
+    }
+}
+
+#main .meta-data-wrapper.disabled {
+    display: none;
+}
+#main .note.md, #main .note.editor{
+    display: none;
+}
+#main .notes-editor {
+    height: 140px !important;
+    min-height: 140px;
+}
