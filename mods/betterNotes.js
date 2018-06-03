@@ -12,11 +12,12 @@
 
 const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/betterNotesEditor.html";
 const VIVALDI_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/browser.html";
+const VIVALDI_ORIGIN = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli";
 let EDITOR_SOURCE;
 
 
 function onMessage(e){
-    if(e.origin !== EDITOR_URI){
+    if(e.origin !== VIVALDI_ORIGIN){
         console.error("Bad message incoming. There may be a threat actor afoot");
         return;
     }
@@ -24,9 +25,9 @@ function onMessage(e){
         case "INIT_YES":
             return onInit();
         case "NOTE_TEXT":
-            return onNoteText(e.data.note);
+            return onNoteText(e.data.note, e.data.noteId);
         case "NOTE_TITLE":
-            return onTitle(e.data.title);
+            return onTitle(e.data.title, e.data.noteId);
         default:
             console.error('unknown message format', e);
     }
@@ -37,12 +38,16 @@ function onInit(){
     sendNote();
 }
 
-function onNoteText(text){
-    // vivaldi.notes.update
+function onNoteText(text, id){
+    vivaldi.notes.update(id, {
+        content: text
+    });
 }
 
-function onTitle(title){
-    // vivaldi.notes.update
+function onTitle(title, id){
+    vivaldi.notes.update(id, {
+        title: title
+    });
 }
 
 

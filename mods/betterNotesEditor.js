@@ -4,9 +4,10 @@
 * No Copyright Reserved
 * EDITOR COMPONENT
 */
-
+(function betterNotesEditor(){
 "use strict";
 
+const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/betterNotesEditor.html";
 const VIVALDI_ORIGIN = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli";
 let VIVALDI_SOURCE;
 let THEME_COLOURS;
@@ -40,18 +41,22 @@ function onMessage(e){
 
 function onInitQuery(source){
     VIVALDI_SOURCE = source;
-    VIVALDI_SOURCE.postMessage("1", VIVALDI_ORIGIN);
+    sendMessage({
+        verb: "INIT_YES"
+    });
 }
 
 function onNote(note, preview){
     document.querySelector("textarea").value = note.content;
-    document.querySelector("h1").innerText = note.title;
+    document.querySelector("#title").value = note.title;
+    document.querySelector("#noteId").value = note.id;
     document.querySelector("#preview").innerHTML = preview;
 }
 
 function onEmpty(){
     document.querySelector("textarea").value = "";
-    document.querySelector("h1").innerText = "Vivaldi Notes";
+    document.querySelector("#title").value = "Vivaldi Notes";
+    document.querySelector("#noteId").value = "";
     document.querySelector("#preview").innerHTML = "<h1>Select a note to start</h1>";
 }
 
@@ -70,12 +75,40 @@ function sendInitResponse(){
     });
 }
 
-function sendNoteText(){
-
+function sendNoteText(event){
+    const noteText = document.querySelector("textarea").value;
+    const id = document.querySelector("#noteId").value;
+    if(id===""){
+        return;
+    }
+    sendMessage({
+        verb: "NOTE_TEXT",
+        note: noteText,
+        noteId: id
+    });
 }
 
 function sendNoteTitle(){
-
+    const noteTitle = document.querySelector("#title").value;
+    const id = document.querySelector("#noteId").value;
+    if(id===""){
+        return;
+    }
+    sendMessage({
+        verb: "NOTE_TITLE",
+        title: noteTitle,
+        noteId: id
+    });
 }
 
-addEventListener('message', onMessage);
+function init(){
+    addEventListener('message', onMessage);
+    document.querySelector("textarea").addEventListener("input", sendNoteText);
+    document.querySelector("#title").addEventListener("input", sendNoteTitle);
+}
+
+if(window.location.href===EDITOR_URI){
+    init();
+}
+
+})();
