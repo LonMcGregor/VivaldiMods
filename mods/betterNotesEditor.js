@@ -16,13 +16,13 @@ function sendMessage(msg){
     if(VIVALDI_SOURCE){
         VIVALDI_SOURCE.postMessage(msg, VIVALDI_ORIGIN);
     } else {
-        console.error("Tried to message but origin was lost");
+        error("Tried to message but origin was lost");
     }
 }
 
 function onMessage(e){
     if(e.origin !== VIVALDI_ORIGIN){
-        console.error("Bad message incoming. There may be a threat actor afoot");
+        error("Bad message incoming. There may be a threat actor afoot");
         return;
     }
     switch(e.data.verb){
@@ -35,7 +35,7 @@ function onMessage(e){
         case "THEME":
             return onTheme(e.data.theme);
         default:
-            console.error('unknown message format', e);
+            error('unknown message format', e);
     }
 }
 
@@ -44,6 +44,7 @@ function onInitQuery(source){
     sendMessage({
         verb: "INIT_YES"
     });
+    document.querySelector("#preview").innerHTML = "<h1>Select a note to continue</h1>";
 }
 
 function onNote(note, preview){
@@ -109,6 +110,21 @@ function init(){
 
 if(window.location.href===EDITOR_URI){
     init();
+}
+
+
+function error(message){
+    console.error(message);
+    new Notification("Better Notes Error", {
+        body: message,
+    });
+}
+
+function info(message){
+    console.log(message);
+    new Notification("Better Notes Message", {
+        body: message,
+    });
 }
 
 })();

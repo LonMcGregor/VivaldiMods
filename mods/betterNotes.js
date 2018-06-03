@@ -18,7 +18,7 @@ let EDITOR_SOURCE;
 
 function onMessage(e){
     if(e.origin !== VIVALDI_ORIGIN){
-        console.error("Bad message incoming. There may be a threat actor afoot");
+        error("Bad message incoming. There may be a threat actor afoot");
         return;
     }
     switch(e.data.verb){
@@ -29,7 +29,7 @@ function onMessage(e){
         case "NOTE_TITLE":
             return onTitle(e.data.title, e.data.noteId);
         default:
-            console.error('unknown message format', e);
+            error('unknown message format');
     }
 }
 
@@ -56,17 +56,17 @@ function sendMessage(msg){
     if(EDITOR_SOURCE){
         EDITOR_SOURCE.contentWindow.postMessage(msg, EDITOR_URI);
     } else {
-        console.error("tried to message before notes tab  was ready");
+        error("tried to message before notes tab  was ready");
     }
 }
 
 function sendInit(attempts){
     if(attempts < 1){
-        console.error("Failed to init messaging to notes tab");
+        error("Failed to init messaging to notes tab");
         return;
     }
     if(!document.querySelector(`webview[src="${EDITOR_URI}"]`)){
-        setTimeout(() => {sendInit(attempts-1);}, 100);
+        setTimeout(() => {sendInit(attempts-1);}, 500);
         return;
     }
     EDITOR_SOURCE = document.querySelector(`webview[src="${EDITOR_URI}"]`);
@@ -87,6 +87,8 @@ function sendNote(){
         let previewText = "<h1>Enable markdown generator in panel</h1>";
         if(preview){
             previewText = preview.innerHTML;
+        } else if(note.content===""){
+            previewText = "";
         }
         sendMessage({
             verb: "NOTE",
@@ -119,7 +121,7 @@ function sendThemeData() {
 
 // Start the connection to the notes tab
 function connectToNotesTab(){
-    setTimeout(() => {sendInit(3);}, 100);
+    setTimeout(() => {sendInit(3);}, 500);
 }
 
 // Get the notes tab if it exists, or create a new one
@@ -184,6 +186,15 @@ function makeDebugButton(){
 }
 
 
+function error(message){
+    console.error(message);
+    document.querySelector("#status_info span").innerText = "⚠" + message;
+}
+
+function info(message){
+    console.log(message);
+    document.querySelector("#status_info span").innerText = message;
+}
 
 /**
  * Check that the browser is loaded up properly, and init the mod
