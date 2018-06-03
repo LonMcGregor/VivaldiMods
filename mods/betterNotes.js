@@ -2,212 +2,199 @@
 * BETTER NOTES (a mod for Vivaldi)
 * Written by LonM
 * No Copyright Reserved
+* VIVALDI MOD COMPONENT
+*
+* additional components used:
+* https://github.com/Sporif/CustomHooks/blob/master/hooks/theme-css-variables.js
 */
+(function betterNotes(){
 "use strict";
 
-// Observers
-const panelChangeObserver = new MutationObserver(panelChanged);
-const noteChangeObserver = new MutationObserver(newNoteSelected);
-const noteTextChangeObserver = new MutationObserver(noteTextChanged);
-
-// Globals
-const monospaceFontDeclaration = "DejaVu Sans Mono, Courier New, monospace";
-const childListObserverConfig = { childList: true };
-let fontState = "regular";
-let wrapState = "normal";
+const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/betterNotesEditor.html";
+const VIVALDI_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/browser.html";
+let EDITOR_SOURCE;
 
 
-/*************************************
-* OBSERVER INITIALISERS
-**************************************/
-// BROWSER LOADED - entry point
-// Register the observer once the browser is fully loaded
-setTimeout(function observePanelChanges(){
-    const panels = document.querySelector("#panels > div.panel-group > div");
-    if (panels) {
-        panelChangeObserver.observe(panels, childListObserverConfig);
-        panelChanged();
+function onMessage(e){
+    if(e.origin !== EDITOR_URI){
+        console.error("Bad message incoming. There may be a threat actor afoot");
+        return;
+    }
+    switch(e.data.verb){
+        case "INIT_YES":
+            return onInit();
+        case "NOTE_TEXT":
+            return onNoteText(e.data.note);
+        case "NOTE_TITLE":
+            return onTitle(e.data.title);
+        default:
+            console.error('unknown message format', e);
+    }
+}
+
+function onInit(){
+    sendThemeData();
+    sendNote();
+}
+
+function onNoteText(text){
+    // vivaldi.notes.update
+}
+
+function onTitle(title){
+    // vivaldi.notes.update
+}
+
+
+
+function sendMessage(msg){
+    if(EDITOR_SOURCE){
+        EDITOR_SOURCE.contentWindow.postMessage(msg, EDITOR_URI);
     } else {
-        setTimeout(observePanelChanges, 500);
-    }
-}, 500)
-
-// Look for if a user selectes a new note or folder
-function observeNoteChanges(){
-    const notecard = document.querySelector("#notes-panel > div > div");
-    noteChangeObserver.observe(notecard, childListObserverConfig);
-    newNoteSelected();
-}
-
-// Look for if a user edits a note
-function observeNoteTextChanges(){
-    const notetext = document.querySelector("#notes-panel > div > div > textarea");
-    if(notetext){
-        noteTextChangeObserver.observe(notetext, childListObserverConfig);
-        noteTextChanged();
+        console.error("tried to message before notes tab  was ready");
     }
 }
 
-
-/**************************************
-* OBSERVER REACTIONS
-***************************************/
-function panelChanged(m, o){
-    // Clean up observers
-    noteChangeObserver.disconnect();
-    noteTextChangeObserver.disconnect();
-    //Identify Panel
-    const notes = document.querySelector("#notes-panel");
-    if(notes){
-        // Add DOM Elements
-        addWordCountSpan();
-        fontToggleAddButton();
-        wrapToggleAddButton();
-        // Observe note changes
-        observeNoteChanges();
-    }
-}
-
-function newNoteSelected(m, o){
-    noteTextChangeObserver.disconnect();
-    updateNoteFont();
-    updateWrapState();
-    observeNoteTextChanges();
-}
-
-function noteTextChanged(m, o){
-    updateWordCount();
-}
-
-
-/**************************************
-* GENERAL DOM GENERATOR
-***************************************/
-function makeButton(id, className, innerHtml, title, clickEvent){    
-    const newButton = document.createElement("button");
-    newButton.id = id;
-    newButton.className = className;
-    newButton.style.width = "28px";
-    newButton.style.height = "28px";
-    newButton.style.border = "1px solid var(--colorBg)";
-    newButton.style.padding = "5px";
-    newButton.style.borderRadius = "var(--radius)";
-    newButton.style.backgroundColor = "var(--colorBg)";
-    newButton.innerHTML = innerHtml;
-    newButton.title = title;
-    newButton.addEventListener("click", clickEvent);
-    return newButton;
-}
-
-function attachButton(newButton){
-    const controlwrapper = document.querySelector("#notes-panel > div > div > div.add-attachments-wrapper");
-    controlwrapper.appendChild(newButton);
-}
-
-
-/**************************************
-* FONT TOGGLER METHODS
-***************************************/
-// Create the font toggle dom element
-function fontToggleAddButton(){
-    let newButton = makeButton(
-        "notes-font-toggle",
-        "",
-        "A",
-        "Switch between monospace and regular font",
-        fontToggleClicked
-    );
-    newButton.style.fontFamily = monospaceFontDeclaration;
-    newButton.style.fontSize = "16px";
-    attachButton(newButton);
-}
-
-// User clicked the font toggle button
-function fontToggleClicked(){
-    fontState = fontState==="regular" ? "mono" : "regular";
-    updateNoteFont();
-}
-
-// Make the font match what the button state is
-function updateNoteFont(){
-    const noteTextArea = document.querySelector("#notes-panel > div > div > textarea");
-    if(!noteTextArea){ // A folder was selected
+function sendInit(attempts){
+    if(attempts < 1){
+        console.error("Failed to init messaging to notes tab");
         return;
     }
-    noteTextArea.style.fontFamily = fontState==="regular" ? "" : monospaceFontDeclaration;
-}
-
-
-/**************************************
-* WORD WRAP TOGGLER
-***************************************/
-
-// Create the font toggle dom element
-function wrapToggleAddButton(){
-    let newButton = makeButton(
-        "notes-wrap-toggle",
-        "",
-        "↵",
-        "Toggle the line wrapping on the note",
-        wrapToggleClicked
-    );
-    newButton.style.fontSize = "16px";
-    attachButton(newButton);
-}
-
-// User clicked the wrap toggle button
-function wrapToggleClicked(){
-    wrapState = wrapState==="normal" ? "pre" : "normal";
-    updateWrapState()
-}
-
-// Make the wrap match what the button state is
-function updateWrapState(){
-    const noteTextArea = document.querySelector("#notes-panel > div > div > textarea");
-    if(!noteTextArea){ // A folder was selected
+    if(!document.querySelector(`webview[src="${EDITOR_URI}"]`)){
+        setTimeout(() => {sendInit(attempts-1);}, 100);
         return;
     }
-    noteTextArea.style.whiteSpace = wrapState;
+    EDITOR_SOURCE = document.querySelector(`webview[src="${EDITOR_URI}"]`);
+    sendMessage({
+        verb: "INIT_QRY"
+    });
 }
 
-
-/**************************************
-* WORD COUNT METHODS
-***************************************/
-// Create the word count dom element
-function addWordCountSpan(){
-    const metawrapper = document.querySelector("#notes-panel > div > div > div.meta-data-wrapper");
-    const wordcountwrapper = document.createElement("div");
-    wordcountwrapper.className = "dateCreated";
-    wordcountwrapper.id = "note-word-count-container";
-    //icon from https://commons.wikimedia.org/wiki/File:Revision_of_policy.svg 
-    wordcountwrapper.innerHTML = `
-        <div class="meta-icon word-count fieldset" title="Word Count">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 40 37">
-                <path fill="none" stroke="var(--colorFg)" stroke-width="3" d="m10,18 9-9 14,14-19-19-9,9 19,19 11,2-2-11-1-1m1,4-6,6 3,1 4-4"/>
-            </svg>
-        </div>
-        <span id="note-word-count" title="Word Count">Select a note to see word count</span>`;
-    metawrapper.appendChild(wordcountwrapper);
-}
-
-// Trigger a word count update
-function updateWordCount(){
-    const wordcountspan = document.querySelector("#note-word-count");
-    if(!wordcountspan){
+function sendNote(){
+    const selection = document.querySelector("#notes-panel div[data-selected]");
+    if(!selection){
+        sendEmpty();
         return;
     }
-    const notetextarea = document.querySelector("#notes-panel > div > div > textarea");
-    if(!notetextarea || !notetextarea.value || !notetextarea.value.length){
-        wordcountspan.textContent = "Chars: 0 Words: 0 Lines: 0";
+    vivaldi.notes.get(selection.getAttribute("data-id"), note => {
+        const noteObject = note[0];
+        const preview = document.querySelector("#notes-panel  div.md.note");
+        let previewText = "<h1>Enable markdown generator in panel</h1>";
+        if(preview){
+            previewText = preview.innerHTML;
+        }
+        sendMessage({
+            verb: "NOTE",
+            note: noteObject,
+            preview: previewText
+        });
+    });
+}
+
+function sendEmpty(){
+    sendMessage({
+        verb: "EMPTY"
+    });
+}
+
+function sendThemeData() {
+    if(!EDITOR_SOURCE){return;}
+    var css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
+    sendMessage({
+        verb: "THEME",
+        theme: css
+    });
+}
+
+
+/*
+* NOTES TAB MANAGEMENT
+* Functions helping with management of the notes tab
+*/
+
+// Start the connection to the notes tab
+function connectToNotesTab(){
+    setTimeout(() => {sendInit(3);}, 100);
+}
+
+// Get the notes tab if it exists, or create a new one
+function getOrCreateNotesTab(){
+    chrome.tabs.query({url: EDITOR_URI}, tabs => {
+        if(tabs.length > 0){
+            chrome.tabs.highlight({tabs: tabs[0].id});
+        } else {
+            chrome.tabs.create({"url": EDITOR_URI}, tab => {
+                connectToNotesTab();
+            });
+        }
+    });
+}
+
+// Open the Notes Tab
+function openNotesTab(){
+    chrome.tabs.getSelected(null, tab => {
+        if(tab.url !== EDITOR_URI){
+            getOrCreateNotesTab();
+        } else {
+            connectToNotesTab();
+        }
+    });
+}
+
+
+
+
+
+const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
+    const panel = document.querySelector("#notes-panel");
+    if(panel){
+        sendNote();
+    }
+});
+
+
+/* Wait until the panel is ready before activating the mod */
+function observePanels(){
+    const panels = document.querySelector("#panels");
+    PANEL_CHANGE_OBSERVER.observe(panels, {attributes: true, subtree: true});
+}
+
+
+
+function observeThemes(){
+    THEME_OBSERVER.observe(document.body, {
+		attributes: true,
+		attributeFilter: ['style']
+	});
+}
+const THEME_OBSERVER = new MutationObserver(sendThemeData);
+
+
+
+function makeDebugButton(){
+    const newBtn = document.createElement("button");
+    newBtn.innerHTML = "<span>notething</span>";
+    newBtn.addEventListener("click", openNotesTab);
+    document.querySelector("#footer > div.status-toolbar").appendChild(newBtn);
+}
+
+
+
+/**
+ * Check that the browser is loaded up properly, and init the mod
+ */
+function initMod(){
+    if(!document.querySelector("#browser")){
+        setTimeout(initMod, 500);
         return;
     }
-    const notetext = notetextarea.value;
-    const characters = notetext.length;
-    const wordsMatches = notetext.match(/\S+/g);
-    const words = wordsMatches ? wordsMatches.length : 0;
-    const lineMatches = notetext.match(/\n/g);
-    const lines = lineMatches ? lineMatches.length+1 : (characters==0 ? 0 : 1);
-    const message = "Chars: "+characters+" Words: "+words+" Lines: "+lines;
-    wordcountspan.textContent = message;
+
+    observePanels();
+    observeThemes();
+    addEventListener('message', onMessage);
+    makeDebugButton();
 }
+
+initMod();
+
+})();
