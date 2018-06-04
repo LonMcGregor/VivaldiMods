@@ -266,16 +266,25 @@ function doFormatNumber(){
     doListFormat(true);
 }
 
+function blockEventUnlessModifierKey(event){
+    if(event.altKey || event.ctrlKey || event.shiftKey || event.metaKey){
+        return;
+    }
+    event.preventDefault();
+}
+
+function initExport(){
+    document.querySelector("#exportTxt").addEventListener("click", blockEventUnlessModifierKey);
+    document.querySelector("#exportHtml").addEventListener("click", blockEventUnlessModifierKey);
+}
 
 function exportEnabled(isEnabled){
     if(isEnabled){
         document.querySelector("#exportLabel").style.display = "inline-block";
-        document.querySelector("#exportTxt").style.display = "inline-block";
-        document.querySelector("#exportHtml").style.display = "inline-block";
+        document.querySelector("#exportArea").style.display = "inline-block";
     } else {
-        document.querySelector("#exportHtml").style.display = "none";
-        document.querySelector("#exportHtml").style.display = "none";
-        document.querySelector("#exportHtml").style.display = "none";
+        document.querySelector("#exportLabel").style.display = "none";
+        document.querySelector("#exportArea").style.display = "none";
     }
 }
 
@@ -316,6 +325,7 @@ function init(){
     window.onunload = sendClosed;
     MARKDOWN = new Remarkable('full');
     initFormatting();
+    initExport();
 }
 
 if(window.location.href===EDITOR_URI){
