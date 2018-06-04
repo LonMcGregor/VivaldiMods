@@ -1,7 +1,7 @@
 <html class="betterNotesEditor">
 <head>
     <meta charset="utf-8" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'nonce-1638362'; style-src 'unsafe-inline'; img-src *;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; img-src *;">
 <title>Notes</title>
 <link rel="stylesheet" href="../style/common.css">
 <link rel="stylesheet" href="betterNotesEditor.css">
@@ -52,6 +52,8 @@
     <div class="note md col" id="preview"><h1>Loading...</h1><span>If you see this message for more than a few seconds, click the <em>Open Full Editor</em> Button again.</span></div>
 </div>
 <footer>
+<input id="syncscroll" type="checkbox" checked="true">Sync Scroll</input>
+<span class="spacer"></span>
 <b>Note Statistics</b> Chars: <span id="chars">0</span> Words: <span id="words">0</span> Lines: <span id="lines">0</span>
 </footer>
 <script src="betterNotesEditor.js"></script>
