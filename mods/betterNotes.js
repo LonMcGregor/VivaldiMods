@@ -15,7 +15,6 @@ const VIVALDI_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/browser
 const VIVALDI_ORIGIN = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli";
 let EDITOR_SOURCE;
 
-
 function onMessage(e){
     if(e.origin !== VIVALDI_ORIGIN){
         error("Bad message incoming. There may be a threat actor afoot");
@@ -43,6 +42,8 @@ function onNoteText(text, id){
         content: text
     });
 }
+
+
 
 function onTitle(title, id){
     vivaldi.notes.update(id, {
@@ -83,17 +84,9 @@ function sendNote(){
     }
     vivaldi.notes.get(selection.getAttribute("data-id"), note => {
         const noteObject = note[0];
-        const preview = document.querySelector("#notes-panel  div.md.note");
-        let previewText = "<h1>Enable markdown generator in panel</h1>";
-        if(preview){
-            previewText = preview.innerHTML;
-        } else if(note.content===""){
-            previewText = "";
-        }
         sendMessage({
             verb: "NOTE",
-            note: noteObject,
-            preview: previewText
+            note: noteObject
         });
     });
 }
@@ -204,7 +197,6 @@ function initMod(){
         setTimeout(initMod, 500);
         return;
     }
-
     observePanels();
     observeThemes();
     addEventListener('message', onMessage);
