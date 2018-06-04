@@ -1,5 +1,6 @@
 <html class="betterNotesEditor">
 <head>
+    <meta charset="utf-8" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'nonce-1638362'; style-src 'unsafe-inline'; img-src *;">
 <title>Notes</title>
 <link rel="stylesheet" href="../style/common.css">
@@ -9,6 +10,27 @@
 <body class="full panel-group" id="notes-panel">
 <input type="hidden" id="noteId" value="" />
 <h1><input type="text" id="title" value="Vivaldi Notes" readonly="true" /></h1>
+<header>
+    <span>Formatting</span>
+    <button id="head1">H1</button>
+    <button id="head2">H2</button>
+    <button id="head3">H3</button>
+    <button id="rule">--</button>
+    <span class="spacer"></span>
+
+    <button id="bold">B</button>
+    <button id="italic">i</button>
+    <button id="strike">S</button>
+    <span class="spacer"></span>
+
+    <button id="quote">' '</button>
+    <button id="code">&lt;&gt;</button>
+    <button id="link">link</button>
+    <span class="spacer"></span>
+
+    <button id="bullet">▪ List</button>
+    <button id="number">1. List</button>
+</header>
 <div class="notes-editor full dual panel-group">
     <textarea class="note editor col" readonly="true">
 

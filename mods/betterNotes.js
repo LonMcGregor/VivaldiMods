@@ -104,7 +104,8 @@ function sendEmpty(){
 
 function sendThemeData() {
     if(!EDITOR_SOURCE){return;}
-    var css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
+    let css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
+    css = css.replace(/background-.+;/g, "");
     sendMessage({
         verb: "THEME",
         theme: css

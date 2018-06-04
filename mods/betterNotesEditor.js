@@ -159,12 +159,116 @@ function updateWordCount(override){
     document.querySelector("#lines").innerText = lineMatches ? lineMatches.length : (characters ? 1 : 0);
 }
 
+function initFormatting(){
+    document.querySelector("#head1").addEventListener("click", doFormatH1);
+    document.querySelector("#head2").addEventListener("click", doFormatH2);
+    document.querySelector("#head3").addEventListener("click", doFormatH3);
+    document.querySelector("#rule").addEventListener("click", doFormatRule);
+    document.querySelector("#bold").addEventListener("click", doFormatBold);
+    document.querySelector("#italic").addEventListener("click", doFormatItalic);
+    document.querySelector("#strike").addEventListener("click", doFormatStrike);
+    document.querySelector("#quote").addEventListener("click", doFormatQuote);
+    document.querySelector("#code").addEventListener("click", doFormatCode);
+    document.querySelector("#link").addEventListener("click", doFormatLink);
+    document.querySelector("#bullet").addEventListener("click", doFormatBullet);
+    document.querySelector("#number").addEventListener("click", doFormatNumber);
+}
+
+function doFormatInputNewText(newtext, newCursorPos){
+    // find a way to simulate an input such that ctrl+Z undo is possible
+    // in the meantime just set it directly
+    document.querySelector("textarea").value = newtext;
+    renderText();
+    sendNoteText();
+    document.querySelector("textarea").focus();
+    document.querySelector("textarea").setSelectionRange(newCursorPos, newCursorPos);
+}
+
+function doFormat(startrep, endrep){
+    const textarea = document.querySelector("textarea");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    let replacement;
+    replacement = textarea.value.substring(0, start) + startrep + textarea.value.substring(start, end) + endrep + textarea.value.substring(end);
+    if(startrep===endrep){
+        doFormatInputNewText(replacement, start+startrep.length);
+    } else {
+        doFormatInputNewText(replacement, end+replacement.length-textarea.value.length);
+    }
+}
+
+function doListFormat(numeric){
+    const textarea = document.querySelector("textarea");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    if(start===end){
+        let replacement = textarea.value.substring(0, start) + (numeric ? "1. " : "* ") + textarea.value.substring(end);
+        doFormatInputNewText(replacement, start+3);
+        return;
+    }
+    let selection = textarea.value.substring(start, end);
+    const lines = selection.split("\n");
+    selection = "";
+    for(let index = 0; index < lines.length; index++){
+        selection += (numeric ? (index+1) + ". " : "* ") + lines[index]+"\n";
+    }
+    let replacement = textarea.value.substring(0, start) + selection + textarea.value.substring(end);
+    doFormatInputNewText(replacement, end+replacement.length-textarea.value.length);
+}
+
+function doFormatH1(){
+    doFormat("# ", "");
+}
+function doFormatH2(){
+    doFormat("## ", "");
+}
+function doFormatH3(){
+    doFormat("### ", "");
+}
+function doFormatRule(){
+    doFormat("", "\n\n---");
+}
+function doFormatBold(){
+    doFormat("**", "**");
+}
+function doFormatItalic(){
+    doFormat("*", "*");
+}
+function doFormatStrike(){
+    doFormat("~~", "~~");
+}
+function doFormatQuote(){
+    doFormat("> ", "");
+}
+function doFormatCode(){
+    const textarea = document.querySelector("textarea");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    let selection = textarea.value.substring(start, end);
+    if(selection.indexOf("\n") >= 0){
+        doFormat("```\n", "\n```");
+    } else {
+        doFormat("`", "`");
+    }
+}
+function doFormatLink(){
+    doFormat("[", "](url)");
+}
+function doFormatBullet(){
+    doListFormat(false);
+}
+function doFormatNumber(){
+    doListFormat(true);
+}
+
+
 function init(){
     addEventListener('message', onMessage);
     document.querySelector("textarea").addEventListener("input", noteTextChanged);
     document.querySelector("#title").addEventListener("input", sendNoteTitle);
     window.onunload = sendClosed;
     MARKDOWN = new Remarkable('full');
+    initFormatting();
 }
 
 if(window.location.href===EDITOR_URI){

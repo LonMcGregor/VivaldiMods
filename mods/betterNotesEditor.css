@@ -38,6 +38,36 @@
     flex: 1 !important;
 }
 
+.betterNotesEditor #head1 {
+    font-weight: bold;
+}
+.betterNotesEditor #head2 {
+    font-weight: bold;
+    font-style: italic;
+}
+.betterNotesEditor #bold {
+    font-weight: bold;
+}
+.betterNotesEditor #italic {
+    font-style: italic;
+}
+.betterNotesEditor #link {
+    text-decoration: underline;
+}
+.betterNotesEditor #strike {
+    text-decoration: line-through;
+}
+.betterNotesEditor .spacer {
+    margin-left: 10px;
+}
+.betterNotesEditor header button {
+    height: 20px;
+}
+.betterNotesEditor header {
+    padding: 2px;
+}
+
+
 @media screen and (max-width: 600px){
     .betterNotesEditor .dual {
         flex-direction: column !important;
