@@ -59,14 +59,17 @@
 }
 .betterNotesEditor .spacer {
     margin-left: 10px;
-}
-.betterNotesEditor header button {
-    height: 20px;
-}
-.betterNotesEditor header {
-    padding: 2px;
+    pointer-events: none;
 }
 
+.betterNotesEditor header {
+    padding: 5px;
+}
+.betterNotesEditor header label {
+    font-size: large;
+    margin-left: 20px;
+    margin-right: 5px;
+}
 
 @media screen and (max-width: 600px){
     .betterNotesEditor .dual {

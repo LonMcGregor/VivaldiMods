@@ -53,7 +53,7 @@ function onTitle(title, id){
 
 function onClose(){
     EDITOR_SOURCE = undefined;
-    document.querySelector("#panels-container").classList.remove("betterNotesEditorOpen");
+    styleForPanels();
 }
 
 
@@ -144,7 +144,7 @@ function openNotesTab(){
         } else {
             connectToNotesTab();
         }
-        document.querySelector("#panels-container").classList.add("betterNotesEditorOpen");
+        styleForFullEditor();
     });
 }
 
@@ -159,6 +159,7 @@ const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
         document.querySelector("#notes-panel input[type=search]").addEventListener("input", notesSearchChanged);
         if(EDITOR_SOURCE){
             sendNote();
+            styleForFullEditor();
         }
     }
 });
@@ -186,6 +187,14 @@ function notesSearchChanged(){
     if(query || query===""){
         document.querySelector(`webview[src="${EDITOR_URI}"]`).find(query);
     }
+}
+
+function styleForPanels(){
+    document.querySelector("#panels-container").classList.remove("betterNotesEditorOpen");
+}
+
+function styleForFullEditor(){
+    document.querySelector("#panels-container").classList.add("betterNotesEditorOpen");
 }
 
 
