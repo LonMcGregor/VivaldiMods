@@ -93,6 +93,7 @@ function sendNote(){
             note: noteObject
         });
     });
+    notesSearchChanged();
 }
 
 function sendEmpty(){
@@ -154,6 +155,7 @@ const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
     const panel = document.querySelector("#notes-panel");
     if(panel){
         makeEditorButton();
+        document.querySelector("#notes-panel input[type=search]").addEventListener("input", notesSearchChanged);
         if(EDITOR_SOURCE){
             sendNote();
         }
@@ -166,15 +168,6 @@ function observePanels(){
     makeEditorButton();
 }
 
-function observeThemes(){
-    THEME_OBSERVER.observe(document.body, {
-		attributes: true,
-		attributeFilter: ['style']
-	});
-}
-
-const THEME_OBSERVER = new MutationObserver(sendThemeData);
-
 function makeEditorButton(){
     if(document.querySelector("#betterNotesOpenEditor") || !document.querySelector("#notes-panel")){
         return;
@@ -186,6 +179,26 @@ function makeEditorButton(){
     newBtn.addEventListener("click", openNotesTab);
     document.querySelector("#notes-panel > header > div > span").appendChild(newBtn);
 }
+
+function notesSearchChanged(){
+    const query = document.querySelector("#notes-panel input[type=search]").value;
+    if(query || query===""){
+        document.querySelector(`webview[src="${EDITOR_URI}"]`).find(query);
+    }
+}
+
+
+
+function observeThemes(){
+    THEME_OBSERVER.observe(document.body, {
+		attributes: true,
+		attributeFilter: ['style']
+	});
+}
+
+const THEME_OBSERVER = new MutationObserver(sendThemeData);
+
+
 
 function error(message){
     console.error(message);
