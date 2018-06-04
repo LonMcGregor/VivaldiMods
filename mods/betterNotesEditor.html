@@ -8,14 +8,16 @@
 </head>
 <body class="full panel-group" id="notes-panel">
 <input type="hidden" id="noteId" value="" />
-<h1><input type="text" id="title" value="Vivaldi Notes" /></h1>
+<h1><input type="text" id="title" value="Vivaldi Notes" readonly="true" /></h1>
 <div class="notes-editor full dual panel-group">
-    <textarea class="note editor full col">
+    <textarea class="note editor full col" readonly="true">
 
     </textarea>
     <div class="note md full col" id="preview"><h1>Loading...</h1></div>
 </div>
-
+<footer>
+<b>Note Statistics</b> Chars: <span id="chars">0</span> Words: <span id="words">0</span> Lines: <span id="lines">0</span>
+</footer>
 <script src="betterNotesEditor.js"></script>
 </body>
 </html>

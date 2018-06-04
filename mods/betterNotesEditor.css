@@ -21,6 +21,15 @@
 .betterNotesEditor h1 {
     font-size: large;
 }
+
+.betterNotesEditor footer {
+    text-align: right;
+}
+
+.betterNotesEditor #preview{
+    white-space: pre !important;
+}
+
 @media screen and (max-width: 800px){
     .betterNotesEditor .dual {
         flex-direction: column !important;
