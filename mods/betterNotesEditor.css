@@ -1,6 +1,7 @@
 .betterNotesEditor .col {
-    flex-grow: 1 !important;
     min-width: unset !important;
+    height: 100%;
+    flex: unset !important;
 }
 .betterNotesEditor .full {
     height: 100%;
@@ -17,6 +18,7 @@
 }
 .betterNotesEditor textarea {
     font-family: monospace;
+    resize: horizontal !important;
 }
 .betterNotesEditor h1 {
     font-size: large;
