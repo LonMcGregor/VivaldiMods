@@ -27,6 +27,8 @@ function onMessage(e){
             return onNoteText(e.data.note, e.data.noteId);
         case "NOTE_TITLE":
             return onTitle(e.data.title, e.data.noteId);
+        case "CLOSE":
+            return onClose();
         default:
             error('unknown message format');
     }
@@ -43,14 +45,16 @@ function onNoteText(text, id){
     });
 }
 
-
-
 function onTitle(title, id){
     vivaldi.notes.update(id, {
         title: title
     });
 }
 
+function onClose(){
+    EDITOR_SOURCE = undefined;
+    document.querySelector("#panels-container").classList.remove("betterNotesEditorOpen");
+}
 
 
 function sendMessage(msg){
@@ -138,6 +142,7 @@ function openNotesTab(){
         } else {
             connectToNotesTab();
         }
+        document.querySelector("#panels-container").classList.add("betterNotesEditorOpen");
     });
 }
 
@@ -148,18 +153,18 @@ function openNotesTab(){
 const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
     const panel = document.querySelector("#notes-panel");
     if(panel){
-        sendNote();
+        makeEditorButton();
+        if(EDITOR_SOURCE){
+            sendNote();
+        }
     }
 });
 
-
-/* Wait until the panel is ready before activating the mod */
 function observePanels(){
     const panels = document.querySelector("#panels");
     PANEL_CHANGE_OBSERVER.observe(panels, {attributes: true, subtree: true});
+    makeEditorButton();
 }
-
-
 
 function observeThemes(){
     THEME_OBSERVER.observe(document.body, {
@@ -167,17 +172,20 @@ function observeThemes(){
 		attributeFilter: ['style']
 	});
 }
+
 const THEME_OBSERVER = new MutationObserver(sendThemeData);
 
-
-
-function makeDebugButton(){
+function makeEditorButton(){
+    if(document.querySelector("#betterNotesOpenEditor") || !document.querySelector("#notes-panel")){
+        return;
+    }
     const newBtn = document.createElement("button");
-    newBtn.innerHTML = "<span>notething</span>";
+    newBtn.title = "Open Full Notes Editor";
+    newBtn.innerHTML = "<span>Full Editor</span>";
+    newBtn.id = "betterNotesOpenEditor";
     newBtn.addEventListener("click", openNotesTab);
-    document.querySelector("#footer > div.status-toolbar").appendChild(newBtn);
+    document.querySelector("#notes-panel > header > div > span").appendChild(newBtn);
 }
-
 
 function error(message){
     console.error(message);
@@ -200,7 +208,6 @@ function initMod(){
     observePanels();
     observeThemes();
     addEventListener('message', onMessage);
-    makeDebugButton();
 }
 
 initMod();

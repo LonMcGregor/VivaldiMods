@@ -122,6 +122,12 @@ function sendNoteTitle(){
     });
 }
 
+function sendClosed(){
+    sendMessage({
+        verb: "CLOSE"
+    });
+}
+
 function noteTextChanged(event){
     sendNoteText();
     renderText();
@@ -157,6 +163,7 @@ function init(){
     addEventListener('message', onMessage);
     document.querySelector("textarea").addEventListener("input", noteTextChanged);
     document.querySelector("#title").addEventListener("input", sendNoteTitle);
+    window.onunload = sendClosed;
     MARKDOWN = new Remarkable('full');
 }
 

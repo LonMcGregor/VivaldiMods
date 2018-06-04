@@ -1,10 +1,10 @@
-#main .meta-data-wrapper.disabled {
+#main .betterNotesEditorOpen .meta-data-wrapper.disabled {
     display: none;
 }
-#main .note.md, #main .note.editor{
+#main .betterNotesEditorOpen .note{
     display: none;
 }
-#main .notes-editor {
-    height: 140px !important;
-    min-height: 140px;
+#main .betterNotesEditorOpen .notes-editor {
+    height: 165px !important;
+    min-height: 165px;
 }
