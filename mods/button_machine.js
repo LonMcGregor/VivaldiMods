@@ -61,7 +61,7 @@
      * @param script function to execute on the page
      */
     function content_script(script){
-        const webview = document.querySelector("#webpage-stack > div.active.tiled.visible.webpageview webview");
+        const webview = document.querySelector("#webpage-stack > div.active.visible.webpageview webview");
         const scriptText = "("+script+")()";
         webview.executeScript({code: scriptText});
     }
@@ -91,22 +91,22 @@
      * @param how The method of choosing hwo to place the new button
      */
     function addButtonToUi(buttonDom, existingUi, how){
-        switch(buttondef.where_type){
+        switch(how){
             case "BEFORE":
-            existingUi.parentNode.insertBefore(button, existingUi);
+            existingUi.parentNode.insertBefore(buttonDom, existingUi);
                 break;
             case "AFTER":
                 if(existingUi.nextSibling){
-                    existingUi.parentNode.insertBefore(button, existingUi.nextSibling);
+                    existingUi.parentNode.insertBefore(buttonDom, existingUi.nextSibling);
                 } else {
-                    existingUi.parentNode.appendChild(button);
+                    existingUi.parentNode.appendChild(buttonDom);
                 }
                 break;
             case "CHILD":
-                existingUi.appendChild(button);
+                existingUi.appendChild(buttonDom);
                 break;
             default:
-                console.warn(`Bad selector type ${buttondef.where_type}`);
+                console.warn(`Bad selector type ${how}`);
         }
     }
 
