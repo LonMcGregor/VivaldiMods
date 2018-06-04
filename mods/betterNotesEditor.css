@@ -1,7 +1,11 @@
 .betterNotesEditor .col {
-    min-width: unset !important;
+    min-width: 200px !important;
+    max-width: unset !important;
+    width: 50%;
+
+    min-height: 100% !important;
+    max-height: 100% !important;
     height: 100%;
-    flex: unset !important;
 }
 .betterNotesEditor .full {
     height: 100%;
@@ -19,6 +23,7 @@
 .betterNotesEditor textarea {
     font-family: monospace;
     resize: horizontal !important;
+    flex: unset !important;
 }
 .betterNotesEditor h1 {
     font-size: large;
@@ -30,10 +35,23 @@
 
 .betterNotesEditor #preview{
     white-space: pre !important;
+    flex: 1 !important;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 600px){
     .betterNotesEditor .dual {
         flex-direction: column !important;
+    }
+    .betterNotesEditor .col {
+        min-width: 100% !important;
+        max-width: 100% !important;
+        width: 100%;
+
+        min-height: 100px !important;
+        max-height: unset !important;
+        height: 50%;
+    }
+    .betterNotesEditor textarea {
+        resize: vertical !important;
     }
 }
