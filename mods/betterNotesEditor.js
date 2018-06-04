@@ -293,13 +293,13 @@ function setExportContent(){
     const textobj = window.URL.createObjectURL(textfile);
     document.querySelector("#exportTxt").setAttribute("href", textobj);
 
-    var htmldoc = `<html>
+    const htmldoc = `<html>
     <head>
     <meta charset="utf-8" />
     <title>${document.querySelector("#title").value}</title>
     </head>
     <body>${document.querySelector("#preview").innerHTML}</body>
-    </html>`
+    </html>`;
     const htmlfile = new File(
         [htmldoc],
         document.querySelector("#title").value+".html",
