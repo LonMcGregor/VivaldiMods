@@ -1,10 +1,15 @@
+/*
+* BETTER NOTES (a mod for Vivaldi)
+* Written by LonM
+* No Copyright Reserved
+* VIVALDI MOD COMPONENT STYLES
+*
+* The betterNotesEditorOpen class is applied before anything to
+*  only apply the styles if the editor tab is open
+*/
 #main .betterNotesEditorOpen .meta-data-wrapper.disabled {
     display: none;
 }
 #main .betterNotesEditorOpen .note{
     display: none;
-}
-#main .betterNotesEditorOpen .notes-editor {
-    height: 165px !important;
-    min-height: 165px;
 }

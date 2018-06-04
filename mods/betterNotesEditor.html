@@ -10,10 +10,10 @@
 <body class="full panel-group" id="notes-panel">
 <input type="hidden" id="noteId" value="" />
 <header class="toolbar icons">
-    <label>Title: </label>
-    <input type="text" id="title" value="Vivaldi Notes" readonly="true" />
+    <label id="titlelabel"></label>
+    <input type="text" id="title" value="" readonly="true" />
 
-    <label>Formatting: </label>
+    <label id="formatlabel"></label>
     <button id="head1">H1</button>
     <button id="head2">H2</button>
     <button id="head3">H3</button>
@@ -33,10 +33,10 @@
     <button id="bullet">▪ List</button>
     <button id="number">1. List</button>
 
-    <label id="exportLabel" style="display:none">Export: </label>
+    <label id="exportLabel" style="display:none"></label>
     <div id="exportArea" style="display:none">
         <div class="above">
-            <span>Right-Click, Save As...</span>
+            <span id="exportprompt"></span>
         </div>
         <div class="below">
             <a id="exportTxt" href="" download="">TXT</a>
@@ -49,12 +49,12 @@
     <textarea class="note editor col" readonly="true">
 
     </textarea>
-    <div class="note md col" id="preview"><h1>Loading...</h1><span>If you see this message for more than a few seconds, click the <em>Open Full Editor</em> Button again.</span></div>
+    <div class="note md col" id="preview"><h1></h1><span></span></div>
 </div>
 <footer>
-<input id="syncscroll" type="checkbox" checked="true">Sync Scroll</input>
+<input id="syncscroll" type="checkbox" checked="true"><label id="syncScrollLabel"></label></input>
 <span class="spacer"></span>
-<b>Note Statistics</b> Chars: <span id="chars">0</span> Words: <span id="words">0</span> Lines: <span id="lines">0</span>
+<b></b> <span id="chars"></span> <span id="words"></span> <span id="lines"></span>
 </footer>
 <script src="betterNotesEditor.js"></script>
 </body>

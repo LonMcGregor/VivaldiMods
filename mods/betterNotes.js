@@ -10,14 +10,23 @@
 (function betterNotes(){
 "use strict";
 
+const EDITOR_TOOLTIP = {
+    en_GB: "Open Notes Editor",
+    fr_FR: "Ouvrir l'éditeur de notes"
+}.en_GB;
+
 const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/betterNotesEditor.html";
 const VIVALDI_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/browser.html";
 const VIVALDI_ORIGIN = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli";
 let EDITOR_SOURCE;
+let INIT_HANDSHAKE_COMPLETE = false;
 
+/**
+ * Handle incoming messages from the editor tab
+ * @param e message event
+ */
 function onMessage(e){
     if(e.origin !== VIVALDI_ORIGIN){
-        error("Bad message incoming. There may be a threat actor afoot");
         return;
     }
     switch(e.data.verb){
@@ -30,56 +39,86 @@ function onMessage(e){
         case "CLOSE":
             return onClose();
         default:
-            error('unknown message format');
+            console.error('unknown message format', e);
     }
 }
 
+/**
+ * The editor tab has loaded and has connected succesfully
+ */
 function onInit(){
+    INIT_HANDSHAKE_COMPLETE = true;
     sendThemeData();
     sendNote();
 }
 
+/**
+ * The Editor has sent a new version of a note
+ * @param text Updated note contents
+ * @param id of note updated
+ */
 function onNoteText(text, id){
     vivaldi.notes.update(id, {
         content: text
     });
 }
 
+/**
+ * The editor has sent a new title for a note
+ * @param title new title of note
+ * @param id of note updated
+ */
 function onTitle(title, id){
     vivaldi.notes.update(id, {
         title: title
     });
 }
 
+/**
+ * The editor has closed. Perform necessary cleanup.
+ */
 function onClose(){
     EDITOR_SOURCE = undefined;
+    INIT_HANDSHAKE_COMPLETE = false;
     styleForPanels();
 }
 
 
+
+/**
+ * Send a message to the Editor
+ * @param msg The object to send as a message. must contain a valid verb
+ */
 function sendMessage(msg){
     if(EDITOR_SOURCE){
         EDITOR_SOURCE.contentWindow.postMessage(msg, EDITOR_URI);
-    } else {
-        error("tried to message before notes tab  was ready");
     }
 }
 
+/**
+ * Try and make a connection between the vivaldi UI and the editor
+ * @param attempts Number of connection attempts left
+ */
 function sendInit(attempts){
+    if(INIT_HANDSHAKE_COMPLETE){return;}
     if(attempts < 1){
-        error("Failed to init messaging to notes tab");
+        console.error("Failed to init messaging to editor tab");
         return;
     }
     if(!document.querySelector(`webview[src="${EDITOR_URI}"]`)){
-        setTimeout(() => {sendInit(attempts-1);}, 500);
+        console.warn("Editor tab wasn't open when connection was started");
         return;
     }
     EDITOR_SOURCE = document.querySelector(`webview[src="${EDITOR_URI}"]`);
     sendMessage({
         verb: "INIT_QRY"
     });
+    setTimeout(() => {sendInit(attempts-1);}, 500);
 }
 
+/**
+ * Send the currently selected note to the Editor
+ */
 function sendNote(){
     const selection = document.querySelector("#notes-panel div[data-selected]");
     if(!selection){
@@ -96,12 +135,18 @@ function sendNote(){
     notesSearchChanged();
 }
 
+/**
+ * Inform the editor that no note is selected
+ */
 function sendEmpty(){
     sendMessage({
         verb: "EMPTY"
     });
 }
 
+/**
+ * Update the editor with the latest theme variables
+ */
 function sendThemeData() {
     if(!EDITOR_SOURCE){return;}
     let css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
@@ -113,21 +158,21 @@ function sendThemeData() {
 }
 
 
-/*
-* NOTES TAB MANAGEMENT
-* Functions helping with management of the notes tab
-*/
 
-// Start the connection to the notes tab
+/**
+ * Start a connection to the editor
+ */
 function connectToNotesTab(){
     setTimeout(() => {sendInit(3);}, 500);
 }
 
-// Get the notes tab if it exists, or create a new one
+/**
+ * Activate the editor if it exists, or open it in a new tab
+ */
 function getOrCreateNotesTab(){
     chrome.tabs.query({url: EDITOR_URI}, tabs => {
         if(tabs.length > 0){
-            chrome.tabs.highlight({tabs: tabs[0].id});
+            chrome.tabs.update(tabs[0].id, {active: true});
         } else {
             chrome.tabs.create({"url": EDITOR_URI}, tab => {
                 connectToNotesTab();
@@ -136,7 +181,9 @@ function getOrCreateNotesTab(){
     });
 }
 
-// Open the Notes Tab
+/**
+ * Make sure that if not already open, the editor is active
+ */
 function openNotesTab(){
     chrome.tabs.getSelected(null, tab => {
         if(tab.url !== EDITOR_URI){
@@ -150,8 +197,10 @@ function openNotesTab(){
 
 
 
-
-
+/**
+ * Observe for changes to the panels
+ * If it is the notes panel, add a button and send info if connection exists
+ */
 const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
     const panel = document.querySelector("#notes-panel");
     if(panel){
@@ -164,24 +213,38 @@ const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
     }
 });
 
+/**
+ * Begin observing the panels. If notes are already open, make a button
+ */
 function observePanels(){
     const panels = document.querySelector("#panels");
     PANEL_CHANGE_OBSERVER.observe(panels, {attributes: true, subtree: true});
     makeEditorButton();
 }
 
+/**
+ * Create and Add the editor button to the notes panel
+ */
 function makeEditorButton(){
     if(document.querySelector("#betterNotesOpenEditor") || !document.querySelector("#notes-panel")){
         return;
     }
     const newBtn = document.createElement("button");
-    newBtn.title = "Open Full Notes Editor";
-    newBtn.innerHTML = "<span>Full Editor</span>";
+    newBtn.title = EDITOR_TOOLTIP;
+    newBtn.innerHTML = `<svg viewBox="-5 -5 26 26" xmlns="http://www.w3.org/2000/svg">
+    <g fill-rule="evenodd">
+      <path d="M0 4h16v10H0V4zm2 2h12v6H2V6zM0 1h7v3H0z"></path>
+      <path opacity=".5" d="M8 1h8v2H8z"></path>
+    </g>
+  </svg>`;
     newBtn.id = "betterNotesOpenEditor";
     newBtn.addEventListener("click", openNotesTab);
     document.querySelector("#notes-panel > header > div > span").appendChild(newBtn);
 }
 
+/**
+ * Event for when the notes search box changes (input event)
+ */
 function notesSearchChanged(){
     const query = document.querySelector("#notes-panel input[type=search]").value;
     if(query || query===""){
@@ -189,16 +252,25 @@ function notesSearchChanged(){
     }
 }
 
+/**
+ * Stop applying the style to the panel
+ */
 function styleForPanels(){
     document.querySelector("#panels-container").classList.remove("betterNotesEditorOpen");
 }
 
+/**
+ * Start applying the special style to hide existing notes UI to the notes panel
+ */
 function styleForFullEditor(){
     document.querySelector("#panels-container").classList.add("betterNotesEditorOpen");
 }
 
 
 
+/**
+ * Begin observe for changes to the browser theme style
+ */
 function observeThemes(){
     THEME_OBSERVER.observe(document.body, {
 		attributes: true,
@@ -206,22 +278,15 @@ function observeThemes(){
 	});
 }
 
+/**
+ * If the browser theme style changes, inform the editor
+ */
 const THEME_OBSERVER = new MutationObserver(sendThemeData);
 
 
 
-function error(message){
-    console.error(message);
-    document.querySelector("#status_info span").innerText = "⚠" + message;
-}
-
-function info(message){
-    console.log(message);
-    document.querySelector("#status_info span").innerText = message;
-}
-
 /**
- * Check that the browser is loaded up properly, and init the mod
+ * Check that the browser is loaded up properly, and then initialise the mod
  */
 function initMod(){
     if(!document.querySelector("#browser")){
