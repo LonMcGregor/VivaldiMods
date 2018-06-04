@@ -57,17 +57,20 @@ function onInitQuery(source){
 function onNote(note, preview){
     document.querySelector("#title").value = note.title;
     document.querySelector("#title").readOnly = false;
+    setExportTitle(note.title);
     document.querySelector("#noteId").value = note.id;
     if(note.children){
         document.querySelector("textarea").readOnly = true;
         document.querySelector("textarea").value = "";
         renderText("# Select a note to edit & view");
         updateWordCount(0);
+        exportEnabled(false);
     } else {
         document.querySelector("textarea").readOnly = false;
         document.querySelector("textarea").value = note.content;
         renderText();
         updateWordCount();
+        exportEnabled(true);
     }
 }
 
@@ -79,6 +82,7 @@ function onEmpty(){
     document.querySelector("#noteId").value = "";
     renderText("# Select a note to edit & view");
     updateWordCount(0);
+    exportEnabled(false);
 }
 
 function onTheme(theme){
@@ -141,6 +145,7 @@ function renderText(override){
     }
     const noteText = document.querySelector("textarea").value;
     document.querySelector("#preview").innerHTML = MARKDOWN.render(noteText);
+    setExportContent();
 }
 
 function updateWordCount(override){
@@ -261,6 +266,48 @@ function doFormatNumber(){
     doListFormat(true);
 }
 
+
+function exportEnabled(isEnabled){
+    if(isEnabled){
+        document.querySelector("#exportLabel").style.display = "inline-block";
+        document.querySelector("#exportTxt").style.display = "inline-block";
+        document.querySelector("#exportHtml").style.display = "inline-block";
+    } else {
+        document.querySelector("#exportHtml").style.display = "none";
+        document.querySelector("#exportHtml").style.display = "none";
+        document.querySelector("#exportHtml").style.display = "none";
+    }
+}
+
+function setExportTitle(newtitle){
+    document.querySelector("#exportTxt").setAttribute("download", newtitle+".txt");
+    document.querySelector("#exportHtml").setAttribute("download", newtitle+".html");
+}
+
+function setExportContent(){
+    const textfile = new File(
+        [document.querySelector("textarea").value],
+        document.querySelector("#title").value+".txt",
+        {type: "text/plain"}
+    );
+    const textobj = window.URL.createObjectURL(textfile);
+    document.querySelector("#exportTxt").setAttribute("href", textobj);
+
+    var htmldoc = `<html>
+    <head>
+    <meta charset="utf-8" />
+    <title>${document.querySelector("#title").value}</title>
+    </head>
+    <body>${document.querySelector("#preview").innerHTML}</body>
+    </html>`
+    const htmlfile = new File(
+        [htmldoc],
+        document.querySelector("#title").value+".html",
+        {type: "text/html"}
+    );
+    const htmlobj = window.URL.createObjectURL(htmlfile);
+    document.querySelector("#exportHtml").setAttribute("href", htmlobj);
+}
 
 function init(){
     addEventListener('message', onMessage);

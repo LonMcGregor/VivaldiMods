@@ -71,6 +71,11 @@
     margin-right: 5px;
 }
 
+.betterNotesEditor #exportArea {
+    display: flex;
+    flex-direction: column;
+}
+
 @media screen and (max-width: 600px){
     .betterNotesEditor .dual {
         flex-direction: column !important;
