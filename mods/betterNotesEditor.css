@@ -116,3 +116,16 @@
         resize: vertical !important;
     }
 }
+
+.betterNotesEditor .hideMarkdown textarea{
+    resize: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+}
+.betterNotesEditor .hideMarkdown #preview {
+    display: none;
+}

@@ -28,7 +28,8 @@ const SELECTED_LANGUAGE = {
         Chars: "Chars",
         Words: "Words",
         Lines: "Lines",
-        SyncScroll: "Sync Scroll"
+        SyncScroll: "Sync Scroll",
+        ShowPreview: "Show MarkDown"
     },
     fr_FR: {
         Select: "# Sélectionnez une note pour la modifier",
@@ -43,7 +44,8 @@ const SELECTED_LANGUAGE = {
         Chars: "Caractères",
         Words: "Mots",
         Lines: "Linges",
-        SyncScroll: "Défilement synchronisé"
+        SyncScroll: "Défilement synchronisé",
+        ShowPreview: "Afficher MarkDown"
     }
 }.en_GB;
 
@@ -62,6 +64,7 @@ function initStrings(){
     <p>${SELECTED_LANGUAGE.LoadingPrompt}</p>`;
     document.querySelector("footer b").innerText = SELECTED_LANGUAGE.Stats;
     document.querySelector("#syncScrollLabel").innerText = SELECTED_LANGUAGE.SyncScroll;
+    document.querySelector("#showPreviewLabel").innerText = SELECTED_LANGUAGE.ShowPreview;
     updateWordCount(0);
 }
 
@@ -374,7 +377,7 @@ function getComputedStyle(element, property){
  * @param event fired (textarea scroll)
  */
 function syncScroll(event) {
-    if(!document.querySelector("#syncscroll").checked){
+    if(!document.querySelector("#syncscroll").checked || !document.querySelector("#showpreview").checked){
         return;
     }
     var textarea = document.querySelector('textarea'),
@@ -640,12 +643,29 @@ function setExportContent(){
 
 
 /**
+ * User changed wether the preview is active
+ */
+function previewActiveChanged(){
+    const active = document.querySelector("#showpreview").checked;
+    if(active){
+        document.body.classList.remove("hideMarkdown");
+        document.querySelector("#syncscroll").disabled = false;
+    } else {
+        document.body.classList.add("hideMarkdown");
+        document.querySelector("#syncscroll").disabled = true;
+    }
+}
+
+
+
+/**
  * Initialise the page, and call any sub-component init methods
  */
 function init(){
     addEventListener('message', onMessage);
     document.querySelector("textarea").addEventListener("input", noteTextChanged);
     document.querySelector("#title").addEventListener("input", sendNoteTitle);
+    document.querySelector("#showpreview").addEventListener("change", previewActiveChanged);
     window.onunload = sendClosed;
     initRenderer();
     initFormatting();
