@@ -61,6 +61,9 @@ function onNoteText(text, id){
     vivaldi.notes.update(id, {
         content: text
     });
+    if(document.querySelector("#notes-panel textarea.note.editor")){
+        document.querySelector("#notes-panel textarea.note.editor").value = text;
+    }
 }
 
 /**
@@ -163,6 +166,9 @@ function sendThemeData() {
  * Start a connection to the editor
  */
 function connectToNotesTab(){
+    if(document.querySelector("#notes-panel textarea.note.editor")){
+        document.querySelector("#notes-panel button.notes-toggle-md").click();
+    }
     setTimeout(() => {sendInit(3);}, 500);
 }
 
