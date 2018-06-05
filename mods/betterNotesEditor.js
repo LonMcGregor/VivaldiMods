@@ -273,7 +273,6 @@ function initRenderer(){
     };
 
     document.querySelector("textarea").addEventListener("scroll", syncScroll);
-    document.querySelector("textarea").addEventListener("resize", clearScrollMap);
     window.addEventListener("resize", clearScrollMap);
 }
 
@@ -647,6 +646,7 @@ function setExportContent(){
  */
 function previewActiveChanged(){
     const active = document.querySelector("#showpreview").checked;
+    window.localStorage.setItem("betterNotesPreview", active);
     if(active){
         document.body.classList.remove("hideMarkdown");
         document.querySelector("#syncscroll").disabled = false;
@@ -654,6 +654,23 @@ function previewActiveChanged(){
         document.body.classList.add("hideMarkdown");
         document.querySelector("#syncscroll").disabled = true;
     }
+}
+
+/**
+ * User changed whether sync scroll is on
+ */
+function syncScrollChanged(){
+    const active = document.querySelector("#syncscroll").checked;
+    window.localStorage.setItem("betterNotesScroll", active);
+}
+
+/**
+ * Read the state settings from the storage
+ */
+function initSettings(){
+    document.querySelector("#syncscroll").checked = window.localStorage.getItem("betterNotesScroll")==="true";
+    document.querySelector("#showpreview").checked = window.localStorage.getItem("betterNotesPreview")==="true";
+    previewActiveChanged();
 }
 
 
@@ -666,11 +683,13 @@ function init(){
     document.querySelector("textarea").addEventListener("input", noteTextChanged);
     document.querySelector("#title").addEventListener("input", sendNoteTitle);
     document.querySelector("#showpreview").addEventListener("change", previewActiveChanged);
+    document.querySelector("#syncscroll").addEventListener("change", syncScrollChanged);
     window.onunload = sendClosed;
     initRenderer();
     initFormatting();
     initExport();
     initStrings();
+    initSettings();
 }
 
 /**
