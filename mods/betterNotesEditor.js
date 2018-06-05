@@ -339,7 +339,7 @@ function buildScrollMap() {
         if (t === '') { return; }
         t = lineHeightMap[t];
         if (t !== 0) { nonEmptyList.push(t); }
-        _scrollMap[t] = Math.round(el.offsetTop);
+        _scrollMap[t] = Math.round(el.offsetTop - el.parentElement.getBoundingClientRect().top);
     });
 
     nonEmptyList.push(linesCount);

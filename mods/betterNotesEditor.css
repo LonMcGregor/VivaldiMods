@@ -34,17 +34,17 @@
     resize: horizontal !important;
     flex: unset !important;
 }
+
+.betterNotesEditor #notes-panel .notes-editor .note.md {
+    margin-right: 0px !important;
+}
+
 .betterNotesEditor h1 {
     font-size: large;
 }
 
 .betterNotesEditor footer {
     text-align: right;
-}
-
-.betterNotesEditor #preview{
-    white-space: pre !important;
-    flex: 1 !important;
 }
 
 .betterNotesEditor #head1 {
