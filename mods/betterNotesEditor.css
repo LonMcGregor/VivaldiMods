@@ -60,11 +60,25 @@
 .betterNotesEditor #italic {
     font-style: italic;
 }
-.betterNotesEditor #link {
+.betterNotesEditor #link, .betterNotesEditor #under {
     text-decoration: underline;
 }
 .betterNotesEditor #strike {
     text-decoration: line-through;
+}
+.betterNotesEditor #light span {
+    background: var(--colorFg);
+    color: var(--colorBg);
+}
+.betterNotesEditor #super span {
+    font-size: 8;
+    position: relative;
+    top: -4px;
+}
+.betterNotesEditor #subs span {
+    font-size: 8;
+    position: relative;
+    top: 4px;
 }
 .betterNotesEditor .spacer {
     margin-left: 10px;

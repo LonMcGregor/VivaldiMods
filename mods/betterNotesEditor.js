@@ -270,6 +270,15 @@ function initRenderer(){
     };
 
     document.querySelector("textarea").addEventListener("scroll", syncScroll);
+    document.querySelector("textarea").addEventListener("resize", clearScrollMap);
+    window.addEventListener("resize", clearScrollMap);
+}
+
+/**
+ * A change has happened that requires the scroll map to be rebuilt
+ */
+function clearScrollMap(){
+    SCROLLMAP = undefined;
 }
 
 /**
@@ -279,7 +288,7 @@ function buildScrollMap() {
   // Build offsets for each line (lines can be wrapped)
   // That's a bit dirty to process each line everytime, but ok for demo.
   // Optimizations are required only for big texts.
-    var i, offset, nonEmptyList, pos, a, b, lineHeightMap, linesCount,
+    var i, nonEmptyList, pos, a, b, lineHeightMap, linesCount,
         acc, sourceLikeDiv, textarea = document.querySelector('textarea'),
         _scrollMap;
 
@@ -289,14 +298,13 @@ function buildScrollMap() {
     sourceLikeDiv.style.height = 'auto';
     sourceLikeDiv.style.width = textarea.clientWidth;
     sourceLikeDiv.style.fontSize = getComputedStyle(textarea, "font-size");
-    sourceLikeDiv.style.fontFamily = getComputedStyle(textarea, "font-samily");
+    sourceLikeDiv.style.fontFamily = getComputedStyle(textarea, "font-family");
     sourceLikeDiv.style.lineHeight = getComputedStyle(textarea, "line-height");
     sourceLikeDiv.style.whiteSpace = getComputedStyle(textarea, "white-space");
     document.body.appendChild(sourceLikeDiv);
 
     const preview = document.querySelector("#preview");
 
-    offset = 0;
     _scrollMap = [];
     nonEmptyList = [];
     lineHeightMap = [];
@@ -331,7 +339,7 @@ function buildScrollMap() {
         if (t === '') { return; }
         t = lineHeightMap[t];
         if (t !== 0) { nonEmptyList.push(t); }
-        _scrollMap[t] = Math.round(el.offsetTop + offset);
+        _scrollMap[t] = Math.round(el.offsetTop);
     });
 
     nonEmptyList.push(linesCount);
@@ -384,6 +392,7 @@ function syncScroll(event) {
  * @param override A string of MD to use instead of the textarea contents
  */
 function renderText(override){
+    clearScrollMap();
     if(override || override === ""){
         document.querySelector("#preview").innerHTML = MARKDOWN.render(override);
         return;
@@ -391,7 +400,6 @@ function renderText(override){
     const noteText = document.querySelector("textarea").value;
     document.querySelector("#preview").innerHTML = MARKDOWN.render(noteText);
     setExportContent();
-    SCROLLMAP = undefined;
 }
 
 /**
@@ -427,6 +435,10 @@ function initFormatting(){
     document.querySelector("#bold").addEventListener("click", doFormatBold);
     document.querySelector("#italic").addEventListener("click", doFormatItalic);
     document.querySelector("#strike").addEventListener("click", doFormatStrike);
+    document.querySelector("#under").addEventListener("click", doFormatUnder);
+    document.querySelector("#light").addEventListener("click", doFormatLight);
+    document.querySelector("#super").addEventListener("click", doFormatSuper);
+    document.querySelector("#subs").addEventListener("click", doFormatSubs);
     document.querySelector("#quote").addEventListener("click", doFormatQuote);
     document.querySelector("#code").addEventListener("click", doFormatCode);
     document.querySelector("#link").addEventListener("click", doFormatLink);
@@ -443,10 +455,10 @@ function doFormatInputNewText(newtext, newCursorPos){
     // find a way to simulate an input such that ctrl+Z undo is possible
     // in the meantime just set it directly
     document.querySelector("textarea").value = newtext;
-    renderText();
-    sendNoteText();
-    document.querySelector("textarea").focus();
+    /*document.querySelector("textarea").focus();
     document.querySelector("textarea").setSelectionRange(newCursorPos, newCursorPos);
+    document.querySelector("textarea").setSelectionRange(newCursorPos, newCursorPos);*/
+    noteTextChanged();
 }
 
 /**
@@ -513,6 +525,18 @@ function doFormatItalic(){
 }
 function doFormatStrike(){
     doFormat("~~", "~~");
+}
+function doFormatUnder(){
+    doFormat("++", "++");
+}
+function doFormatLight(){
+    doFormat("==", "==");
+}
+function doFormatSuper(){
+    doFormat("^", "^");
+}
+function doFormatSubs(){
+    doFormat("~", "~");
 }
 function doFormatQuote(){
     doFormat("> ", "");
