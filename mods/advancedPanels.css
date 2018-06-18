@@ -1,0 +1,95 @@
+/*
+* Advanced Panels (a mod for Vivaldi)
+* Written by LonM
+* No Copyright Reserved
+*/
+.panel[advancedpanel="true"] header .toolbar .back, /* hide the web panel back/reload buttons */
+.panel[advancedpanel="true"] header .toolbar .forward,
+.panel[advancedpanel="true"] header .toolbar .reload,
+.panel[advancedpanel="true"] header .toolbar .home,
+.panel[advancedpanel="true"] .webpanel-content, /* hide the web panel webview */
+.panel[advancedpanel="true"] footer /* this last one is to prevent collision with panel actions mod */ {
+    display: none !important;
+}
+
+.panel[advancedpanel="true"] > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/*
+* CSS For Sessions Panel
+*/
+#sessions_lonm .sessionslist li {
+    display: flex;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px
+}
+
+#sessions_lonm .sessionslist li div {
+    flex-grow: 1;
+    padding-right: 4px;
+}
+
+#sessions_lonm .sessionslist li button {
+    width: 24px;
+    height: 24px;
+}
+
+#sessions_lonm .sessionslist li span {
+    font-size: smaller;
+}
+
+#sessions_lonm li h3 , #sessions_lonm li div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#sessions_lonm li:hover {
+    background: var(--colorHighlightBgAlpha);
+}
+#sessions_lonm li.selected {
+    background: var(--colorHighlightBg);
+    color: var(--colorHighlightFg);
+}
+
+#sessions_lonm li button {
+    display: none;
+}
+#sessions_lonm li.selected button {
+    display: block;
+}
+
+#sessions_lonm .sortselector-button {
+    display: none;
+}
+#sessions_lonm .sortselector-button.selected {
+    display: block;
+}
+
+#sessions_lonm .open_current svg {
+    width: 16px;
+    left: -3.5px;
+    position: relative;
+}
+
+#sessions_lonm .open_new svg {
+    width: 20px;
+    position: relative;
+    left: -5.5px;
+}
+#sessions_lonm .confirm {
+    display: none;
+}
+#sessions_lonm .confirm.show {
+    display: block;
+}
+
+#sessions_lonm .newSession {
+    padding: 4px;
+}
