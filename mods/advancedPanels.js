@@ -7,7 +7,9 @@
 (function advancedPanels(){
 "use strict";
 
+    /* Aliases for sanity */
     const $ = document.querySelector.bind(document);
+    const $a = document.querySelectorAll.bind(document);
     const $$ = document.createElement.bind(document);
 
     /**
@@ -69,24 +71,32 @@
                  * REMARK: Hide the confirm box if it is open, but not if the click
                  *    happened on the delete button
                  */
-                function sessionClick(e){
+                function listItemClick(e){
                     const oldselect = $("#sessions_lonm li.selected");
                     if(oldselect){
                         oldselect.classList.toggle("selected");
                     }
                     e.currentTarget.classList.toggle("selected");
-                    if((e.target.tagName.toLowerCase()==="button" && e.target.className==="delete") ||
-                       (e.target.tagName.toLowerCase()==="svg" && e.target.parentElement.className==="delete") ){
-                           return;
+                    if(!isDeleteButton(e.target)){
+                        $("#sessions_lonm .confirm").classList.remove("show");
                     }
-                    $("#sessions_lonm .confirm").classList.remove("show");
                 }
+
+                /**
+                 * Check if the target of a click is delete buttons
+                 * @param target an event target
+                 */
+                function isDeleteButton(target){
+                    const tag = target.tagName.toLowerCase();
+                    return (tag==="button" && target.className==="delete") || (tag==="svg"&&target.parentElement.className==="delete");
+                }
+
 
                 /**
                  * Add a new session
                  * @param e button click event
                  */
-                function addNewSession(e){
+                function newSessionClick(e){
                     const name = $('#sessions_lonm .newSession input[type="text"]').value;
                     const windows = $('#sessions_lonm .newSession input[type="checkbox"]').checked;
                     if(name===""){
@@ -98,7 +108,7 @@
                         }, ()=>{
                             $('#sessions_lonm .newSession input[type="text"]').value = "";
                             $('#sessions_lonm .newSession input[type="checkbox"]').checked = false;
-                            updateSessionListing();
+                            updateList();
                         });
                     });
                 }
@@ -108,10 +118,10 @@
                  * @param e click event
                  */
                 function sortOrderChange(e){
-                    document.querySelectorAll("#sessions_lonm .sortselector-button").forEach(el => {
+                    $a("#sessions_lonm .sortselector-button").forEach(el => {
                         el.classList.toggle("selected");
                     });
-                    updateSessionListing();
+                    updateList();
                 }
 
                 /**
@@ -119,14 +129,14 @@
                  * @param e click event
                  */
                 function sortMethodChange(e){
-                    updateSessionListing();
+                    updateList();
                 }
 
                 /**
                  * User clicked remove button
                  * @param e click event
                  */
-                function sessionDeleteButtonClick(e){
+                function deleteClick(e){
                     const selectedSession = $("#sessions_lonm li.selected h3").innerText;
                     $("#sessions_lonm .confirm .title").innerText = selectedSession;
                     $("#sessions_lonm .confirm").classList.add("show");
@@ -136,10 +146,10 @@
                  * User confirmed remove
                  * @param e event
                  */
-                function sessionDeleteConfirm(e){
+                function deleteConfirmClick(e){
                     const selectedSession = $("#sessions_lonm li.selected h3").innerText;
                     vivaldi.sessionsPrivate.delete(selectedSession, ()=>{
-                        updateSessionListing();
+                        updateList();
                     });
                 }
 
@@ -147,7 +157,7 @@
                  * User cancelled remove
                  * @param e event
                  */
-                function sessionDeleteCancel(e){
+                function deleteCancelClick(e){
                     $("#sessions_lonm .confirm").classList.remove("show");
                 }
 
@@ -155,7 +165,7 @@
                  * User clicked open (current) button
                  * @param e click event
                  */
-                function sessionOpenCurrentButtonClick(e){
+                function openInCurrentWindowClick(e){
                     vivaldi.sessionsPrivate.open(
                         e.currentTarget.parentElement.querySelector("h3").innerText,
                         {openInNewWindow: false}
@@ -166,7 +176,7 @@
                  * User clicked open (new) button
                  * @param e click event
                  */
-                function sessionOpenNewButtonClick(e){
+                function oneInNewWindowClick(e){
                     vivaldi.sessionsPrivate.open(
                         e.currentTarget.parentElement.querySelector("h3").innerText,
                         {openInNewWindow: true}
@@ -177,7 +187,7 @@
                  * Generate a list item for a session object
                  * @returns DOM list item
                  */
-                function createSessionItem(session){
+                function createListItem(session){
                     const el = $$("li");
                     const date = new Date(session.createDateJS);
                     el.innerHTML = `<div>
@@ -200,39 +210,59 @@
                             <path d="M10.2.5l-.7-.7L5 4.3.5-.2l-.7.7L4.3 5-.2 9.5l.7.7L5 5.7l4.5 4.5.7-.7L5.7 5"></path>
                             </svg>
                         </button>`;
-                    el.addEventListener("click", sessionClick);
-                    el.querySelector(".open_new").addEventListener("click", sessionOpenNewButtonClick);
-                    el.querySelector(".open_current").addEventListener("click", sessionOpenCurrentButtonClick);
-                    el.querySelector(".delete").addEventListener("click", sessionDeleteButtonClick);
+                    el.addEventListener("click", listItemClick);
+                    el.querySelector(".open_new").addEventListener("click", oneInNewWindowClick);
+                    el.querySelector(".open_current").addEventListener("click", openInCurrentWindowClick);
+                    el.querySelector(".delete").addEventListener("click", deleteClick);
                     return el;
                 }
 
                 /**
-                 * Get the list of sessions and update the pnael accordingly
+                 * Sort the array of sessions
+                 * @param sessions array of session objects - unsorted
+                 * @returns sessions array of session objects - sorted
                  */
-                function updateSessionListing(){
+                function sortSessions(sessions){
+                    const sortRule = $("#sessions_lonm .sortselector-dropdown").value;
+                    const sortDescending = $("#sessions_lonm .direction-descending.selected");
+                    if(sortRule==="visitTime" && sortDescending){
+                        sessions.sort((a,b) => {return a.createDateJS > b.createDateJS;});
+                    } else if (sortRule==="visitTime" && !sortDescending) {
+                        sessions.sort((a,b) => {return a.createDateJS < b.createDateJS;});
+                    } else if (sortRule==="title" && sortDescending) {
+                        sessions.sort((a,b) => {return a.name < b.name;});
+                    } else if (sortRule==="title" && !sortDescending) {
+                        sessions.sort((a,b) => {return a.name > b.name;});
+                    }
+                    return sessions;
+                }
+
+                /**
+                 * Create the dom list for the sessions
+                 * @param sessions The array of session objects (already sorted)
+                 * @returns DOM list of session items
+                 */
+                function createList(sessions){
+                    const newList = $$("ul");
+                    sessions.forEach((session, index) => {
+                        const li = createListItem(session, index);
+                        newList.appendChild(li);
+                    });
+                    return newList;
+                }
+
+                /**
+                 * Get the array of sessions and recreate the list in the panel
+                 */
+                function updateList(){
                     $("#sessions_lonm .confirm").classList.remove("show");
                     const existingList = $("#sessions_lonm .sessionslist ul");
                     if(existingList){
                         existingList.parentElement.removeChild(existingList);
                     }
-                    const sortRule = $("#sessions_lonm .sortselector-dropdown").value;
-                    const sortDescending = $("#sessions_lonm .direction-descending.selected");
                     vivaldi.sessionsPrivate.getAll(items => {
-                        const newList = $$("ul");
-                        if(sortRule==="visitTime" && sortDescending){
-                            items.sort((a,b) => {return a.createDateJS > b.createDateJS;});
-                        } else if (sortRule==="visitTime" && !sortDescending) {
-                            items.sort((a,b) => {return a.createDateJS < b.createDateJS;});
-                        } else if (sortRule==="title" && sortDescending) {
-                            items.sort((a,b) => {return a.name < b.name;});
-                        } else if (sortRule==="title" && !sortDescending) {
-                            items.sort((a,b) => {return a.name > b.name;});
-                        }
-                        items.forEach((session, index) => {
-                            const dom = createSessionItem(session, index);
-                            newList.appendChild(dom);
-                        });
+                        const sorted = sortSessions(items);
+                        const newList = createList(sorted);
                         $("#sessions_lonm .sessionslist").appendChild(newList);
                     });
                 }
@@ -241,20 +271,20 @@
                  * Update the session listing on activation of panel
                  */
                 function onActivate(){
-                    updateSessionListing();
+                    updateList();
                 }
 
                 /**
                  * Add the sort listeners on creation of panel
                  */
                 function onInit(){
-                    document.querySelectorAll("#sessions_lonm .sortselector-button").forEach(el => {
+                    $a("#sessions_lonm .sortselector-button").forEach(el => {
                         el.addEventListener("click", sortOrderChange);
                     });
                     $("#sessions_lonm .sortselector-dropdown").addEventListener("change", sortMethodChange);
-                    $("#sessions_lonm .confirm .yes").addEventListener("click", sessionDeleteConfirm);
-                    $("#sessions_lonm .confirm .no").addEventListener("click", sessionDeleteCancel);
-                    $("#sessions_lonm .newSession button").addEventListener("click", addNewSession);
+                    $("#sessions_lonm .confirm .yes").addEventListener("click", deleteConfirmClick);
+                    $("#sessions_lonm .confirm .no").addEventListener("click", deleteCancelClick);
+                    $("#sessions_lonm .newSession button").addEventListener("click", newSessionClick);
                 }
 
                 return {
@@ -272,8 +302,14 @@
      * This may require the panel buttons and panels to be re-converted
      */
     const UI_STATE_OBSERVER = new MutationObserver(records => {
-        convertWebPanelButtonstoAdvancedPanelButtons();
-        listenForNewPanelsAndConvertIfNecessary();
+        records.forEach(record => {
+            const usedToHaveMinimalUI = record.oldValue.indexOf("minimal-ui") > -1;
+            const nowHasMinimalUI = record.target.className.indexOf("minimal-ui") > -1;
+            if(usedToHaveMinimalUI && !nowHasMinimalUI){
+                convertWebPanelButtonstoAdvancedPanelButtons();
+                listenForNewPanelsAndConvertIfNecessary();
+            }
+        });
     });
 
 
@@ -283,7 +319,7 @@
      */
     function listenForNewPanelsAndConvertIfNecessary(){
         WEBPANEL_CREATE_OBSERVER.observe($("#panels .webpanel-stack"), {childList: true});
-        const currentlyOpen = document.querySelectorAll(".webpanel-stack .panel");
+        const currentlyOpen = $a(".webpanel-stack .panel");
         currentlyOpen.forEach(convertWebPanelToAdvancedPanel);
     }
 
@@ -298,15 +334,30 @@
     });
 
     /**
+     * Webview loaded a page. This means the src has been initially set.
+     * @param e load event
+     */
+    function webviewLoaded(e){
+        e.currentTarget.removeEventListener("contentload", webviewLoaded);
+        convertWebPanelToAdvancedPanel(e.currentTarget.parentElement.parentElement);
+    }
+
+    /**
      * Attempt to convert a web panel to an advanced panel.
      * First check if the SRC matches a registered value.
      * If so, call the advanced Panel Created method
      * @param node DOM node representing the newly added web panel (child of .webpanel-stack)
      * REMARK: Webview.src can add a trailing "/" to URLs
+     * REMARK: When initially created the webview may have no src,
+     *     so we need to listen for the first src change
      */
     function convertWebPanelToAdvancedPanel(node){
         const addedWebview = node.querySelector("webview");
         if(!addedWebview){
+            return;
+        }
+        if(!addedWebview.src){
+            addedWebview.addEventListener("contentload", webviewLoaded);
             return;
         }
         for(const key in CUSTOM_PANELS){
@@ -418,7 +469,7 @@
      */
     function initMod(){
         if($("#panels .webpanel-stack")){
-            UI_STATE_OBSERVER.observe($("#browser"), {attributes: true, attributeFilter: ["class"]});
+            UI_STATE_OBSERVER.observe($("#browser"), {attributes: true, attributeFilter: ["class"], attributeOldValue: true});
             convertWebPanelButtonstoAdvancedPanelButtons();
             listenForNewPanelsAndConvertIfNecessary();
         } else {
