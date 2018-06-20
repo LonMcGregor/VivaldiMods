@@ -18,6 +18,10 @@
     flex-direction: column;
 }
 
+.panel[advancedpanel="true"] button {
+    background: var(--colorBg);
+}
+
 
 /*
 * CSS For Sessions Panel
