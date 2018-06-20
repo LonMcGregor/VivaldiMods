@@ -312,6 +312,17 @@
         });
     });
 
+    /**
+     * Observe UI state changes
+     */
+    function observeUIState(){
+        UI_STATE_OBSERVER.observe($("#browser"), {
+            attributes: true,
+            attributeFilter: ["class"],
+            attributeOldValue: true
+        });
+    }
+
 
 
     /**
@@ -463,13 +474,30 @@
     }
 
 
+    /**
+     * Observe web panel switches.
+     * REMARK: When one is added or removed, all of the web panels are recreated
+     */
+    const WEB_SWITCH_OBSERVER = new MutationObserver(records => {
+        convertWebPanelButtonstoAdvancedPanelButtons();
+        listenForNewPanelsAndConvertIfNecessary();
+    });
+
+    /**
+     * Start observing for additions or removals of web panel switches
+     */
+    function observePanelSwitchChildren(){
+        WEB_SWITCH_OBSERVER.observe($("#switch"), {childList: true});
+    }
+
 
     /**
      * Initialise the mod. Checking to make sure that the relevant panel element exists first.
      */
     function initMod(){
         if($("#panels .webpanel-stack")){
-            UI_STATE_OBSERVER.observe($("#browser"), {attributes: true, attributeFilter: ["class"], attributeOldValue: true});
+            observeUIState();
+            observePanelSwitchChildren();
             convertWebPanelButtonstoAdvancedPanelButtons();
             listenForNewPanelsAndConvertIfNecessary();
         } else {
