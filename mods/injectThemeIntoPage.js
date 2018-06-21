@@ -34,16 +34,27 @@
 
     /**
      * Send latest theme info to all pages
+     * REMARK: Add additional custom css to line 3 of this function
      */
     function updatePages(){
         let css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
         css = css.replace(/background-.+;/g, "");
+        css += ``;
         PAGES.forEach(page => {
             const webview = $(`webview[src="${page}"]`);
+            if(!webview){return;}
             webview.executeScript({
                 code: `(function(){
                     "use strict";
+                    const alreadyAddedStyles = document.querySelectorAll('style[vStyleInjected="true"]');
+                    if(alreadyAddedStyles.length){
+                        const latestStyle = alreadyAddedStyles[alreadyAddedStyles.length-1];
+                        if(latestStyle.innerText === \`${css}\`){
+                            return;
+                        }
+                    }
                     const style = document.createElement("style");
+                    style.setAttribute("vStyleInjected", "true");
                     style.innerText = \`${css}\`;
                     document.body.appendChild(style);
                 })();`
