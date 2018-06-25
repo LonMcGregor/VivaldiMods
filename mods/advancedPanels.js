@@ -226,13 +226,13 @@
                     const sortRule = $("#sessions_lonm .sortselector-dropdown").value;
                     const sortDescending = $("#sessions_lonm .direction-descending.selected");
                     if(sortRule==="visitTime" && sortDescending){
-                        sessions.sort((a,b) => {return a.createDateJS > b.createDateJS;});
+                        sessions.sort((a,b) => {return a.createDateJS - b.createDateJS;});
                     } else if (sortRule==="visitTime" && !sortDescending) {
-                        sessions.sort((a,b) => {return a.createDateJS < b.createDateJS;});
+                        sessions.sort((a,b) => {return b.createDateJS - a.createDateJS;});
                     } else if (sortRule==="title" && sortDescending) {
-                        sessions.sort((a,b) => {return a.name < b.name;});
+                        sessions.sort((a,b) => {return a.name.localeCompare(b.name);});
                     } else if (sortRule==="title" && !sortDescending) {
-                        sessions.sort((a,b) => {return a.name > b.name;});
+                        sessions.sort((a,b) => {return b.name.localeCompare(a.name);});
                     }
                     return sessions;
                 }
