@@ -193,13 +193,15 @@
                 /**
                  * User confirmed remove
                  * @param e event
+                 * REMARK: Want to remove all and only update UI after final removal
                  */
                 function deleteConfirmClick(e){
                     const selections = getSelectedSessionNames();
-                    selections.forEach(item => {
-                        vivaldi.sessionsPrivate.delete(item, ()=>{
-                            updateList();
-                        });
+                    for (let i = 0; i < selections.length-1; i++) {
+                        vivaldi.sessionsPrivate.delete(selections[i],() => {});
+                    }
+                    vivaldi.sessionsPrivate.delete(selections[selections.length-1], ()=>{
+                        updateList();
                     });
                 }
 
@@ -296,8 +298,8 @@
                  */
                 function updateList(){
                     $("#sessions_lonm .confirm").classList.remove("show");
-                    const existingList = $a("#sessions_lonm .sessionslist ul");
-                    existingList.forEach(list => list.parentElement.removeChild(list));
+                    const existingList = $("#sessions_lonm .sessionslist ul");
+                    existingList.parentElement.removeChild(existingList);
                     vivaldi.sessionsPrivate.getAll(items => {
                         const sorted = sortSessions(items);
                         const newList = createList(sorted);
