@@ -63,7 +63,31 @@
                     <p>Are you sure you want to delete <span class="title"></span>?</p>
                     <button class="yes">⚠ Yes, Delete</button>
                     <button class="no">No, don't.</button>
-                </div>`,
+                </div>
+                <template class="session_item">
+                    <li>
+                        <div>
+                            <h3></h3>
+                            <span>Created <time></time></span>
+                        </div>
+                        <button class="open_new" title="Open in new window">
+                            <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 6h-16v14h16v-14zm-11 2h2v2h-2v-2zm-3 0h2v2h-2v-2zm12 10h-12v-7h12v7zm0-8h-6v-2h6v2z"></path>
+                            </svg>
+                        </button>
+                        <button class="open_current" title="Open in current window">
+                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9h16v2h-16v-2zm0-4h8v4h-8v-4z"></path>
+                            <path opacity=".5" d="M9 5h7v3h-7z"></path>
+                            </svg>
+                        </button>
+                        <button class="delete" title="Delete this session">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                            <path d="M10.2.5l-.7-.7L5 4.3.5-.2l-.7.7L4.3 5-.2 9.5l.7.7L5 5.7l4.5 4.5.7-.7L5.7 5"></path>
+                            </svg>
+                        </button>
+                    </li>
+                </template>`,
             module: function(){
 
                 /**
@@ -220,29 +244,13 @@
                  * @returns DOM list item
                  */
                 function createListItem(session){
-                    const el = $$("li");
+                    const template = $("#sessions_lonm template.session_item");
+                    const el = document.importNode(template.content, true);
+                    el.querySelector("h3").innerText = session.name;
                     const date = new Date(session.createDateJS);
-                    el.innerHTML = `<div>
-                            <h3>${session.name}</h3>
-                            <span>Created ${date.toLocaleString()}</span>
-                        </div>
-                        <button class="open_new" title="Open in new window">
-                            <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 6h-16v14h16v-14zm-11 2h2v2h-2v-2zm-3 0h2v2h-2v-2zm12 10h-12v-7h12v7zm0-8h-6v-2h6v2z"></path>
-                            </svg>
-                        </button>
-                        <button class="open_current" title="Open in current window">
-                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 9h16v2h-16v-2zm0-4h8v4h-8v-4z"></path>
-                            <path opacity=".5" d="M9 5h7v3h-7z"></path>
-                            </svg>
-                        </button>
-                        <button class="delete" title="Delete this session">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-                            <path d="M10.2.5l-.7-.7L5 4.3.5-.2l-.7.7L4.3 5-.2 9.5l.7.7L5 5.7l4.5 4.5.7-.7L5.7 5"></path>
-                            </svg>
-                        </button>`;
-                    el.addEventListener("click", listItemClick);
+                    el.querySelector("time").innerText = date.toLocaleString();
+                    el.querySelector("time").setAttribute("datetime", date.toISOString());
+                    el.querySelector("li").addEventListener("click", listItemClick);
                     el.querySelector(".open_new").addEventListener("click", oneInNewWindowClick);
                     el.querySelector(".open_current").addEventListener("click", openInCurrentWindowClick);
                     el.querySelector(".delete").addEventListener("click", deleteClick);
