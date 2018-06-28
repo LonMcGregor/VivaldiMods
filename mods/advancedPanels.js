@@ -65,32 +65,44 @@
                     <button class="no">No, don't.</button>
                 </div>`,
             module: function(){
+
+                /**
+                 * Get selected session names
+                 * @returns string array of names
+                 */
+                function getSelectedSessionNames(){
+                    const selections = Array.from($a("#sessions_lonm li.selected h3"));
+                    return selections.map(x => x.innerText);
+                }
+
                 /**
                  * Open a session after its corresponding list item is clicked
                  * @param e click event
-                 * REMARK: Hide the confirm box if it is open, but not if the click
-                 *    happened on the delete button
+                 * REMARK: Hide the confirm box if it is open
+                 * REMARK: If click was on a button, just ignore it
                  */
                 function listItemClick(e){
-                    const oldselect = $("#sessions_lonm li.selected");
-                    if(oldselect){
-                        oldselect.classList.toggle("selected");
+                    if(isButton(e.target)){
+                        return;
                     }
-                    e.currentTarget.classList.toggle("selected");
-                    if(!isDeleteButton(e.target)){
-                        $("#sessions_lonm .confirm").classList.remove("show");
+                    if(e.ctrlKey){
+                        e.currentTarget.classList.toggle("selected");
+                    } else {
+                        const oldselect = $a("#sessions_lonm li.selected");
+                        oldselect.forEach(item => item.classList.remove("selected"));
+                        e.currentTarget.classList.add("selected");
                     }
+                    $("#sessions_lonm .confirm").classList.remove("show");
                 }
 
                 /**
-                 * Check if the target of a click is delete buttons
+                 * Check if the target of a click is a button
                  * @param target an event target
                  */
-                function isDeleteButton(target){
+                function isButton(target){
                     const tag = target.tagName.toLowerCase();
-                    return (tag==="button" && target.className==="delete") || (tag==="svg"&&target.parentElement.className==="delete");
+                    return (tag==="button" && target.className==="delete") || (tag==="svg" && target.parentElement.className==="delete");
                 }
-
 
                 /**
                  * Add a new session
@@ -137,8 +149,20 @@
                  * @param e click event
                  */
                 function deleteClick(e){
-                    const selectedSession = $("#sessions_lonm li.selected h3").innerText;
-                    $("#sessions_lonm .confirm .title").innerText = selectedSession;
+                    const selectedSessions = getSelectedSessionNames();
+                    if(selectedSessions.length === 1){
+                        confirmMsg(selectedSessions[0]);
+                    } else {
+                        confirmMsg(selectedSessions.length + " selected sessions");
+                    }
+                }
+
+                /**
+                 * Show the delete confirmation box with specified text
+                 * @param msg string to use
+                 */
+                function confirmMsg(msg){
+                    $("#sessions_lonm .confirm .title").innerText = msg;
                     $("#sessions_lonm .confirm").classList.add("show");
                 }
 
@@ -147,9 +171,11 @@
                  * @param e event
                  */
                 function deleteConfirmClick(e){
-                    const selectedSession = $("#sessions_lonm li.selected h3").innerText;
-                    vivaldi.sessionsPrivate.delete(selectedSession, ()=>{
-                        updateList();
+                    const selections = getSelectedSessionNames();
+                    selections.forEach(item => {
+                        vivaldi.sessionsPrivate.delete(item, ()=>{
+                            updateList();
+                        });
                     });
                 }
 
@@ -166,10 +192,13 @@
                  * @param e click event
                  */
                 function openInCurrentWindowClick(e){
-                    vivaldi.sessionsPrivate.open(
-                        e.currentTarget.parentElement.querySelector("h3").innerText,
-                        {openInNewWindow: false}
-                    );
+                    const selections = getSelectedSessionNames();
+                    selections.forEach(item => {
+                        vivaldi.sessionsPrivate.open(
+                            item,
+                            {openInNewWindow: false}
+                        );
+                    });
                 }
 
                 /**
@@ -177,10 +206,13 @@
                  * @param e click event
                  */
                 function oneInNewWindowClick(e){
-                    vivaldi.sessionsPrivate.open(
-                        e.currentTarget.parentElement.querySelector("h3").innerText,
-                        {openInNewWindow: true}
-                    );
+                    const selections = getSelectedSessionNames();
+                    selections.forEach(item => {
+                        vivaldi.sessionsPrivate.open(
+                            item,
+                            {openInNewWindow: true}
+                        );
+                    });
                 }
 
                 /**
@@ -256,10 +288,8 @@
                  */
                 function updateList(){
                     $("#sessions_lonm .confirm").classList.remove("show");
-                    const existingList = $("#sessions_lonm .sessionslist ul");
-                    if(existingList){
-                        existingList.parentElement.removeChild(existingList);
-                    }
+                    const existingList = $a("#sessions_lonm .sessionslist ul");
+                    existingList.forEach(list => list.parentElement.removeChild(list));
                     vivaldi.sessionsPrivate.getAll(items => {
                         const sorted = sortSessions(items);
                         const newList = createList(sorted);
