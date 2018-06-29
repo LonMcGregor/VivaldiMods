@@ -130,13 +130,13 @@ function onNote(note){
         document.querySelector("textarea").value = "";
         renderText(SELECTED_LANGUAGE.Select);
         updateWordCount(0);
-        exportEnabled(false);
+        setExportEnabled(false);
     } else {
         document.querySelector("textarea").readOnly = false;
         document.querySelector("textarea").value = note.content;
         renderText();
         updateWordCount();
-        exportEnabled(true);
+        setExportEnabled(true);
     }
 }
 
@@ -151,7 +151,7 @@ function onEmpty(){
     document.querySelector("#noteId").value = "";
     renderText(SELECTED_LANGUAGE.Select);
     updateWordCount(0);
-    exportEnabled(false);
+    setExportEnabled(false);
 }
 
 /**
@@ -592,7 +592,7 @@ function initExport(){
  * Set whether exporting is allowed / displayed
  * @param isEnabled boolean whether to enable or not
  */
-function exportEnabled(isEnabled){
+function setExportEnabled(isEnabled){
     if(isEnabled){
         document.querySelector("#exportLabel").style.display = "inline-block";
         document.querySelector("#exportArea").style.display = "inline-block";
@@ -620,6 +620,7 @@ function setExportContent(){
         document.querySelector("#title").value+".txt",
         {type: "text/plain"}
     );
+    window.URL.revokeObjectURL(document.querySelector("#exportTxt").getAttribute("href"));
     const textobj = window.URL.createObjectURL(textfile);
     document.querySelector("#exportTxt").setAttribute("href", textobj);
 
@@ -635,6 +636,7 @@ function setExportContent(){
         document.querySelector("#title").value+".html",
         {type: "text/html"}
     );
+    window.URL.revokeObjectURL(document.querySelector("#exportHtml").getAttribute("href"));
     const htmlobj = window.URL.createObjectURL(htmlfile);
     document.querySelector("#exportHtml").setAttribute("href", htmlobj);
 }
