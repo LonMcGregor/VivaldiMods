@@ -254,7 +254,10 @@ function makeEditorButton(){
 function notesSearchChanged(){
     const query = document.querySelector("#notes-panel input[type=search]").value;
     if(query || query===""){
-        document.querySelector(`webview[src="${EDITOR_URI}"]`).find(query);
+        const webview = document.querySelector(`webview[src="${EDITOR_URI}"]`);
+        if(webview){
+            webview.find(query);
+        }
     }
 }
 
