@@ -7,7 +7,6 @@
 (function panel_actions(){
     "use strict";
 
-    const SAVE_ZOOM_ACROSS_DOMAINS = true; /*Use per-domain zoom*/
     const ZOOM_STEP = 0.1; /*Step amount. 0.1 is 10%*/
 
     /*
@@ -190,9 +189,6 @@
     function upgradePanel(panel){
         addPanelControls(panel);
         const webview = panel.querySelector("webview");
-        if(SAVE_ZOOM_ACROSS_DOMAINS){
-            webview.setZoomMode("per-origin");
-        }
         webview.addEventListener("zoomchange", () => {
             updateZoomLabel(webview);
         });
