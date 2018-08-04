@@ -1,0 +1,20 @@
+.dial-folder-icon {
+    background: transparent;
+}
+
+.dial .folder-flap svg path{
+    d: path('M6.16,2.5H1.6A1.12,1.12,0,0,0,.5,3.63v8.75A1.12,1.12,0,0,0,1.6,13.5H14.4a1.12,1.12,0,0,0,1.1-1.12V5.76a1.19,1.19,0,0,0-1.1-1.23H7.76Z');
+}
+
+.dial .thumbnail-image svg .folder-tab-color {
+    fill: var(--colorBgIntense);
+}
+
+.dial .folder-flap svg{
+    width: 16px !important;
+    height: 16px !important;
+    position: relative !important;
+    transform: scale(12);
+    top: 42px !important;
+    left: 16px;
+}

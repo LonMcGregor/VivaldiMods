@@ -10,17 +10,22 @@ regular on bookmarks, history*/
 .startpage .startpage-navigation .startpage-navigation-group:last-of-type {
     border-color: transparent;
 }
+
 button.button-startpage svg{
-    fill: var(--colorHighlightBg);
+    fill: var(--colorAccentBg);
 }
+.startpage .button-startpage.active {
+    border-color: var(--colorAccentBg);
+}
+
 .startpage .startpage-navigation, button.button-startpage.active {
-    color: #999; /* You'll need to fiddle with this value to find one that work swith your theme */
+    color: var(--colorAccentBg);
 }
 
 .startpage .manager {
     background: var(--colorBgLightIntense);
     padding-top:  30px;
-    top: -30px;
+    top: -33px;
 }
 
 .startpage .startpage-content {
@@ -30,4 +35,9 @@ button.button-startpage svg{
 nav.startpage-navigation > div.startpage-navigation-group:nth-child(2) > button {
     max-width: 38px;
     color: transparent;
+}
+
+/*bugfix for strange gradient*/
+button.button-startpage:after {
+    display: none
 }
