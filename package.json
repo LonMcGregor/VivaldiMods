@@ -1,0 +1,15 @@
+{
+  "name": "vivaldimods",
+  "version": "1.0.0",
+  "description": "Mods for vivaldi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LonMcGregor/VivaldiMods.git"
+  },
+  "author": "Léon McGregor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LonMcGregor/VivaldiMods/issues"
+  },
+  "homepage": "https://github.com/LonMcGregor/VivaldiMods#readme"
+}
