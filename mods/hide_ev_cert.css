@@ -6,3 +6,28 @@ button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
 button.button-addressfield.addressfield-siteinfo.certified:hover .siteinfo-text {
     display: block
 }
+
+/* change colours so that secure uses default style, not green */
+.addressfield .addressfield-siteinfo.secure,
+.addressfield .addressfield-siteinfo.certified,
+.addressfield .addressfield-siteinfo.secure .siteinfo-symbol,
+.addressfield .addressfield-siteinfo.certified .siteinfo-symbol {
+    background-color: transparent;
+}
+
+.addressfield .addressfield-siteinfo.secure .siteinfo-symbol svg,
+.addressfield .addressfield-siteinfo.certified .siteinfo-symbol svg {
+    fill: var(--colorFgFaded);
+}
+
+.addressfield .addressfield-siteinfo.secure:hover,
+.addressfield .addressfield-siteinfo.certified:hover,
+.addressfield .addressfield-siteinfo.secure:focus:not([tabindex='-1']),
+.addressfield .addressfield-siteinfo.certified:focus:not([tabindex='-1']) {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
+    color: var(--colorFg);
+}
