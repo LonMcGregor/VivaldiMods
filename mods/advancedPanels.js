@@ -133,10 +133,10 @@
                  * @param e button click event
                  */
                 function newSessionClick(e){
-                    const name = $('#sessions_lonm .newSession input[type="text"]').value;
+                    let name = $('#sessions_lonm .newSession input[type="text"]').value;
                     const windows = $('#sessions_lonm .newSession input[type="checkbox"]').checked;
                     if(name===""){
-                        return;
+                        name = new Date().toISOString().replace(":",".").replace(":",".");
                     }
                     vivaldi.windowPrivate.getCurrentId(window => {
                         vivaldi.sessionsPrivate.saveOpenTabs(name, {
