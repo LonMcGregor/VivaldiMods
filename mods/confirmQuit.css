@@ -1,0 +1,56 @@
+.lonmConfirmQuit {
+    z-index: 4999;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lonmConfirmQuit > div.shadow {
+    z-index: 5001;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background: rgba(0,0,0,0.5);
+}
+
+.lonmConfirmQuit > div.modal {
+    z-index: 5002;
+    width: 500px;
+    height: 130px;
+    background: var(--colorBg);
+    color: var(--colorFg);
+    background-color: var(--colorBgLight);
+    box-shadow: var(--shadowOverlay);
+    border-radius: var(--radiusHalf);
+    position: fixed;
+}
+
+.lonmConfirmQuit p:nth-of-type(1) {
+    margin: 20px;
+}
+
+.lonmConfirmQuit p:nth-of-type(2) {
+    margin-left: 20px;
+}
+
+.lonmConfirmQuit button {
+    margin: 20px;
+    border: 1px solid var(--colorBorder);
+    height: 28px;
+    padding: 0 18px;
+    -webkit-user-select: none;
+    color: var(--colorFg);
+    background-image: linear-gradient(var(--colorBgLightIntense) 0%, var(--colorBg) 100%);
+}
+
+.lonmConfirmQuit button:hover {
+    background-image: linear-gradient(var(--colorBg), var(--colorBg));
+}
