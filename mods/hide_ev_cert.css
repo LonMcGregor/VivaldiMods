@@ -24,8 +24,8 @@ button.button-addressfield.addressfield-siteinfo.certified:hover .siteinfo-text 
 .addressfield .addressfield-siteinfo.certified:hover,
 .addressfield .addressfield-siteinfo.secure:focus:not([tabindex='-1']),
 .addressfield .addressfield-siteinfo.certified:focus:not([tabindex='-1']) {
-    border-color: transparent;
-    background-color: transparent;
+    border-color: var(--colorBorder);
+    background-color: var(--colorBgLight);
 }
 
 button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
