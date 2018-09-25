@@ -14,7 +14,7 @@
      * Array of strings of URLs matching web pages where variables are to be injected
      */
     const PAGES = [
-        "chrome-extension://eofhkahmgjlddedjnbjmndkgmiabhifi/panel.html"
+        "chrome-extension://nnnheolekoehkioeicninoneagaimnjd/panel.html"
     ];
 
     /**
