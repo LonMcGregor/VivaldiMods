@@ -43,14 +43,16 @@
         quitAll.innerHTML = "Quit Vivaldi";
         confirmModal.appendChild(quitAll);
 
-        const quitThisWindow = document.createElement("button");
-        quitThisWindow.addEventListener("click", () => {
-            chrome.windows.getCurrent(window => {
-                chrome.windows.remove(window.id);
+        if(n > 1){
+            const quitThisWindow = document.createElement("button");
+            quitThisWindow.addEventListener("click", () => {
+                chrome.windows.getCurrent(window => {
+                    chrome.windows.remove(window.id);
+                });
             });
-        });
-        quitThisWindow.innerHTML = "Close just this window";
-        confirmModal.appendChild(quitThisWindow);
+            quitThisWindow.innerHTML = "Close just this window";
+            confirmModal.appendChild(quitThisWindow);
+        }
 
         const cancel = document.createElement("button");
         cancel.addEventListener("click", (e) => {
