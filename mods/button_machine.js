@@ -19,7 +19,7 @@
     * additional_css: CSS text applied to the button object's css attribute
     */
     const MY_BUTTONS = {
-        OpenSettingsPage: {
+        /*OpenSettingsPage: {
             title: "Open a new page with the chrome settings",
             content_script: false,
             script: (event) => {
@@ -53,13 +53,13 @@
             additional_css: `
                 font-family: "Comic Sans MS", cursive;
             `
-        },
+        },*/
 
         TaskManager: {
             title: "Open Vivaldi Task Manager",
             content_script: false,
             script: () => {
-                vivaldi.importData.openTaskManager(() => {});
+                vivaldi.utilities.openTaskManager(() => {});
             },
             display: `<svg viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 8v2h-2v-2h-4v2h-2v-4h6v-2h-2v-4h6v4h-2v2h6v4h-2v-2h-4zm-9 2v3h4v-3h-4zm12 0v3h4v-3h-4zm-6 0v3h4v-3h-4z"></path>
