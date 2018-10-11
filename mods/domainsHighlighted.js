@@ -30,6 +30,9 @@
                 return clearMask();
             }
             const newText = target.value;
+            if(!newText){
+                return;
+            }
             if(newText.indexOf("://")>-1){
                 maskProtocolAndAddress(newText);
             } else {
