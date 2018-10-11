@@ -42,7 +42,7 @@ def copy_mods(resources_loc, mod_path, active_mods):
         modname = mod.split(".")[0]
         if modname in active_mods:
             shutil.copyfile(modfile, os.path.join(target_location, mod))
-            print("Copied %s" % mod)
+            print("Copied mod %s" % mod)
             if modname not in successful:
                 successful.append(modname)
     for mod in active_mods:
@@ -66,9 +66,29 @@ def update_splash_screen(resources_loc, background, foreground):
     with open(svg_loc, 'w') as svgfile:
         svgfile.write(svg_contents)
 
+def copy_page_actions(resources_loc, page_action_path, active_actions):
+    target_location = os.path.join(resources_loc, 'user_files')
+    if not os.path.exists(target_location):
+        os.makedirs(target_location)
+    successful = []
+    for actionfile in glob.glob(os.path.join(page_action_path, "*")):
+        action = actionfile.split(os.path.sep)[-1]
+        if action in active_actions:
+            shutil.copyfile(actionfile, os.path.join(target_location, action))
+            print("Copied PA %s" % action)
+            if action not in successful:
+                successful.append(action)
+    for action in active_actions:
+        if action not in successful:
+            print("/!\\ Could not install page action %s" % action)
+            input("Press any key to continue...")
+
+
 config = load_config()
 resources_loc = get_newest_app_resource_dir(config["application_path"])
 mod_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mods')
+page_action_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pageActions')
 copy_mods(resources_loc, mod_path, config["active_mods"])
 register_mods(resources_loc)
 update_splash_screen(resources_loc, config["splash_bg"], config["splash_fg"])
+copy_page_actions(resources_loc, page_action_path, config["active_page_actions"])
