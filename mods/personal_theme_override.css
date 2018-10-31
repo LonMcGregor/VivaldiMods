@@ -15,3 +15,7 @@
 .theme-dark .internal-page .startpage{
     background-image: url("chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/personal_theme_override.jpg") !important
 }
+
+.theme-dark .tab-position .tab.active .tab-header .favicon {
+    filter: none;
+}
