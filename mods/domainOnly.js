@@ -1,11 +1,9 @@
 /*
-* TLD Plus One Only (a mod for Vivaldi)
+* Domain Only (a mod for Vivaldi)
 * LonM
 */
 
-/** todo fix case when user entered random teext then unfocused */
-
-(function tldPlusOneOnly(){
+(function domainOnly(){
     "use strict";
 
     /* Add the mask in again when no longer focused */
