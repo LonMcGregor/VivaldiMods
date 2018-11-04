@@ -1,0 +1,34 @@
+/**
+* TLD Plus One Only (a mod for vivaldi)
+* LonM
+*/
+
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > form:not([data-url=""]) input.url.vivaldi-addressfield:not(:focus):not(:focus-within){
+    opacity: 0;
+}
+input.url.vivaldi-addressfield:focus,
+input.url.vivaldi-addressfield:focus-within{
+    opacity: 1;
+    background: var(--colorBgLight);
+}
+
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > form:before {
+    content: attr(data-url);
+    width: calc(100% - 44px);
+    display: block;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    cursor: text;
+    margin: 0px 0px 0px 44px;
+    height: 100%;
+    line-height: 1.8;
+    border-radius: 0px var(--radius) var(--radius) 0px;
+}
+
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > .insecure + form:before {
+    background: #f30;
+    color: white;
+}
