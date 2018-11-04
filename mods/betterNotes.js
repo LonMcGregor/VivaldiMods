@@ -94,7 +94,16 @@ function onClose(){
  */
 function sendMessage(msg){
     if(EDITOR_SOURCE){
-        EDITOR_SOURCE.contentWindow.postMessage(msg, EDITOR_URI);
+        try{
+            EDITOR_SOURCE.contentWindow.postMessage(msg, EDITOR_URI);
+        } catch (exception) {
+            if(exception.message.indexOf("postMessage")>-1){
+                console.warn("Better Notes Mod: Failed to contact editor tab. Please re-open");
+                onClose();
+            } else {
+                throw exception;
+            }
+        }
     }
 }
 
