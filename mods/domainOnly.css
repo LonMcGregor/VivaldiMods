@@ -4,16 +4,16 @@
 * For other languages, replace "Site info" with whatever your locale string is
 */
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:not(:focus):not(:focus-within){
+div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:not(:focus):not(:focus-within){
     opacity: 0;
 }
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
+div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
+div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
     opacity: 1;
     background: var(--colorBgLight);
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button[title="Site info"] + form:before {
+div.addressfield > button[title="Site info"] + form:before {
     content: attr(data-url);
     width: calc(100% - 44px);
     display: block;
@@ -29,7 +29,7 @@
     border-radius: 0px var(--radius) var(--radius) 0px;
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.insecure[title="Site info"] + form:before {
+div.addressfield > button.insecure[title="Site info"] + form:before {
     background: #f30;
     color: white;
 }

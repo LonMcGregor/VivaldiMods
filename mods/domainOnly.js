@@ -64,7 +64,7 @@
      * @param {string} tldPlusOne
      */
     function setTldPlusOne(tldPlusOne){
-        const form = document.querySelector("#main > div.toolbar-addressbar.search.toolbar > div.addressfield > form");
+        const form = document.querySelector("div.addressfield > form");
         form.setAttribute("data-url", tldPlusOne);
     }
 
