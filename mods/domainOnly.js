@@ -21,6 +21,10 @@
             return;
         }
         const tldText = getTldPlusOne(newText);
+        if(tldText.indexOf("view-source:")===0){
+            setTldPlusOne("");
+            return;
+        }
         if(tldText==="chrome-extension:"){
             const extensionIdPlusPath = newText.replace("chrome-extension://", "");
             const extensionIdOnly = extensionIdPlusPath.split("/")[0];
