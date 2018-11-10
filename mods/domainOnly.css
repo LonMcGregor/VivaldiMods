@@ -12,6 +12,16 @@ div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url
     opacity: 1;
     background: var(--colorBgLight);
 }
+.private div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
+.private div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
+    background: var(--colorFgIntense);
+}
+div.addressfield > div.progressing + button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
+div.addressfield > div.progressing + button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within,
+.private div.addressfield > div.progressing + button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
+.private div.addressfield > div.progressing + button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
+    background: transparent;
+}
 
 div.addressfield > button[title="Site info"] + form:before {
     content: attr(data-url);
@@ -27,6 +37,11 @@ div.addressfield > button[title="Site info"] + form:before {
     height: 100%;
     line-height: 1.8;
     border-radius: 0px var(--radius) var(--radius) 0px;
+}
+
+div.addressfield > div.progressing + button[title="Site info"] + form:focus:before,
+div.addressfield > div.progressing + button[title="Site info"] + form:focus-within:before {
+    display: none;
 }
 
 div.addressfield > button.insecure[title="Site info"] + form:before {
