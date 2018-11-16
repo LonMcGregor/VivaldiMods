@@ -1,3 +1,0 @@
-/* Make extensions bar not be light colour */
-.toolbar-addressbar .button-toolbar.browserAction-button,
-.toolbar-mailbar .button-toolbar.browserAction-button {background: none}
