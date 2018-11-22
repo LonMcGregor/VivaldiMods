@@ -1,21 +1,18 @@
-.theme-dark #tabs-container {
-    background-image: none !important;
-    background-color: black;
-    --colorImageForeground: white !important;
-    --colorImageBackgroundAlpha: rgba(0,0,0,0.6) !important;
-    --colorImageBackgroundAlphaHeavy: rgba(0,0,0,0.3) !important;
-}
-.theme-dark #titlebar svg {fill: white}
-.theme-dark #titlebar .vivaldi-v svg {fill: white}
-.theme-dark #titlebar .window-buttongroup button:hover svg {fill: white}
-.theme-dark.color-behind-tabs-on.acc-dark .tab-position .tab:not(.active) .favicon.internal {
-    filter: invert(1);
+#browser.theme-light {
+    background: url("../resources/bg.jpg");
+    background-size: cover;
 }
 
-.theme-dark .internal-page .startpage{
-    background-image: url("chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/personal_theme_override.jpg") !important
+#browser.theme-dark {
+    background: url("../resources/bg_alt_7.jpg");
+    background-size: cover;
 }
 
-.theme-dark .tab-position .tab.active .tab-header .favicon {
-    filter: none;
+#tabs-container, .inner, #main, .vivaldi-settings .settings-content, .startpage, .startpage .manager {
+    background: transparent !important;
+}
+
+.tab.active, .toolbar-addressbar, #switch, #footer, .vivaldi-settings, .vivaldi-settings .settings-sidebar, .startpage .manager > div {
+    background:  var(--colorBgAlpha) !important;
+    background-color:  var(--colorBgAlpha) !important;
 }
