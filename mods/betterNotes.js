@@ -211,6 +211,107 @@ function openNotesTab(){
 }
 
 
+/**
+ * Make the attachment button a drop target
+ */
+function attachmentAsDropTarget(){
+    const ᣞᴥᣞ = document.querySelector("#notes-panel label[for=notesFileAttachment]");
+    ᣞᴥᣞ.addEventListener("drop", dropOnToAttachment);
+    ᣞᴥᣞ.addEventListener("dragover", dragOverAttachment);
+}
+
+/**
+ * Something dragged over attachments
+ */
+function dragOverAttachment(dragEvent){
+    dragEvent.preventDefault();
+    dragEvent.dataTransfer.dropEffect = "copy";
+}
+
+/**
+ * Something dropped onto attachments
+ */
+function dropOnToAttachment(dropEvent){
+    dropEvent.preventDefault();
+    const selection = document.querySelector("#notes-panel div[data-selected]");
+    if(!selection){
+        console.error("BN: failed to get selected note. Is the notes panel open?");
+        return;
+    }
+    const selectedNote = selection.getAttribute("data-id");
+    if (dropEvent.dataTransfer.items) {
+        for (var i = 0; i < dropEvent.dataTransfer.items.length; i++) {
+            switch (dropEvent.dataTransfer.items[i].kind) {
+                case "file":
+                    const file = dropEvent.dataTransfer.items[i].getAsFile();
+                    addBlobAttachment(selectedNote, file);
+                    break;
+                case "string":
+                    dropEvent.dataTransfer.items[i].getAsString(item => {
+                        if(item.indexOf("<img")===0){
+                            const div = document.createElement("div");
+                            div.innerHTML = item;
+                            const src = div.firstChild.src;
+                            if(src.indexOf("data:")===0){
+                                addDataAttachment(selectedNote, src);
+                            } else {
+                                fetch(src).then(response => {
+                                    if(!response.ok){
+                                        console.error("BN: Failed to add image attachment, web response "+response.status);
+                                        return;
+                                    }
+                                    response.blob().then(blob => {
+                                        addBlobAttachment(selectedNote, blob);
+                                    });
+                                });
+                            }
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+/**
+ * Add a new attachment from a blob
+ * @param {String} noteId
+ * @param {Blob} blob Image blob, from File or Response
+ */
+function addBlobAttachment(noteId, blob){
+    const fr = new FileReader();
+    fr.onload = event => {
+        if(event.target.result.indexOf("data:image")===-1){
+            return;
+        }
+        addDataAttachment(noteId, event.target.result);
+    };
+    fr.readAsDataURL(blob);
+}
+
+/**
+ * Add a data url as an attachment
+ * @param {String} noteId
+ * @param {String} newAttachmentUri base64 encoded data URI
+ * @remark I don't know what checksum encoding is used. I think it's then
+ *   base64 encoded and the length is attached. For now, it seems to work
+ *   ok if I just leave it blank.
+ */
+function addDataAttachment(noteId, newAttachmentUri){
+    vivaldi.notes.get(noteId, notes => {
+        const note = notes[0];
+        const attachments = note.attachments;
+        const newAttachment = {
+            checksum: "|"+newAttachmentUri.length,
+            content: newAttachmentUri
+        };
+        attachments.push(newAttachment);
+        vivaldi.notes.update(noteId, {attachments: attachments}, () => {});
+    });
+}
+
 
 /**
  * Observe for changes to the panels
@@ -225,6 +326,7 @@ const PANEL_CHANGE_OBSERVER = new MutationObserver(mutationrecords => {
             sendNote();
             styleForFullEditor();
         }
+        attachmentAsDropTarget();
     }
 });
 
