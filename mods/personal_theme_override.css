@@ -16,3 +16,7 @@
     background:  var(--colorBgAlpha) !important;
     background-color:  var(--colorBgAlpha) !important;
 }
+
+.private-intro {
+    background: var(--colorBgAlphaHeavy);
+}
