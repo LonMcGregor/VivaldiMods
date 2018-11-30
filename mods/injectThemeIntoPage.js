@@ -14,7 +14,8 @@
      * Array of strings of URLs matching web pages where variables are to be injected
      */
     const PAGES = [
-        "chrome-extension://nnnheolekoehkioeicninoneagaimnjd/panel.html"
+        "chrome-extension://nnnheolekoehkioeicninoneagaimnjd/panel.html",
+        "chrome-extension://jjmgbaeenpogabemadkdghpnccekgfol/theme_light.html"
     ];
 
     /**
@@ -46,17 +47,15 @@
             webview.executeScript({
                 code: `(function(){
                     "use strict";
-                    const alreadyAddedStyles = document.querySelectorAll('style[vStyleInjected="true"]');
-                    if(alreadyAddedStyles.length){
-                        const latestStyle = alreadyAddedStyles[alreadyAddedStyles.length-1];
-                        if(latestStyle.innerText === \`${css}\`){
-                            return;
-                        }
+                    const alreadyAddedStyles = document.querySelector('style[vStyleInjected]');
+                    if(alreadyAddedStyles){
+                        alreadyAddedStyles.innerText = \`${css}\`;
+                    } else {
+                        const style = document.createElement("style");
+                        style.setAttribute("vStyleInjected", "");
+                        style.innerText = \`${css}\`;
+                        document.body.appendChild(style);
                     }
-                    const style = document.createElement("style");
-                    style.setAttribute("vStyleInjected", "true");
-                    style.innerText = \`${css}\`;
-                    document.body.appendChild(style);
                 })();`
             });
         });
