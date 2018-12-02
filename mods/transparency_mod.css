@@ -7,6 +7,9 @@
 
 /* Tab Favicon fixes */
 .tab-position .tab.active .tab-header .favicon {background-color: transparent !important}
+.theme-dark .tab-position .tab.active .tab-header .favicon {
+    filter: none;
+}
 
 /* Actually transparent speed dials */
 .dials .dial .thumbnail-image {background-color:transparent}
