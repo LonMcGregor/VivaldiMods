@@ -11,6 +11,7 @@
     *
     * html: The HTML of a button
     * onclick: What to do when the button is clicked
+    * contentScript: do something in a content script
     * placeAfter: CSS of where to place a button.
     */
     const MY_BUTTONS = {
