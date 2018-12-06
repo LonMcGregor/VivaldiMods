@@ -23,7 +23,7 @@
             onclick: () => {
                 vivaldi.utilities.openTaskManager(() => {});
             },
-            placeAfter: "#footer > .sync-status"
+            placeAfter: "#footer > div > div:nth-child(1)"
         },
 
         ActivateAllPanels: {
@@ -39,9 +39,19 @@
                 });
                 webPanels[webPanels.length-1].click();
             },
-            placeAfter: "#footer > .sync-status"
-        }
+            placeAfter: "#footer > div > div:nth-child(1)"
+        },
     };
+
+    /**
+     * Perform a content script activity
+     * @param {function} func
+     */
+    function doContentScript(func){
+        chrome.tabs.executeScript({
+            code: `(${func})()`
+        });
+    }
 
     /**
      * Return the DOM for a button
@@ -51,7 +61,14 @@
         const div = document.createElement("div");
         div.innerHTML = buttondef.html;
         const newBtn = div.firstChild;
-        newBtn.addEventListener("click", buttondef.onclick);
+        if(buttondef.onclick){
+            newBtn.addEventListener("click", buttondef.onclick);
+        }
+        if(buttondef.contentScript){
+            newBtn.addEventListener("click", () => {
+                doContentScript(buttondef.contentScript);
+            });
+        }
         return newBtn;
     }
 

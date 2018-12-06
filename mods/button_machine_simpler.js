@@ -9,7 +9,7 @@
             onclick: () => {
                 vivaldi.utilities.openTaskManager(() => {});
             },
-            placeAfter: "#footer > .sync-status"
+            placeAfter: "#footer > div > div:nth-child(1)"
         },
 
         ActivateAllPanels: {
@@ -25,8 +25,9 @@
                 });
                 webPanels[webPanels.length-1].click();
             },
-            placeAfter: "#footer > .sync-status"
+            placeAfter: "#footer > div > div:nth-child(1)"
         },
     };
-    function mb(bd){const d=document.createElement("div");d.innerHTML=bd.html;const nb=d.firstChild;nb.addEventListener("click",bd.onclick);return nb;}function cb(bd){const eui=document.querySelector(bd.placeAfter);if(!eui){console.warn(`Can't add button as selector ${bd.placeAfter} is not ready`);return;}const b=mb(bd);eui.insertAdjacentElement("afterend",b);}function mab(){for(const bk in MY_BUTTONS){cb(MY_BUTTONS[bk]);}}function i(){if(!document.querySelector("#browser")){setTimeout(i,500);return;}mab();}i();
+
+    function S(func){chrome.tabs.executeScript({code:`(${func})()`})}function B(d){const e=document.createElement("div");e.innerHTML=d.html;const b=e.firstChild;if(d.onclick){b.addEventListener("click",d.onclick)}if(d.contentScript){b.addEventListener("click",()=>{S(d.contentScript)})}return b}function C(d){const e=document.querySelector(d.placeAfter);if(!e){console.warn(`Can't add button as selector ${d.placeAfter} is not ready`);return}const b=B(d);e.insertAdjacentElement("afterend",b)}function M(){for(const b in MY_BUTTONS){C(MY_BUTTONS[b])}}function I(){if(!document.querySelector("#browser")){setTimeout(I,500);return}M()}I()
 })();
