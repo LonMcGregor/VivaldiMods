@@ -35,9 +35,10 @@
             initialHTML: `
                 <div class="newSession">
                     <h2>New Session</h2>
-                    <input type="text" placeholder="Session Name">
-                    <input type="checkbox"><label> All Windows</label>
-                    <button>Add Session</button>
+                    <input type="text" placeholder="Session Name" class="session-name">
+                    <label><input type="checkbox" class="all-windows"><span>All Windows</span></label>
+                    <label><input type="checkbox" class="selected-tabs"><span>Only Selected Tabs</span></label>
+                    <input type="button" class="add-session" value="Add Session"></input>
                 </div>
                 <div class="sortselector sortselector-compact">
                     <select class="sortselector-dropdown" title="Sort by..." tabindex="-1">
@@ -59,10 +60,12 @@
                     <ul>
                     </ul>
                 </section>
-                <div class="confirm">
-                    <p>Are you sure you want to delete <span class="title"></span>?</p>
-                    <button class="yes">⚠ Yes, Delete</button>
-                    <button class="no">No, don't.</button>
+                <div class="modal-container">
+                    <div class="confirm">
+                        <p>Are you sure you want to delete <span class="title"></span>?</p>
+                        <button class="yes">⚠ Yes, Delete</button>
+                        <button class="no">No, don't.</button>
+                    </div>
                 </div>
                 <template class="session_item">
                     <li>
@@ -133,17 +136,24 @@
                  * @param e button click event
                  */
                 function newSessionClick(e){
-                    let name = $('#sessions_lonm .newSession input[type="text"]').value;
-                    const windows = $('#sessions_lonm .newSession input[type="checkbox"]').checked;
+                    let name = $('#sessions_lonm .newSession input.session-name').value;
+                    const windows = $('#sessions_lonm .newSession input.all-windows').checked;
+                    const selectedTabs = $('#sessions_lonm .newSession input.selected-tabs').checked;
+                    const markedTabs = document.querySelectorAll(".tab.marked");
                     if(name===""){
                         name = new Date().toISOString().replace(":",".").replace(":",".");
                     }
                     vivaldi.windowPrivate.getCurrentId(window => {
-                        vivaldi.sessionsPrivate.saveOpenTabs(name, {
+                        const options = {
                             saveOnlyWindowId: windows ? 0 : window
-                        }, ()=>{
-                            $('#sessions_lonm .newSession input[type="text"]').value = "";
-                            $('#sessions_lonm .newSession input[type="checkbox"]').checked = false;
+                        };
+                        if(selectedTabs && markedTabs && markedTabs.length>0){
+                            options.ids = Array.from(markedTabs).map(tab => Number(tab.id.replace("tab-", "")));
+                        }
+                        vivaldi.sessionsPrivate.saveOpenTabs(name, options, ()=>{
+                            $('#sessions_lonm .newSession input.session-name').value = "";
+                            $('#sessions_lonm .newSession input.all-windows').checked = false;
+                            $('#sessions_lonm .newSession input.selected-tabs').checked = false;
                             updateList();
                         });
                     });
@@ -187,7 +197,7 @@
                  */
                 function confirmMsg(msg){
                     $("#sessions_lonm .confirm .title").innerText = msg;
-                    $("#sessions_lonm .confirm").classList.add("show");
+                    $("#sessions_lonm .modal-container").classList.add("show");
                 }
 
                 /**
@@ -210,7 +220,7 @@
                  * @param e event
                  */
                 function deleteCancelClick(e){
-                    $("#sessions_lonm .confirm").classList.remove("show");
+                    $("#sessions_lonm .modal-container").classList.remove("show");
                 }
 
                 /**
@@ -297,7 +307,7 @@
                  * Get the array of sessions and recreate the list in the panel
                  */
                 function updateList(){
-                    $("#sessions_lonm .confirm").classList.remove("show");
+                    $("#sessions_lonm .modal-container").classList.remove("show");
                     const existingList = $("#sessions_lonm .sessionslist ul");
                     existingList.parentElement.removeChild(existingList);
                     vivaldi.sessionsPrivate.getAll(items => {
@@ -324,7 +334,7 @@
                     $("#sessions_lonm .sortselector-dropdown").addEventListener("change", sortMethodChange);
                     $("#sessions_lonm .confirm .yes").addEventListener("click", deleteConfirmClick);
                     $("#sessions_lonm .confirm .no").addEventListener("click", deleteCancelClick);
-                    $("#sessions_lonm .newSession button").addEventListener("click", newSessionClick);
+                    $("#sessions_lonm .newSession .add-session").addEventListener("click", newSessionClick);
                 }
 
                 return {
