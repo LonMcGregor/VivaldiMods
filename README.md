@@ -7,7 +7,7 @@ Stuff for Vivaldi Browser, Bringing together various gists into a repo
 {
     "application_path": "C:\\Program Files\\Vivaldi\\Application",
     "active_mods": [
-        "addressbar_button_order",
+        "addressbar_button_order"
     ],
     "active_page_actions": [],
     "splash_fg": "#67d0ea",
