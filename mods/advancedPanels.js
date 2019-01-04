@@ -7,11 +7,6 @@
 (function advancedPanels(){
 "use strict";
 
-    /* Aliases for sanity */
-    const $ = document.querySelector.bind(document);
-    const $a = document.querySelectorAll.bind(document);
-    const $$ = document.createElement.bind(document);
-
     /**
      * Key is the ID of your advanced panel. This must be UNIQUE (across the whole vivaldi UI). If in doubt, append your name to ensure it is unique
      *     You can use this ID as a #selector in the advancedPanels.css file
@@ -98,7 +93,7 @@
                  * @returns string array of names
                  */
                 function getSelectedSessionNames(){
-                    const selections = Array.from($a("#sessions_lonm li.selected h3"));
+                    const selections = Array.from(document.querySelectorAll("#sessions_lonm li.selected h3"));
                     return selections.map(x => x.innerText);
                 }
 
@@ -115,11 +110,11 @@
                     if(e.ctrlKey){
                         e.currentTarget.classList.toggle("selected");
                     } else {
-                        const oldselect = $a("#sessions_lonm li.selected");
+                        const oldselect = document.querySelectorAll("#sessions_lonm li.selected");
                         oldselect.forEach(item => item.classList.remove("selected"));
                         e.currentTarget.classList.add("selected");
                     }
-                    $("#sessions_lonm .confirm").classList.remove("show");
+                    document.querySelector("#sessions_lonm .confirm").classList.remove("show");
                 }
 
                 /**
@@ -136,9 +131,9 @@
                  * @param e button click event
                  */
                 function newSessionClick(e){
-                    let name = $('#sessions_lonm .newSession input.session-name').value;
-                    const windows = $('#sessions_lonm .newSession input.all-windows').checked;
-                    const selectedTabs = $('#sessions_lonm .newSession input.selected-tabs').checked;
+                    let name = document.querySelector('#sessions_lonm .newSession input.session-name').value;
+                    const windows = document.querySelector('#sessions_lonm .newSession input.all-windows').checked;
+                    const selectedTabs = document.querySelector('#sessions_lonm .newSession input.selected-tabs').checked;
                     const markedTabs = document.querySelectorAll(".tab.marked");
                     if(name===""){
                         name = new Date().toISOString().replace(":",".").replace(":",".");
@@ -151,9 +146,9 @@
                             options.ids = Array.from(markedTabs).map(tab => Number(tab.id.replace("tab-", "")));
                         }
                         vivaldi.sessionsPrivate.saveOpenTabs(name, options, ()=>{
-                            $('#sessions_lonm .newSession input.session-name').value = "";
-                            $('#sessions_lonm .newSession input.all-windows').checked = false;
-                            $('#sessions_lonm .newSession input.selected-tabs').checked = false;
+                            document.querySelector('#sessions_lonm .newSession input.session-name').value = "";
+                            document.querySelector('#sessions_lonm .newSession input.all-windows').checked = false;
+                            document.querySelector('#sessions_lonm .newSession input.selected-tabs').checked = false;
                             updateList();
                         });
                     });
@@ -164,7 +159,7 @@
                  * @param e click event
                  */
                 function sortOrderChange(e){
-                    $a("#sessions_lonm .sortselector-button").forEach(el => {
+                    document.querySelectorAll("#sessions_lonm .sortselector-button").forEach(el => {
                         el.classList.toggle("selected");
                     });
                     updateList();
@@ -196,8 +191,8 @@
                  * @param msg string to use
                  */
                 function confirmMsg(msg){
-                    $("#sessions_lonm .confirm .title").innerText = msg;
-                    $("#sessions_lonm .modal-container").classList.add("show");
+                    document.querySelector("#sessions_lonm .confirm .title").innerText = msg;
+                    document.querySelector("#sessions_lonm .modal-container").classList.add("show");
                 }
 
                 /**
@@ -220,7 +215,7 @@
                  * @param e event
                  */
                 function deleteCancelClick(e){
-                    $("#sessions_lonm .modal-container").classList.remove("show");
+                    document.querySelector("#sessions_lonm .modal-container").classList.remove("show");
                 }
 
                 /**
@@ -256,7 +251,7 @@
                  * @returns DOM list item
                  */
                 function createListItem(session){
-                    const template = $("#sessions_lonm template.session_item");
+                    const template = document.querySelector("#sessions_lonm template.session_item");
                     const el = document.importNode(template.content, true);
                     el.querySelector("h3").innerText = session.name;
                     const date = new Date(session.createDateJS);
@@ -275,8 +270,8 @@
                  * @returns sessions array of session objects - sorted
                  */
                 function sortSessions(sessions){
-                    const sortRule = $("#sessions_lonm .sortselector-dropdown").value;
-                    const sortDescending = $("#sessions_lonm .direction-descending.selected");
+                    const sortRule = document.querySelector("#sessions_lonm .sortselector-dropdown").value;
+                    const sortDescending = document.querySelector("#sessions_lonm .direction-descending.selected");
                     if(sortRule==="visitTime" && sortDescending){
                         sessions.sort((a,b) => {return a.createDateJS - b.createDateJS;});
                     } else if (sortRule==="visitTime" && !sortDescending) {
@@ -295,7 +290,7 @@
                  * @returns DOM list of session items
                  */
                 function createList(sessions){
-                    const newList = $$("ul");
+                    const newList = document.createElement("ul");
                     sessions.forEach((session, index) => {
                         const li = createListItem(session, index);
                         newList.appendChild(li);
@@ -307,13 +302,13 @@
                  * Get the array of sessions and recreate the list in the panel
                  */
                 function updateList(){
-                    $("#sessions_lonm .modal-container").classList.remove("show");
-                    const existingList = $("#sessions_lonm .sessionslist ul");
+                    document.querySelector("#sessions_lonm .modal-container").classList.remove("show");
+                    const existingList = document.querySelector("#sessions_lonm .sessionslist ul");
                     existingList.parentElement.removeChild(existingList);
                     vivaldi.sessionsPrivate.getAll(items => {
                         const sorted = sortSessions(items);
                         const newList = createList(sorted);
-                        $("#sessions_lonm .sessionslist").appendChild(newList);
+                        document.querySelector("#sessions_lonm .sessionslist").appendChild(newList);
                     });
                 }
 
@@ -328,13 +323,13 @@
                  * Add the sort listeners on creation of panel
                  */
                 function onInit(){
-                    $a("#sessions_lonm .sortselector-button").forEach(el => {
+                    document.querySelectorAll("#sessions_lonm .sortselector-button").forEach(el => {
                         el.addEventListener("click", sortOrderChange);
                     });
-                    $("#sessions_lonm .sortselector-dropdown").addEventListener("change", sortMethodChange);
-                    $("#sessions_lonm .confirm .yes").addEventListener("click", deleteConfirmClick);
-                    $("#sessions_lonm .confirm .no").addEventListener("click", deleteCancelClick);
-                    $("#sessions_lonm .newSession .add-session").addEventListener("click", newSessionClick);
+                    document.querySelector("#sessions_lonm .sortselector-dropdown").addEventListener("change", sortMethodChange);
+                    document.querySelector("#sessions_lonm .confirm .yes").addEventListener("click", deleteConfirmClick);
+                    document.querySelector("#sessions_lonm .confirm .no").addEventListener("click", deleteCancelClick);
+                    document.querySelector("#sessions_lonm .newSession .add-session").addEventListener("click", newSessionClick);
                 }
 
                 return {
@@ -346,42 +341,47 @@
     };
 
 
-
     /**
      * Observe for changes to the UI, e.g. if panels are hidden by going in to fullscreen mode
      * This may require the panel buttons and panels to be re-converted
+     * Also, observe panels container, if class changes to switcher, the webstack is removed
      */
     const UI_STATE_OBSERVER = new MutationObserver(records => {
-        records.forEach(record => {
-            const usedToHaveMinimalUI = record.oldValue.indexOf("minimal-ui") > -1;
-            const nowHasMinimalUI = record.target.className.indexOf("minimal-ui") > -1;
-            if(usedToHaveMinimalUI && !nowHasMinimalUI){
-                convertWebPanelButtonstoAdvancedPanelButtons();
-                listenForNewPanelsAndConvertIfNecessary();
-            }
-        });
+        convertWebPanelButtonstoAdvancedPanelButtons();
+        listenForNewPanelsAndConvertIfNecessary();
     });
 
     /**
      * Observe UI state changes
      */
     function observeUIState(){
-        UI_STATE_OBSERVER.observe($("#browser"), {
+        const classInit = {
             attributes: true,
-            attributeFilter: ["class"],
-            attributeOldValue: true
-        });
+            attributeFilter: ["class"]
+        };
+        UI_STATE_OBSERVER.observe(document.querySelector("#browser"), classInit);
+        UI_STATE_OBSERVER.observe(document.querySelector("#panels-container"), classInit);
     }
 
+    const PANEL_STACK_CREATION_OBSERVER = new MutationObserver((records, observer) => {
+        observer.disconnect();
+        listenForNewPanelsAndConvertIfNecessary();
+    });
 
 
     /**
      * Start listening for new web panel stack children and convert any already open ones
      */
     function listenForNewPanelsAndConvertIfNecessary(){
-        WEBPANEL_CREATE_OBSERVER.observe($("#panels .webpanel-stack"), {childList: true});
-        const currentlyOpen = $a(".webpanel-stack .panel");
-        currentlyOpen.forEach(convertWebPanelToAdvancedPanel);
+        const panelStack = document.querySelector("#panels .webpanel-stack");
+        if(panelStack){
+            WEBPANEL_CREATE_OBSERVER.observe(panelStack, {childList: true});
+            const currentlyOpen = document.querySelectorAll(".webpanel-stack .panel");
+            currentlyOpen.forEach(convertWebPanelToAdvancedPanel);
+        } else {
+            const panels = document.querySelector("#panels");
+            PANEL_STACK_CREATION_OBSERVER.observe(panels, {childList: true});
+        }
     }
 
     /**
@@ -442,6 +442,9 @@
      *    vivaldi UI will crash when attempting to hide the panel
      * REMARK: Check that the panel isn't already an advanced panel
      *    before convert as this could be called after state change
+     * REMARK: it may take a while for vivaldi to update the title of
+     *    a panel, therefore after it is terminated, the title may
+     *    change to aborted. Title changing should be briefly delayed
      */
     function advancedPanelCreated(node, panel, panelID){
         if(node.getAttribute("advancedPanel")){
@@ -449,18 +452,17 @@
         }
         node.setAttribute("advancedPanel", "true");
         node.querySelector("webview").terminate();
-        if(node.querySelector("h1")){
-            node.querySelector("h1").innerHTML = panel.title;
-        }
-        const newHTML = $$("div");
+        const newHTML = document.createElement("div");
         newHTML.innerHTML = panel.initialHTML;
         node.appendChild(newHTML);
         node.id = panelID;
         panel.module().onInit();
         ADVANCED_PANEL_ACTIVATION.observe(node, {attributes: true, attributeFilter: ["class"]});
-        advancedPanelOpened(node);
+        if(node.querySelector("header.webpanel-header")){
+            advancedPanelOpened(node);
+            setTimeout(() => {updateAdvancedPanelTitle(node);}, 500);
+        }
     }
-
 
 
     /**
@@ -477,13 +479,21 @@
     /**
      * An advanced panel has been selected by the user and is now active
      * @param node DOM node of the advancedpanel activated
-     * REMARK: Vivaldi may change the panel title here, it will
-     *     need to be reset to the expected value each activation
      */
     function advancedPanelOpened(node){
+        updateAdvancedPanelTitle(node);
         const panel = CUSTOM_PANELS[node.id];
-        node.querySelector("h1").innerHTML = panel.title;
         panel.module().onActivate();
+    }
+
+    /**
+     * Update the header title of a panel
+     * @param node DOM node of the advancedpanel activated
+     */
+    function updateAdvancedPanelTitle(node){
+        const panel = CUSTOM_PANELS[node.id];
+        node.querySelector("header.webpanel-header h1").innerHTML = panel.title;
+        node.querySelector("header.webpanel-header h1").title = panel.title;
     }
 
 
@@ -494,9 +504,9 @@
     function convertWebPanelButtonstoAdvancedPanelButtons(){
         for(const key in CUSTOM_PANELS){
             const panel = CUSTOM_PANELS[key];
-            let switchBtn = $(`#switch button[title~="${panel.url}"`);
+            let switchBtn = document.querySelector(`#switch button[title~="${panel.url}"`);
             if(!switchBtn){
-                switchBtn = $(`#switch button[advancedPanelSwitch="${key}"`);
+                switchBtn = document.querySelector(`#switch button[advancedPanelSwitch="${key}"`);
                 if(!switchBtn){
                     console.warn(`Failed to find button for ${panel.title}`);
                     continue;
@@ -537,7 +547,8 @@
      * Start observing for additions or removals of web panel switches
      */
     function observePanelSwitchChildren(){
-        WEB_SWITCH_OBSERVER.observe($("#switch"), {childList: true});
+        const panelSwitch = document.querySelector("#switch");
+        WEB_SWITCH_OBSERVER.observe(panelSwitch, {childList: true});
     }
 
 
@@ -545,7 +556,7 @@
      * Initialise the mod. Checking to make sure that the relevant panel element exists first.
      */
     function initMod(){
-        if($("#panels .webpanel-stack")){
+        if(document.querySelector("#panels .webpanel-stack")){
             observeUIState();
             observePanelSwitchChildren();
             convertWebPanelButtonstoAdvancedPanelButtons();
