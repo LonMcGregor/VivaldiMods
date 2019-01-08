@@ -7,7 +7,6 @@
 .panel[advancedpanel="true"] header .toolbar .forward,
 .panel[advancedpanel="true"] header .toolbar .reload,
 .panel[advancedpanel="true"] header .toolbar .home,
-.panel[advancedpanel="true"] .webpanel-content, /* hide the web panel webview */
 .panel[advancedpanel="true"] footer /* this last one is to prevent collision with panel actions mod */ {
     display: none !important;
 }
