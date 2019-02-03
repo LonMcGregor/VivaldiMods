@@ -1,0 +1,26 @@
+.tab-header img {
+    order:  1;
+}
+
+.tab-header marquee.lonm-mediaMarquee {
+    order:  2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    padding-right: calc(var(--padding) * 0.5);
+    padding-left: var(--padding);
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: var(--fontSize);
+    -webkit-mask-image: -webkit-linear-gradient(0deg, transparent 0, #fff 12px, #fff calc(100% - 12px), transparent 100%);
+}
+
+
+.tab:not(.audio-on) .tab-header marquee.lonm-mediaMarquee,
+.tab.pinned .tab-header marquee.lonm-mediaMarquee {
+    display: none;
+}
+
+.tab-header .title {
+    order:  3;
+}
