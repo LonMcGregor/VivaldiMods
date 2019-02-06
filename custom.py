@@ -32,9 +32,7 @@ def register_mods(resources_loc):
 
 def copy_mods(resources_loc, mod_path, active_mods):
     target_location = os.path.join(resources_loc, 'user_modfiles')
-    if os.path.exists(target_location):
-        shutil.rmtree(target_location)
-        print("Erased old mods")
+    if not os.path.exists(target_location):
     os.makedirs(target_location)
     successful = []
     for modfile in glob.glob(os.path.join(mod_path, "*")):
@@ -90,5 +88,6 @@ mod_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mods')
 page_action_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pageActions')
 copy_mods(resources_loc, mod_path, config["active_mods"])
 register_mods(resources_loc)
+copy_mods(resources_loc, mod_path, config["mod_dependencies"])
 update_splash_screen(resources_loc, config["splash_bg"], config["splash_fg"])
 copy_page_actions(resources_loc, page_action_path, config["active_page_actions"])
