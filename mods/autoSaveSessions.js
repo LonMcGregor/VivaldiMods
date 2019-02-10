@@ -82,8 +82,12 @@ function autoSaveSession(){
 }
 
 /**
- * Init the mod
+ * Init the mod, but only if we are not incognito, to maintain privacy.
  */
-setInterval(autoSaveSession, SESSION_AUTOSAVE_DELAY);
+chrome.windows.getCurrent(window => {
+    if(!window.incognito){
+        setInterval(autoSaveSession, SESSION_AUTOSAVE_DELAY);
+    }
+});
 
 })();
