@@ -39,6 +39,10 @@ Stuff for Vivaldi Browser, Bringing together various gists into a repo
 4. Restart vivaldi if it was open
 
 
+## Uninstall Mods or Page Actions
+* Run the command `python3 custom.py -u config.json` - this will remove all mods and page actions
+* Alternatively, you can keep multiple json files, and when you install a different one, it will remove any changes and only keep the ones you specify
+
 ## Speed Dial Thumbnails
 There are some speed dial thumbnails in the *thumbs* folder.
 
