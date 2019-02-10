@@ -1,43 +1,42 @@
 # VivaldiMods
 Stuff for Vivaldi Browser, Bringing together various gists into a repo
 
-## Installing Mods
-1. Make or find a file called `mod_config.json`, with the following inside it:
+## Installing Mods or Page Actions
+1. Find the file called `config.json`, with the following inside it:
 ```
 {
     "application_path": "C:\\Program Files\\Vivaldi\\Application",
-    "active_mods": [
-        "addressbar_button_order",
+    "mods": [
+        "betterNotes.css",
+        "betterNotes.js",
+        "always_small_tab_audio.css",
+        "autoSaveSessions.js",
+        "bluescreen.css"
     ],
-    "active_page_actions": [],
-    "splash_fg": "#67d0ea",
-    "splash_bg": "#222"
+    "mod_dependencies": [
+        "betterNotesEditor.css",
+        "betterNotesEditor.html",
+        "betterNotesEditor.js",
+        "betterNotesEditor.png"
+    ],
+    "page_actions": [
+        "Image_Chequerboard.css"
+    ],
+    "splash_fg": "#ee77d9",
+    "splash_bg": "#444"
 }
 ```
 
-2. Make sure to set the values as you require them. Mods are named as they appear in the mods folder. As some mods may have both a `.js` and `.css` component, you just need to give a name without the extension, and any files that have this name will be installed as mods.
-3. Run the command `python3 custom.py` - Note that if you need admin permission to write to the Vivaldi directory, this script also requires it
+2. Make sure to set the values as you require them:
+    * **application_path** should point to where your vivaldi is installed
+    * **mods** is a list of css or js files that need to be added to `browser.html`. These will be added in the order that you specify, which is important for CSS mods that have cascading rules
+    * **mod_dependencies** is a list of any additional files you need to add in order to use your mods, but that you don't want to add to the actual browser. You won't need these except for very complex mods
+    * **page_actions** is a list of page actions you want to add
+    * **splash_fg** is a hex colour value for the splash screen's icon
+    * **splash_bg** is a hex colour value for the splash screen's background
+
+3. Run the command `python3 custom.py -i config.json` - Note that if you need admin permission to write to the Vivaldi directory, this script also requires it
 4. Restart vivaldi if it was open
-
-## Installing Page Actions
-1. Make or find a file called `mod_config.json`, with the following inside it:
-```
-{
-    "application_path": "C:\\Program Files\\Vivaldi\\Application",
-    "active_mods": [],
-    "active_page_actions": [
-        "Wide_Video.css"
-    ],
-    "splash_fg": "#67d0ea",
-    "splash_bg": "#222"
-}
-```
-2. In the array marked `active_page_actions`, list all of the page actions you want to include, specifying their file extension
-3. Important: **Every file should have a different name**, even if they have different extensions as vivaldi currently does not offer any way to differentiate them.
-4. Files should be named as you want them to appear in page actions, use a `_` symbol for spaces, and append`.css` or `.js` depending on the type of mod
-4. Run the command `python3 custom.py` - Note that if you need admin permission to write to the Vivaldi directory, this script also requires it
-5. Restart vivaldi if it was open
-5. Go into page actions and select any you want to activate
 
 
 ## Speed Dial Thumbnails

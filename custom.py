@@ -1,150 +1,191 @@
-import os, re, shutil, json, glob, sys
+import os, re, shutil, json, argparse
+import logging as log
 
-def load_config(location="mod_config.json"):
-    with open(location) as configfile:
-        return json.loads(configfile.read())
+# Parse arguments
+parser = argparse.ArgumentParser(description='Manage installing vivaldi mods')
+group = parser.add_mutually_exclusive_group(required=True)
+parser.add_argument('-v', '--verbose', action='count', help='Give more verbose output')
+group.add_argument('-u', '--uninstall', action='store_true', help='Uninstall mods')
+group.add_argument('-i', '--install', action='store_true', help='Install mods')
+parser.add_argument('configfile', type=argparse.FileType('r'), help='The configuration file to use')
+args = parser.parse_args()
 
-def get_newest_app_resource_dir(appdir):
-    dir = os.listdir(appdir)
+# Prep logger
+if args.verbose and args.verbose >= 2:
+    log.basicConfig(format='%(levelname)s - %(message)s', level=log.DEBUG)
+elif args.verbose == 1:
+    log.basicConfig(format='%(levelname)s - %(message)s', level=log.INFO)
+else:
+    log.basicConfig(format='%(levelname)s - %(message)s', level=log.WARNING)
+log.debug('Using very verbose logging')
+log.info('Using verbose logging')
+
+# Read from config file
+with args.configfile as configfile:
+    CONFIG = json.loads(configfile.read())
+
+# Gather directories and paths
+def get_app_resource_dir():
+    '''Get the vivaldi resource directory.
+    This assumes that the installer has already removed any older versions'''
+    dir = os.listdir(CONFIG['application_path'])
     matches = [item for item in dir if re.match(r'([0-9]+\.){3}[0-9]+', item)]
-    matches.sort()
-    newest_vivaldi = os.path.join(appdir, matches[-1], 'resources', 'vivaldi')
-    print("Using Vivaldi %s" % newest_vivaldi)
+    newest_vivaldi = os.path.join(CONFIG['application_path'], matches[0], 'resources', 'vivaldi')
+    log.info('Using Vivaldi %s' % newest_vivaldi)
     return newest_vivaldi
 
-def register_mods(resources_loc):
-    browser_loc = os.path.join(resources_loc, 'browser.html')
-    modfiles_loc = os.path.join(resources_loc, 'user_modfiles')
-    with open(browser_loc, 'r') as htmlfile:
-        contents = htmlfile.read()
-    for file in os.listdir(modfiles_loc):
-        if contents.find(file) != -1:
-            print("Already Registered %s" % file)
-            continue
-        if file[::-1][0:4] == "ssc.":
-            contents = contents.replace('</head>', '<link rel="stylesheet" href="user_modfiles/%s" /></head>' % file)
-        if file[::-1][0:3] == "sj.":
-            contents = contents.replace('</body>', '<script src="user_modfiles/%s"></script></body>' % file)
-        print("Registered %s" % file)
-    with open(browser_loc, 'w') as htmlfile:
-        htmlfile.write(contents)
-        print("Updated browser.html")
+RESOURCE_DIRECTORY = get_app_resource_dir()
+BROWSER_HTML = os.path.join(RESOURCE_DIRECTORY, 'browser.html')
+BROWSER_HTML_BAK = os.path.join(RESOURCE_DIRECTORY, 'browser.html.bak')
+PAGE_ACTION_DIR = os.path.join(RESOURCE_DIRECTORY, 'user_files')
+MODS_DIR = os.path.join(RESOURCE_DIRECTORY, 'mods')
+SPLASH_SVG = os.path.join(RESOURCE_DIRECTORY, 'resources', 'vivaldi-splash-icon.svg')
+PAGE_ACTION_INSTALL_LOG = os.path.join(RESOURCE_DIRECTORY, 'page_action_install.log')
+SOURCE_MODS_DIR = os.path.join(os.path.dirname(__file__), 'mods')
+SOURCE_ACTIONS_DIR = os.path.join(os.path.dirname(__file__), 'pageActions')
 
-def copy_mods(resources_loc, mod_path, active_mods):
-    target_location = os.path.join(resources_loc, 'user_modfiles')
-    if not os.path.exists(target_location):
-        os.makedirs(target_location)
-    successful = []
-    for modfile in glob.glob(os.path.join(mod_path, "*")):
-        mod = modfile.split(os.path.sep)[-1]
-        modname = mod.split(".")[0]
-        if modname in active_mods:
-            shutil.copyfile(modfile, os.path.join(target_location, mod))
-            print("Copied mod %s" % mod)
-            if modname not in successful:
-                successful.append(modname)
-    for mod in active_mods:
-        if mod not in successful:
-            print("/!\\ Could not install mod %s" % mod)
-            input("Press any key to continue...")
+def install():
+    '''Installs mods, and makes a backup of browser.html if needed'''
+    if os.path.exists(MODS_DIR):
+        uninstall()
+    else:
+        backup_html()
+    log.warning('Installing mods')
+    install_mods()
+    install_page_actions()
+    update_splash_screen(CONFIG['splash_bg'], CONFIG['splash_fg'])
 
-def update_splash_screen(resources_loc, background, foreground):
-    browser_loc = os.path.join(resources_loc, 'browser.html')
-    svg_loc = os.path.join(resources_loc, 'resources', 'vivaldi-splash-icon.svg')
-    with open(browser_loc, 'r') as htmlfile:
-        html_contents = htmlfile.read()
-    with open(svg_loc, 'r') as svgfile:
-        svg_contents = svgfile.read()
-    print("Updating browser splash background: %s" % background)
-    html_contents = re.sub("background-color: .+;", 'background-color: %s;' % background, html_contents)
-    with open(browser_loc, 'w') as htmlfile:
-        htmlfile.write(html_contents)
-    print("Updating browser splash foreground: %s" % foreground)
-    svg_contents = re.sub('g fill=".+"', 'g fill="%s"' % foreground, svg_contents)
-    with open(svg_loc, 'w') as svgfile:
-        svgfile.write(svg_contents)
+def uninstall():
+    '''Uninstalls all changes and mods'''
+    log.warning('Uninstalling old mods')
+    restore_html()
+    if os.path.exists(MODS_DIR):
+        shutil.rmtree(MODS_DIR)
+    else:
+        log.warning('No mods to remove')
+    uninstall_page_actions()
+    update_splash_screen("#d4d4d4", "rgba(0, 0, 0, 0.1)")
 
-def copy_page_actions(resources_loc, page_action_path, active_actions):
-    page_action_install_log = os.path.join(resources_loc, 'page_action_install.log')
-    target_location = os.path.join(resources_loc, 'user_files')
-    if not os.path.exists(target_location):
-        os.makedirs(target_location)
-    successful = []
-    already_recorded = []
-    if os.path.exists(page_action_install_log):
-        with open(page_action_install_log, "r") as log:
-            installed = log.read()
-            already_recorded = installed.split("\n")
-    for actionfile in glob.glob(os.path.join(page_action_path, "*")):
-        action = actionfile.split(os.path.sep)[-1]
-        if action in active_actions:
-            shutil.copyfile(actionfile, os.path.join(target_location, action))
-            print("Copied PA %s" % action)
-            if action not in successful:
-                successful.append(action)
-    with open(page_action_install_log, "r+") as log:
-        for pa in successful:
-            if pa not in already_recorded:
-                log.write(pa+"\n")
-    for action in active_actions:
-        if action not in successful:
-            print("/!\\ Could not install page action %s" % action)
-            input("Press any key to continue...")
+def backup_html():
+    '''Make a backup of the browser.html'''
+    log.info('Backing up browser.html')
+    shutil.copyfile(BROWSER_HTML, BROWSER_HTML_BAK)
 
+def restore_html():
+    '''Restore the backup of the browser.html'''
+    log.info('Restoring up browser.html')
+    if os.path.exists(BROWSER_HTML_BAK):
+        shutil.copyfile(BROWSER_HTML_BAK, BROWSER_HTML)
+    else:
+        log.error('No html back up to restore')
 
-def backup_html(resources_loc):
-    """Run this BEFORE install mods"""
-    print("Backing up browser.html")
-    html_loc = os.path.join(resources_loc, "browser.html")
-    html_dest = os.path.join(resources_loc, "browser.html.bak")
-    shutil.copyfile(html_loc, html_dest)
+def install_page_actions():
+    '''Installs the page actions
+    Creates the log if it doesn't exist'''
+    if not os.path.exists(PAGE_ACTION_INSTALL_LOG):
+        with open(PAGE_ACTION_INSTALL_LOG, 'w') as palog:
+            palog.write('')
+    for action in CONFIG['page_actions']:
+        install_one_page_action(action)
 
-def restore_html(resources_loc):
-    print("Restoring up browser.html")
-    html_loc = os.path.join(resources_loc, "browser.html")
-    html_dest = os.path.join(resources_loc, "browser.html.bak")
-    shutil.copyfile(html_dest, html_loc)
+def install_one_page_action(action):
+    '''Installs a single page action'''
+    try:
+        action_source_path = os.path.join(SOURCE_ACTIONS_DIR, action)
+        action_dest_path = os.path.join(PAGE_ACTION_DIR, action)
+        shutil.copyfile(action_source_path, action_dest_path)
+        log.info('Installed PA %s' % action)
+        with open(PAGE_ACTION_INSTALL_LOG, 'a') as palog:
+            palog.write(action+'\n')
+    except:
+        log.error('Failed to install PA &s' % action)
 
-def remove_added_page_actions(resources_loc):
-    print("Removing installed page actions")
-    page_action_install_log = os.path.join(resources_loc, 'page_action_install.log')
-    if not os.path.exists(page_action_install_log):
+def uninstall_page_actions():
+    '''Given the page action log of installed, delete
+    each of the added page actions, and then the log itself'''
+    if not os.path.exists(PAGE_ACTION_INSTALL_LOG):
+        log.warning('Tried to uninstall all page actions, but none are already installed')
         return
-    page_actions = []
-    with open(page_action_install_log, "r") as log:
-        installed = log.read()
-        page_actions = installed.split("\n")
-    target_location = os.path.join(resources_loc, 'user_files')
-    for pa in page_actions:
-        if pa != "":
-            path_to_pa = os.path.join(target_location, pa)
-            os.remove(path_to_pa)
-            print("Removed "+pa)
-    with open(page_action_install_log, "w") as log:
-        log.write("")
+    log.info('Uninstalling page actions')
+    with open(PAGE_ACTION_INSTALL_LOG, 'r') as palog:
+        for action in palog:
+            if action.strip() != '':
+                uninstall_page_action(action.strip())
+    os.remove(PAGE_ACTION_INSTALL_LOG)
 
-
-def uninstall_mods():
-    config = load_config()
-    resources_loc = get_newest_app_resource_dir(config["application_path"])
-    restore_html(resources_loc)
-    update_splash_screen(resources_loc, "#d4d4d4", "rgba(0, 0, 0, 0.1)")
-    remove_added_page_actions(resources_loc)
+def uninstall_page_action(action):
+    '''Uninstall one page action. Updating of log
+    will be handled elsewhere'''
+    try:
+        action_path = os.path.join(PAGE_ACTION_DIR, action)
+        os.remove(action_path)
+        log.info('Uninstalled PA %s' % action)
+    except:
+        log.error('Failed to uninstall PA %s' % action)
 
 def install_mods():
-    config = load_config()
-    resources_loc = get_newest_app_resource_dir(config["application_path"])
-    backup_html(resources_loc)
-    mod_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mods')
-    page_action_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pageActions')
-    copy_mods(resources_loc, mod_path, config["active_mods"])
-    register_mods(resources_loc)
-    copy_mods(resources_loc, mod_path, config["mod_dependencies"])
-    update_splash_screen(resources_loc, config["splash_bg"], config["splash_fg"])
-    copy_page_actions(resources_loc, page_action_path, config["active_page_actions"])
+    '''Install all of the specified mods, as well as
+    any specified mod dependencies'''
+    if not os.path.exists(MODS_DIR):
+        os.makedirs(MODS_DIR)
+    for mod in CONFIG['mods']:
+        if copy_mod_file(mod) and register_mod(mod):
+            log.info('Installed mod %s' % mod)
+    for dep in CONFIG['mod_dependencies']:
+        copy_mod_file(dep)
 
-args = sys.argv
-if len(sys.argv) > 1 and sys.argv[1] in ["uninstall", "u"]:
-    uninstall_mods()
-else:
-    install_mods()
+def copy_mod_file(mod):
+    '''Copy a single mod file'''
+    try:
+        mod_src = os.path.join(SOURCE_MODS_DIR, mod)
+        mod_dest = os.path.join(MODS_DIR, mod)
+        shutil.copyfile(mod_src, mod_dest)
+        log.debug('Copied mod %s' % mod)
+        return True
+    except:
+        log.error('Failed to copy mod %s' % mod)
+        return False
+
+def register_mod(mod):
+    '''Register a mod to browser.html'''
+    try:
+        with open(BROWSER_HTML, 'r') as htmlfile:
+            contents = htmlfile.read()
+        if mod[-4:] == '.css':
+            contents = contents.replace('</head>', '''<link rel="stylesheet" href="mods/%s" />
+</head>''' % mod)
+        elif mod[-3:] == '.js':
+            contents = contents.replace('</body>', '''<script src="mods/%s"></script>
+</body>''' % mod)
+        else: # Could also add svg case for path defs if needed
+            log.warning('Cannot register mod type %s' % mod)
+            return
+        with open(BROWSER_HTML, 'w') as htmlfile:
+            htmlfile.write(contents)
+        log.debug('Registered mod %s' % mod)
+        return True
+    except:
+        log.error('Failed to register mod %s' % mod)
+        return False
+
+def update_splash_screen(background, foreground):
+    '''Change the colours of the splash screen'''
+    with open(BROWSER_HTML, 'r') as htmlfile:
+        html_contents = htmlfile.read()
+    with open(SPLASH_SVG, 'r') as svgfile:
+        svg_contents = svgfile.read()
+    log.debug('Updating browser splash background: %s' % background)
+    html_contents = re.sub("background-color: .+;", 'background-color: %s;' % background, html_contents)
+    with open(BROWSER_HTML, 'w') as htmlfile:
+        htmlfile.write(html_contents)
+    log.debug('Updating browser splash foreground: %s' % foreground)
+    svg_contents = re.sub('g fill=".+"', 'g fill="%s"' % foreground, svg_contents)
+    with open(SPLASH_SVG, 'w') as svgfile:
+        svgfile.write(svg_contents)
+    log.info('Updated splash screen')
+
+# Run the program
+if args.install:
+    install()
+elif args.uninstall:
+    uninstall()
