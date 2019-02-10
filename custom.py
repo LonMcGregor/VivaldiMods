@@ -8,6 +8,7 @@ parser.add_argument('-v', '--verbose', action='count', help='Give more verbose o
 group.add_argument('-u', '--uninstall', action='store_true', help='Uninstall mods')
 group.add_argument('-i', '--install', action='store_true', help='Install mods')
 parser.add_argument('configfile', type=argparse.FileType('r'), help='The configuration file to use')
+parser.add_argument('-c', '--css', action='store_false', help='Dont combine all css files into one')
 args = parser.parse_args()
 
 # Prep logger
@@ -43,6 +44,8 @@ SPLASH_SVG = os.path.join(RESOURCE_DIRECTORY, 'resources', 'vivaldi-splash-icon.
 PAGE_ACTION_INSTALL_LOG = os.path.join(RESOURCE_DIRECTORY, 'page_action_install.log')
 SOURCE_MODS_DIR = os.path.join(os.path.dirname(__file__), 'mods')
 SOURCE_ACTIONS_DIR = os.path.join(os.path.dirname(__file__), 'pageActions')
+COMBINED_STYLE_NAME = 'lonm_mod_combined_styles.css'
+COMBINED_STYLE_PATH = os.path.join(MODS_DIR, COMBINED_STYLE_NAME)
 
 def install():
     '''Installs mods, and makes a backup of browser.html if needed'''
@@ -64,7 +67,7 @@ def uninstall():
     else:
         log.warning('No mods to remove')
     uninstall_page_actions()
-    update_splash_screen("#d4d4d4", "rgba(0, 0, 0, 0.1)")
+    update_splash_screen('#d4d4d4', 'rgba(0, 0, 0, 0.1)')
 
 def backup_html():
     '''Make a backup of the browser.html'''
@@ -128,7 +131,18 @@ def install_mods():
     any specified mod dependencies'''
     if not os.path.exists(MODS_DIR):
         os.makedirs(MODS_DIR)
+    if args.css:
+        css = combine_css_mods()
+        if os.path.exists(COMBINED_STYLE_PATH):
+            log.error('Conflict when combining CSS mods - a mod already exists called %s' % COMBINED_STYLE_NAME)
+        with open(COMBINED_STYLE_PATH, 'w') as css_file:
+            css_file.write(css)
+            log.debug('Wrote combined css')
+        if register_mod(COMBINED_STYLE_NAME):
+            log.info('Installed css mods as a single file')
     for mod in CONFIG['mods']:
+        if args.css and is_css(mod):
+            continue
         if copy_mod_file(mod) and register_mod(mod):
             log.info('Installed mod %s' % mod)
     for dep in CONFIG['mod_dependencies']:
@@ -151,10 +165,10 @@ def register_mod(mod):
     try:
         with open(BROWSER_HTML, 'r') as htmlfile:
             contents = htmlfile.read()
-        if mod[-4:] == '.css':
+        if is_css(mod):
             contents = contents.replace('</head>', '''<link rel="stylesheet" href="mods/%s" />
 </head>''' % mod)
-        elif mod[-3:] == '.js':
+        elif is_js(mod):
             contents = contents.replace('</body>', '''<script src="mods/%s"></script>
 </body>''' % mod)
         else: # Could also add svg case for path defs if needed
@@ -175,7 +189,7 @@ def update_splash_screen(background, foreground):
     with open(SPLASH_SVG, 'r') as svgfile:
         svg_contents = svgfile.read()
     log.debug('Updating browser splash background: %s' % background)
-    html_contents = re.sub("background-color: .+;", 'background-color: %s;' % background, html_contents)
+    html_contents = re.sub('background-color: .+;', 'background-color: %s;' % background, html_contents)
     with open(BROWSER_HTML, 'w') as htmlfile:
         htmlfile.write(html_contents)
     log.debug('Updating browser splash foreground: %s' % foreground)
@@ -183,6 +197,29 @@ def update_splash_screen(background, foreground):
     with open(SPLASH_SVG, 'w') as svgfile:
         svgfile.write(svg_contents)
     log.info('Updated splash screen')
+
+def combine_css_mods() :
+    '''Combine all of the css mods and
+    return as a long string
+    Don't use mod dependencies'''
+    css = ''
+    for mod in CONFIG['mods']:
+        if is_css(mod):
+            css += '''
+/** --- %s --- **/
+''' % mod
+            mod_path = os.path.join(SOURCE_MODS_DIR, mod)
+            with open(mod_path, 'r') as cssmodfile:
+                css += cssmodfile.read()
+    return css
+
+def is_js(mod):
+    '''is this a javascript mod'''
+    return mod[-3:] == '.js'
+
+def is_css(mod):
+    '''is this a css style mod'''
+    return mod[-4:] == '.css'
 
 # Run the program
 if args.install:

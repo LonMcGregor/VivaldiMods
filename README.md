@@ -38,6 +38,8 @@ Stuff for Vivaldi Browser, Bringing together various gists into a repo
 3. Run the command `python3 custom.py -i config.json` - Note that if you need admin permission to write to the Vivaldi directory, this script also requires it
 4. Restart vivaldi if it was open
 
+### Combining CSS
+By default, the mod will combine all css files into a single stylesheet. If you would prefer not to do this, use the additional `-c` argument when running the script.
 
 ## Uninstall Mods or Page Actions
 * Run the command `python3 custom.py -u config.json` - this will remove all mods and page actions
