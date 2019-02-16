@@ -1,0 +1,21 @@
+{
+    "application_path": "C:\\Program Files\\Vivaldi\\Application",
+    "mods": [
+        "betterNotes.css",
+        "betterNotes.js",
+        "always_small_tab_audio.css",
+        "autoSaveSessions.js",
+        "bluescreen.css"
+    ],
+    "mod_dependencies": [
+        "betterNotesEditor.css",
+        "betterNotesEditor.html",
+        "betterNotesEditor.js",
+        "betterNotesEditor.png"
+    ],
+    "page_actions": [
+        "Image_Chequerboard.css"
+    ],
+    "splash_fg": "#ee77d9",
+    "splash_bg": "#444"
+}

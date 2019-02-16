@@ -1,0 +1,54 @@
+@keyframes lonm-mediaMarqueeScroll {
+    0% {
+        transform: translateX(5px);
+    }
+    5% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.tab-header img {
+    order:  1;
+}
+
+.tab-header .lonm-mediaMarqueeOuter {
+    order:  2;
+}
+
+.tab-header .title {
+    order: 3;
+}
+
+.tab-header .close {
+    order: 4;
+}
+
+.tab-header .tab-audio {
+    order: 5;
+}
+
+.tab-header .lonm-mediaMarqueeOuter {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    padding-right: calc(var(--padding) * 0.5);
+    padding-left: var(--padding);
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: var(--fontSize);
+    -webkit-mask-image: -webkit-linear-gradient(0deg, transparent 0, #fff 12px, #fff calc(100% - 12px), transparent 100%);
+}
+
+.tab-header .lonm-mediaMarqueeInner {
+    animation-name: lonm-mediaMarqueeScroll;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.tab:not(.audio-on) .tab-header .lonm-mediaMarqueeOuter,
+.tab.pinned .tab-header .lonm-mediaMarqueeOuter {
+    display: none;
+}

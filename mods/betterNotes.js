@@ -15,7 +15,7 @@ const EDITOR_TOOLTIP = {
     fr_FR: "Ouvrir l'éditeur de notes"
 }.en_GB;
 
-const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/user_modfiles/betterNotesEditor.html";
+const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/mods/betterNotesEditor.html";
 const VIVALDI_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/browser.html";
 const VIVALDI_ORIGIN = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli";
 let EDITOR_SOURCE;
