@@ -57,6 +57,44 @@ span.vivaldi-v svg path {
     box-shadow: inset 0px 1px 1px rgb(210, 205, 205);
 }
 
+.tab-position .tab.tab.tab:not(.active) {
+    color: var(--colorFg)
+}
+
+.tab-position .tab .close {
+    display: block;
+}
+
+.toolbar-addressbar .bookmark.bookmarked {
+    filter: saturate(20);
+}
+.tab-position .tab .tab-header {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    flex: 0 0 24px;
+}
+
+.tab-position .tab.pinned .tab-header {
+    padding-left: 5px;
+}
+
+.tab-position {
+    height: 24px !important;
+}
+
+div#tabs-container {
+    height: 24px !important;
+    padding-top: 2px !important;
+}
+
+button.close {
+    transform: scale(0.8);
+    position: relative;
+    top: 1px;
+}
+
 
 /* panels */
 #switch {
@@ -104,7 +142,7 @@ button.button-addressfield.addressfield-siteinfo {
     fill: #565656;
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.web:not(:hover):after {
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.web:after {
     content: 'Web';
     padding-right: 8px;
     color: #333333;
@@ -126,7 +164,7 @@ button.button-addressfield.addressfield-siteinfo {
     fill: #5b4e1a;
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.secure:not(:hover):after {
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.secure:after {
     content: 'Secure';
     padding-right: 8px;
     color: #664c00;
@@ -148,7 +186,7 @@ button.button-addressfield.addressfield-siteinfo {
     fill: #23421d;
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.certified:not(:hover):after {
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.certified:after {
     content: 'Trusted';
     padding-right: 8px;
     color: #114000;
@@ -174,7 +212,7 @@ button.button-addressfield.addressfield-siteinfo {
     fill: #421d1d;
 }
 
-#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.insecure:not(:hover):after {
+#main > div.toolbar-addressbar.search.toolbar > div.addressfield > button.button-addressfield.addressfield-siteinfo.insecure:after {
     content: 'Unsafe';
     padding-right: 8px;
     color: #400000;
@@ -269,11 +307,11 @@ button.button-addressfield.addressfield-siteinfo {
     background-image:  url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWBAMAAAA2mnEIAAAAD1BMVEUAAAAAAAAAAAAAAAD///9PsMGfAAAABXRSTlMAAkCgqG7y1MkAAAA+SURBVBjTY2AgEjAKIthKSgpwYRUXRSxsRkEgWxCmWsUFqgOoAgQU8bEZlI1NXIyNFTDMwWUXSIcCVneSAABDMguxg1+ngAAAAABJRU5ErkJggg==);
 }
 
-.toolbar-addressbar button:hover {
+.toolbar-addressbar .toolbar button:hover {
     background-color: transparent !important;
 }
 
-.toolbar-addressbar button:hover {
+.toolbar-addressbar .toolbar button:hover {
     border: 1px solid #bbbbbb;
     border-radius: 4px;
     position: relative;
@@ -371,11 +409,11 @@ button.button-addressfield.addressfield-siteinfo {
     transform: scaleX(1) scaleY(1);
 }
 .dials .dial:hover {
-    border: 4px solid black;
+    border: 4px solid #888;
     border-radius: var(--radius);
 }
 .dials .dial:hover .button-title {
-    border: 4px solid black;
+    border: 4px solid #888;
     border-top: 0px;
     border-radius: 0px 0px var(--radius) var(--radius);
 }
