@@ -4,13 +4,24 @@
 * For other languages, replace "Site info" with whatever your locale string is
 */
 
-div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:not(:focus):not(:focus-within){
+div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:not(:focus):not(:focus-within):not(:hover){
     opacity: 0;
 }
+div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:hover,
 div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
 div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
     opacity: 1;
     background: var(--colorBgLight);
+}
+.animation-on div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield {
+   transition: all 0.3s ease;
+}
+.animation-on div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:hover {
+   transition-delay: 0.3s;
+}
+.animation-on div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
+.animation-on div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within {
+   transition: none;
 }
 .private div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus,
 .private div.addressfield > button[title="Site info"] + form:not([data-url=""]) input.url.vivaldi-addressfield:focus-within{
