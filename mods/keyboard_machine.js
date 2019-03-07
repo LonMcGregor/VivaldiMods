@@ -24,19 +24,6 @@
                 button.click();
             });
             webPanels[webPanels.length-1].click();
-        },
-        "Shift+Alt+F3": () => { /* make page text yellow */
-            chrome.tabs.executeScript({
-                code: "document.body.style.color = 'yellow';"
-            });
-        },
-        "Ctrl+Alt+T": () => { /* open a new tab to a random wikipedia article */
-            chrome.tabs.create({
-                url: "https://en.wikipedia.org/wiki/Special:Random"
-            });
-        },
-        "Ctrl+T": () => {
-            console.log("This normally opens a tab, but you can now do something else at the same time!");
         }
     };
 
@@ -46,7 +33,6 @@
      * @param {boolean} extras I don't know what this does, but it's an extra argument
      */
     function keyCombo(combination, extras){
-        console.log(combination, extras);
         const customShortcut = SHORTCUTS[combination];
         if(customShortcut){
             customShortcut();
