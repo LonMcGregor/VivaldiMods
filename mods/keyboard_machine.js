@@ -7,54 +7,49 @@
 
 (function keyboardMachine(){
     /**
-    * Add custom buttons here
-    *
-    * key: String of what keys to press - written in the form (CTRL+SHIFT+ALT+KEY)
-    * onpress: What to do when the shortcut is pressed
-    * contentScript: do something in a content script
+    * Add custom commands here
+    * key: String of what keys to press - written in the form (Ctrl+Shift+Alt+Key)
+    * value: A function describing what to do when the key is pressed
     */
     const SHORTCUTS = {
-        ClseOpenPanel: {
-            key: "SHIFT+F4",
-            onpress: () => {
-                const btn = document.querySelector("#switch button.active");
+        "Shift+F4": () => { /* close the active panel */
+            const btn = document.querySelector("#switch button.active");
+            if(btn){
                 btn.click();
             }
+        },
+        "Ctrl+Shift+F4": () => { /* load all the web panels */
+            const webPanels = document.querySelectorAll("#switch button.webviewbtn");
+            webPanels.forEach(button => {
+                button.click();
+            });
+            webPanels[webPanels.length-1].click();
+        },
+        "Shift+Alt+F3": () => { /* make page text yellow */
+            chrome.tabs.executeScript({
+                code: "document.body.style.color = 'yellow';"
+            });
+        },
+        "Ctrl+Alt+T": () => { /* open a new tab to a random wikipedia article */
+            chrome.tabs.create({
+                url: "https://en.wikipedia.org/wiki/Special:Random"
+            });
+        },
+        "Ctrl+T": () => {
+            console.log("This normally opens a tab, but you can now do something else at the same time!");
         }
     };
 
     /**
-     * Perform a content script activity
-     * @param {function} func
+     * Handle a potential keyboard shortcut
+     * @param {String} combination written in the form (CTRL+SHIFT+ALT+KEY)
+     * @param {boolean} extras I don't know what this does, but it's an extra argument
      */
-    function doContentScript(func){
-        chrome.tabs.executeScript({
-            code: `(${func})()`
-        });
-    }
-
-    /**
-     * Add a listener for a shortcut definition
-     * @param {KeyboardEvent} e - a keypress
-     */
-    function heyListen(e){
-        let expectedKey = "";
-        expectedKey += e.ctrlKey ? "CTRL+" : "";
-        expectedKey += e.shiftKey ? "SHIFT+" : "";
-        expectedKey += e.altKey ? "ALT+" : "";
-        expectedKey += e.key.toUpperCase();
-        for (const name in SHORTCUTS) {
-            if (SHORTCUTS.hasOwnProperty(name)) {
-                const def = SHORTCUTS[name];
-                if(def.key===expectedKey){
-                    if(def.onpress){
-                        def.onpress();
-                    }
-                    if(def.contentScript){
-                        doContentScript(def.contentScript);
-                    }
-                }
-            }
+    function keyCombo(combination, extras){
+        console.log(combination, extras);
+        const customShortcut = SHORTCUTS[combination];
+        if(customShortcut){
+            customShortcut();
         }
     }
 
@@ -62,11 +57,11 @@
      * Check that the browser is loaded up properly, and init the mod
      */
     function initMod(){
-        if(!document.querySelector("#browser")){
+        if(document.querySelector("#browser")){
+            vivaldi.tabsPrivate.onKeyboardShortcut.addListener(keyCombo);
+        } else {
             setTimeout(initMod, 500);
-            return;
         }
-        document.addEventListener("keyup", heyListen);
     }
     initMod();
 })();
