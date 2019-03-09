@@ -16,6 +16,9 @@
             const btn = document.querySelector("#switch button.active");
             if(btn){
                 btn.click();
+                lastActivePanel = btn;
+            } else if(lastActivePanel){
+                lastActivePanel.click();
             }
         },
         "Ctrl+Shift+F4": () => { /* load all the web panels */
@@ -24,8 +27,26 @@
                 button.click();
             });
             webPanels[webPanels.length-1].click();
+        },
+        "Shift+V": () => { /* paste and go into a new tab */
+            /*navigator.clipboard.readText()
+            .then(text => {
+                console.log('Pasted content: ', text);
+            })
+            .catch(err => {
+                console.error('Failed to read clipboard contents: ', err);
+            });*/ /* The "proper" clipboard API does't work, so
+            hack it by simulating relevant actions */
+            chrome.tabs.create({}, () => {
+                document.querySelector("input.url.vivaldi-addressfield").focus();
+                document.execCommand("paste");
+                document.querySelector("button.addressfield-siteinfo").click();
+            });
         }
     };
+
+    /* remember last active panel */
+    let lastActivePanel;
 
     /**
      * Handle a potential keyboard shortcut
