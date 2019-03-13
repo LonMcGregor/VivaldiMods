@@ -28,7 +28,7 @@
             });
             webPanels[webPanels.length-1].click();
         },
-        "Shift+V": () => { /* paste and go into a new tab */
+        "Ctrl+Shift+V": () => { /* paste and go into a new tab */
             /*navigator.clipboard.readText()
             .then(text => {
                 console.log('Pasted content: ', text);
