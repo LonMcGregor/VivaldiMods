@@ -347,17 +347,18 @@
         if(document.querySelector("#betterNotesOpenEditor") || !document.querySelector("#notes-panel")){
             return;
         }
-        const newBtn = document.createElement("button");
-        newBtn.title = EDITOR_TOOLTIP;
-        newBtn.innerHTML = `<svg viewBox="-5 -5 26 26" xmlns="http://www.w3.org/2000/svg">
+        const newBtnContainer = document.createElement("div");
+        newBtnContainer.className = "button-toolbar";
+        newBtnContainer.innerHTML = `<button draggable="false" tabindex="-1" title="${EDITOR_TOOLTIP}" id="betterNotesOpenEditor">
+    <svg viewBox="-5 -5 26 26" xmlns="http://www.w3.org/2000/svg">
         <g fill-rule="evenodd">
         <path d="M0 4h16v10H0V4zm2 2h12v6H2V6zM0 1h7v3H0z"></path>
         <path opacity=".5" d="M8 1h8v2H8z"></path>
         </g>
-    </svg>`;
-        newBtn.id = "betterNotesOpenEditor";
-        newBtn.addEventListener("click", openNotesTab);
-        document.querySelector("#notes-panel > header > div > span").appendChild(newBtn);
+    </svg>
+</button>`;
+        newBtnContainer.querySelector("button").addEventListener("click", openNotesTab);
+        document.querySelector("#notes-panel > header > div > div").appendChild(newBtnContainer);
     }
 
     /**
