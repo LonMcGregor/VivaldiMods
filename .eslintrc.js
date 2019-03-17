@@ -25,5 +25,8 @@ module.exports = {
             "error",
             "always"
         ]
+    },
+    "globals": {
+        "vivaldi": "readonly"
     }
 };
