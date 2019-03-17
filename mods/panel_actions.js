@@ -152,8 +152,10 @@
      * @returns dom object
      */
     function createActionButton(action, webview){
+        const newBtnDiv = document.createElement("div");
+        newBtnDiv.className = action.display_class+" button-toolbar mod-panel-action";
         const newBtn = document.createElement("button");
-        newBtn.className = action.display_class+" button-toolbar-small mod-panel-action";
+        newBtn.className = action.display_class+" button-toolbar mod-panel-action";
         newBtn.innerHTML = action.display;
         newBtn.addEventListener("click", event => {
             let eventSource = event.target;
@@ -163,7 +165,8 @@
             action.script(eventSource, webview);
         });
         newBtn.title = action.title;
-        return newBtn;
+        newBtnDiv.appendChild(newBtn);
+        return newBtnDiv;
     }
 
     /**
@@ -174,11 +177,14 @@
         const alreadyAdded = panel.querySelector("footer");
         if(alreadyAdded){return;}
         const footer = document.createElement("footer");
+        const footerToolbar = document.createElement("div");
+        footerToolbar.className = "toolbar";
+        footer.appendChild(footerToolbar);
         const webview = panel.querySelector("webview");
         for(const key in ACTIONS){
             const action = ACTIONS[key];
             const newButton = createActionButton(action, webview);
-            footer.appendChild(newButton);
+            footerToolbar.appendChild(newButton);
         }
         panel.appendChild(footer);
     }
