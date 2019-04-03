@@ -17,6 +17,9 @@ to change how long tab texts are displayed.
 */
 
 /*
+LM 2019-04-03
+Fix positioning issue with snapshot Vivaldi 2.5.1504.6 / Chrome 73.0.3683.88
+
 Mod 02 LM 2018-APR-08
 - Fix slight offset in side tabs causing hover issues
 - Make thumb hover animations obey user setting
@@ -56,6 +59,11 @@ Mod 01 OA 04/08/18
 /* Fixes issues with Thumbnails */
 .tab-strip .tab-position:hover {
   z-index: 17 !important;
+}
+
+/* fix positioning problem in snapshot */
+.stacks-on .tab-strip .tab .tab-group-indicator {
+  position: absolute;
 }
 
 /* Make the tab group indicator vertical below tab header */
