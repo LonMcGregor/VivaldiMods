@@ -24,7 +24,7 @@
             onclick: () => {
                 vivaldi.utilities.openTaskManager(() => {});
             },
-            placeAfter: "#browser > .toolbar-statusbar > div:nth-child(10)"
+            placeAfter: "#switch button.addwebpanel"
         }
     };
 
