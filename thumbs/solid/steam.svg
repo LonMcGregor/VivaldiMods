@@ -1,0 +1,57 @@
+<ns0:svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.inkscape.org/namespaces/inkscape" xmlns:ns2="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns3="http://www.w3.org/1999/xlink" xmlns:ns5="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" height="360" id="svg2" version="1.1" viewBox="0 0 439.99998 359.99998" width="440" ns2:docname="drawing.svg" ns1:export-filename="C:\Users\lonm\AppData\Local\Vivaldi\Application\VivaldiMods\sd\rss.png" ns1:export-xdpi="90" ns1:export-ydpi="90" ns1:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <ns0:defs id="defs4">
+    <ns0:linearGradient id="linearGradient4465" ns1:collect="always">
+      <ns0:stop id="stop4467" offset="0" style="stop-color:#4d4d4d;stop-opacity:1;" />
+      <ns0:stop id="stop4469" offset="1" style="stop-color:#4d4d4d;stop-opacity:0;" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="linearGradient4395" ns1:collect="always">
+      <ns0:stop id="stop4397" offset="0" style="stop-color:#0055ae;stop-opacity:1" />
+      <ns0:stop id="stop4399" offset="1" style="stop-color:#00c8ff;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="linearGradient4796" ns1:collect="always">
+      <ns0:stop id="stop4798" offset="0" style="stop-color:#79a7d3;stop-opacity:1" />
+      <ns0:stop id="stop4800" offset="1" style="stop-color:#c5daee;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="linearGradient4729" ns1:collect="always">
+      <ns0:stop id="stop4731" offset="0" style="stop-color:#ffffff;stop-opacity:1" />
+      <ns0:stop id="stop4733" offset="1" style="stop-color:#ffffff;stop-opacity:0" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="linearGradient4250" ns1:collect="always">
+      <ns0:stop id="stop4252" offset="0" style="stop-color:#304a96;stop-opacity:1" />
+      <ns0:stop id="stop4254" offset="1" style="stop-color:#435dad;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="linearGradient4210" ns1:collect="always">
+      <ns0:stop id="stop4212" offset="0" style="stop-color:#f78c27;stop-opacity:1;" />
+      <ns0:stop id="stop4214" offset="1" style="stop-color:#f89d48;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient gradientUnits="userSpaceOnUse" id="linearGradient4218" x1="276.129" x2="276.129" y1="366.45157" y2="-196.12901" ns1:collect="always" ns3:href="#linearGradient4210" />
+    <ns0:linearGradient gradientTransform="translate(7.7419346,-6.4516121)" gradientUnits="userSpaceOnUse" id="linearGradient4256" x1="222.62456" x2="222.62456" y1="380.07266" y2="28.800304" ns1:collect="always" ns3:href="#linearGradient4250" />
+    <ns0:radialGradient cx="238.70966" cy="336.90521" fx="238.70966" fy="336.90521" gradientTransform="matrix(-2.4823655e-5,-1.4762499,1.5797985,6.9966776e-8,-293.52678,604.00794)" gradientUnits="userSpaceOnUse" id="radialGradient4737" r="179.18113" ns1:collect="always" ns3:href="#linearGradient4729" />
+    <ns0:linearGradient gradientTransform="matrix(0.6860235,0,0,0.80266787,-12.616935,-5.9942279)" gradientUnits="userSpaceOnUse" id="linearGradient4802" x1="285.16125" x2="285.16125" y1="416.77414" y2="-167.55597" ns1:collect="always" ns3:href="#linearGradient4796" />
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5077">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5079" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5083">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5085" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+    <ns0:linearGradient gradientTransform="matrix(0.87834551,0,0,0.83999999,9.0583613,2.4947695)" gradientUnits="userSpaceOnUse" id="linearGradient4401" x1="-25.455841" x2="489.31784" y1="204.43648" y2="204.43648" ns1:collect="always" ns3:href="#linearGradient4395" />
+    <ns0:linearGradient gradientTransform="translate(3.6249996,4.4999995)" gradientUnits="userSpaceOnUse" id="linearGradient4471" x1="204.99997" x2="324.99997" y1="197.99997" y2="341.99997" ns1:collect="always" ns3:href="#linearGradient4465" />
+  </ns0:defs>
+  <ns2:namedview bordercolor="#666666" borderlayer="true" borderopacity="1.0" id="base" pagecolor="#ffffff" showgrid="false" units="px" ns1:current-layer="layer16" ns1:cx="126.77491" ns1:cy="245.66851" ns1:document-units="px" ns1:pageopacity="0.0" ns1:pageshadow="2" ns1:snap-global="false" ns1:window-height="997" ns1:window-maximized="1" ns1:window-width="1680" ns1:window-x="1912" ns1:window-y="22" ns1:zoom="1">
+    <ns1:grid id="grid4875" type="xygrid" />
+  </ns2:namedview>
+  <ns0:metadata id="metadata7">
+    <rdf:RDF>
+      <ns5:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </ns5:Work>
+    </rdf:RDF>
+  </ns0:metadata>
+  <ns0:g id="layer4" style="display:inline" ns2:insensitive="true" ns1:groupmode="layer" ns1:label="steam">
+    <ns0:rect height="430.96768" id="rect4727" style="opacity:1;fill:#1b2838;fill-opacity:1;stroke:none;stroke-width:11;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" width="740.64508" x="-147.09676" y="-34.838707" />
+    <ns0:path d="m 351.91625,98.220224 c -25.55819,0 -46.5065,20.519556 -47.23141,45.909256 l -32.76881,48.00404 c -0.69203,-0.0413 -1.38714,-0.067 -2.0892,-0.067 -6.07541,0 -11.79414,1.57447 -16.7777,4.32901 l -140.4669,-58.24916 c -4.12976,-15.61539 -18.397695,-27.19302 -35.276415,-27.19298 -20.088413,0 -36.486973,16.39856 -36.486973,36.48696 0,20.08841 16.39856,36.48419 36.486973,36.48419 7.263834,0 14.03953,-2.15391 19.737162,-5.84082 l 139.066663,57.66621 c 3.92761,14.94458 17.57237,26.02985 33.71719,26.02985 18.72635,0 34.08667,-14.91398 34.82175,-33.46615 l 48.71532,-35.59996 c 25.34725,-0.77286 45.81721,-21.70132 45.81721,-47.22862 0,-26.01276 -21.2521,-47.264869 -47.26486,-47.264869 z m 0,15.391416 c 17.69476,0 31.87344,14.17869 31.87344,31.87345 0,17.69477 -14.17868,31.87345 -31.87344,31.87345 -17.69481,0 -31.87346,-14.17868 -31.87346,-31.87345 0,-17.69476 14.17865,-31.87345 31.87346,-31.87345 z m 0,7.11553 c -13.67356,-3.3e-4 -24.75826,11.08436 -24.75793,24.75792 -3.3e-4,13.67356 11.08437,24.75825 24.75793,24.75793 13.67356,3.2e-4 24.75824,-11.08437 24.75791,-24.75793 3.3e-4,-13.67356 -11.08435,-24.75825 -24.75791,-24.75792 z m -274.610435,0.65271 c 8.79994,0 16.523487,4.31774 21.235022,10.94525 l -12.052611,-4.99845 c -2.632071,-1.1354 -5.465228,-1.73104 -8.331672,-1.75168 -10.304028,-0.0731 -19.200451,7.1995 -21.177823,17.31229 -1.97737,10.11278 3.524523,20.20068 13.09719,24.01414 l 13.821036,5.73203 c -2.10723,0.545 -4.307003,0.86469 -6.591142,0.86469 -14.454147,0 -26.06053,-11.60361 -26.06053,-26.05775 0,-14.45415 11.606383,-26.06052 26.06053,-26.06052 z m 192.521015,80.55249 c 13.86069,0 24.98943,11.13154 24.98943,24.99222 0,13.86069 -11.12874,24.98944 -24.98943,24.98944 -8.52479,0 -16.00449,-4.22007 -20.5098,-10.68584 l 11.65095,4.83108 c 10.97694,4.75192 23.71874,-0.40488 28.30089,-11.45375 4.58216,-11.04888 -0.77039,-23.70968 -11.88859,-28.121 L 266.859,202.12205 c 0.9742,-0.1141 1.96166,-0.18968 2.96783,-0.18968 z" id="path4703" style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#radialGradient4737);fill-opacity:1;fill-rule:evenodd;stroke:#1b2838;stroke-width:2.09999967;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" ns2:nodetypes="sccsccsssccsccssssssscccccscccsccssssssccsccs" ns1:connector-curvature="0" />
+  </ns0:g>
+  <ns0:style id="style4337">.st0{fill:#7289DA;}</ns0:style>
+</ns0:svg>

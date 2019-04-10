@@ -1,0 +1,35 @@
+<ns0:svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.inkscape.org/namespaces/inkscape" xmlns:ns2="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns4="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" height="340" id="svg2" version="1.1" viewBox="0 0 412.49997 318.74999" width="440" ns2:docname="drawing.svg" ns1:export-filename="C:\Users\lonm\Downloads\ow.png" ns1:export-xdpi="96" ns1:export-ydpi="96" ns1:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <ns0:defs id="defs4">
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5077">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5079" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5083">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5085" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath4430">
+      <ns0:rect height="8.676198" id="rect4432" ry="3.0829127" style="opacity:1;fill:#00668e;fill-opacity:1;stroke:none;stroke-width:5.5;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0" transform="matrix(0.92779282,0.3730958,0,1,0,0)" width="14.766437" x="159.42989" y="45.031303" />
+    </ns0:clipPath>
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5083-4">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5085-4" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+    <ns0:clipPath clipPathUnits="userSpaceOnUse" id="clipPath5077-8">
+      <ns0:path d="m 220.41328,280.29231 -57.01387,-99.68683 c -13.81113,-24.14828 21.21098,-38.72294 32.28552,-19.54127 l 25.40165,43.99696 c 7.22892,11.94804 17.02098,21.68487 31.20348,19.50648 12.59029,-1.93383 24.39895,-9.98538 26.76069,-19.50648 1.99565,-8.04525 3.70591,-16.66074 0,-22.661 -7.54266,-12.21236 -0.77295,-30.55802 14.7719,-30.50765 18.10738,0.0587 23.43704,18.12513 17.55882,28.34222 l -57.06613,99.1882 c -9.30258,16.16906 -27.8101,11.52096 -33.90206,0.86937 z" id="path5079-4" style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" ns2:nodetypes="ssscsssssss" ns1:connector-curvature="0" />
+    </ns0:clipPath>
+  </ns0:defs>
+  <ns2:namedview bordercolor="#666666" borderlayer="true" borderopacity="1.0" id="base" pagecolor="#ffffff" showgrid="false" showguides="false" units="px" ns1:current-layer="layer2" ns1:cx="199.55698" ns1:cy="179.3243" ns1:document-units="px" ns1:pagecheckerboard="true" ns1:pageopacity="0" ns1:pageshadow="2" ns1:snap-global="false" ns1:window-height="997" ns1:window-maximized="1" ns1:window-width="1680" ns1:window-x="1912" ns1:window-y="22" ns1:zoom="2">
+    <ns1:grid id="grid4875" originx="0" originy="0" spacingx="1" spacingy="1" type="xygrid" />
+  </ns2:namedview>
+  <ns0:metadata id="metadata7">
+    <rdf:RDF>
+      <ns4:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </ns4:Work>
+    </rdf:RDF>
+  </ns0:metadata>
+  <ns0:style id="style4337">.st0{fill:#7289DA;}</ns0:style>
+  <ns0:g id="layer6" style="display:inline" transform="translate(0,-21.249986)" ns2:insensitive="true" ns1:groupmode="layer" ns1:label="netflix">
+    <ns0:path d="m 84.602199,220.12577 c -5.048158,0.88647 -10.185132,1.15225 -15.499077,1.86013 L 52.894871,174.51404 v 49.50928 c -5.048162,0.53122 -9.653578,1.23975 -14.436289,1.94827 v -90.69322 h 13.46264 l 18.421656,51.45854 v -51.45854 h 14.259321 z m 27.898921,-51.63453 c 5.49157,0 13.90539,-0.26578 18.95356,-0.26578 v 14.17051 c -6.28858,0 -13.63928,0 -18.95356,0.26578 v 21.07945 c 8.32568,-0.53123 16.65101,-1.24041 25.0645,-1.50619 v 13.63862 l -39.235663,3.10054 v -83.6958 h 39.235663 v 14.17084 h -25.0645 z m 77.76215,-19.04171 H 175.5612 v 65.18566 c -4.78271,0 -9.56542,0 -14.17018,0.17663 v -65.36229 h -14.70206 v -14.17116 h 43.57496 z m 23.0274,18.06774 h 19.39662 v 14.1705 h -19.39662 v 32.15041 h -13.90604 v -78.55981 h 39.59091 v 14.17084 h -25.68487 z m 48.71227,33.92106 c 8.05989,0.17664 16.2076,0.79767 24.09052,1.23976 v 13.99386 c -12.66498,-0.79766 -25.33027,-1.59369 -38.26103,-1.86013 v -79.53345 h 14.17051 z m 36.04697,16.20793 c 4.51693,0.26611 9.29964,0.53188 13.90505,1.06246 v -83.43035 h -13.90505 z m 75.99149,-82.36789 -17.97958,43.13255 17.97958,47.56067 c -5.3146,-0.70852 -10.62855,-1.68283 -15.94282,-2.56865 l -10.1848,-26.21544 -10.36145,24.09052 c -5.13796,-0.88647 -10.09764,-1.15225 -15.23362,-1.86078 l 18.24469,-41.5382 -16.47403,-42.60067 h 15.23297 l 9.29964,23.82475 9.92,-23.82475 z" id="path4284" style="fill:#d81f26" ns1:connector-curvature="0" />
+  </ns0:g>
+  </ns0:svg>
