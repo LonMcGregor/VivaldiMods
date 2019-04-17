@@ -246,7 +246,7 @@
         }
         webview.getZoom(current => {
             const newValue = Math.floor(current * 100);
-            panelZoom.innerHTML = newValue + "%";
+            panelZoom.firstChild.innerHTML = newValue + "%";
         });
     }
 
