@@ -145,8 +145,8 @@
         },
 
         terminate: {
-            title: "Kills the panel to free memory. WARNING! This will also kill any tabs using the same process.",
-            script: function(target, webview){
+            title: "Double-click kills the panel to free memory. WARNING! This will also kill any tabs using the same process.",
+            doubleclick: function(target, webview){
                 webview.terminate();
             },
             display: "x",
@@ -273,13 +273,24 @@
         const newBtn = document.createElement("button");
         newBtn.className = action.display_class+" button-toolbar mod-panel-action";
         newBtn.innerHTML = action.display;
-        newBtn.addEventListener("click", event => {
-            let eventSource = event.target;
-            while(eventSource.tagName.toLowerCase()!== "button"){
-                eventSource = eventSource.parentElement;
-            }
-            action.script(eventSource, webview);
-        });
+        if(action.script){
+            newBtn.addEventListener("click", event => {
+                let eventSource = event.target;
+                while(eventSource.tagName.toLowerCase()!== "button"){
+                    eventSource = eventSource.parentElement;
+                }
+                action.script(eventSource, webview);
+            });
+        }
+        if(action.doubleclick){
+            newBtn.addEventListener("dblclick", event => {
+                let eventSource = event.target;
+                while(eventSource.tagName.toLowerCase()!== "button"){
+                    eventSource = eventSource.parentElement;
+                }
+                action.doubleclick(eventSource, webview);
+            });
+        }
         newBtn.title = action.title;
         newBtnDiv.appendChild(newBtn);
         return newBtnDiv;
