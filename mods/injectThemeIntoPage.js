@@ -4,32 +4,32 @@
 * No Copyright Reserved
 */
 
-(function advancedPanels(){
+(function injectTheme(){
     "use strict";
-
-    /* Aliases for sanity */
-    const $ = document.querySelector.bind(document);
-
     /**
      * Array of strings of URLs matching web pages where variables are to be injected
      */
     const PAGES = [
         "chrome-extension://nnnheolekoehkioeicninoneagaimnjd/panel.html",
-        "chrome-extension://jjmgbaeenpogabemadkdghpnccekgfol/theme_light.html"
+        "chrome-extension://jjmgbaeenpogabemadkdghpnccekgfol/theme_light.html",
+        "chrome-extension://gnepfikbkdmdghjklhccpkplccnnjccm/panel.html"
     ];
 
     /**
-     * Observe changes to theme info
+     * Observe changes to theme info.
+     * Also observe changes to main window class
+     *  - makes it easier to update the theme when a webview is first created
+     *  - just focus/unfocus the browser window
      */
     const THEME_OBSERVER = new MutationObserver(updatePages);
-
-    /**
-     * Observe theme changes
-     */
     function observeThemes(){
-        THEME_OBSERVER.observe($("body"), {
+        THEME_OBSERVER.observe(document.querySelector("body"), {
             attributes: true,
             attributeFilter: ["style"]
+        });
+        THEME_OBSERVER.observe(document.querySelector("#browser"), {
+            attributes: true,
+            attributeFilter: ["class"]
         });
     }
 
@@ -38,25 +38,26 @@
      * REMARK: Add additional custom css to line 3 of this function
      */
     function updatePages(){
-        let css = ":root {\n "+document.body.style.cssText.replace(/;/g, ';\n').replace(/:/g, ': ')+" }";
+        let css = ":root {\n "+document.body.style.cssText.replace(/;/g, ";\n").replace(/:/g, ": ")+" }";
         css = css.replace(/background-.+;/g, "");
-        css += ``;
+        css += "";
         PAGES.forEach(page => {
-            const webview = $(`webview[src="${page}"]`);
-            if(!webview){return;}
-            webview.executeScript({
-                code: `(function(){
-                    "use strict";
-                    const alreadyAddedStyles = document.querySelector('style[vStyleInjected]');
-                    if(alreadyAddedStyles){
-                        alreadyAddedStyles.innerText = \`${css}\`;
-                    } else {
-                        const style = document.createElement("style");
-                        style.setAttribute("vStyleInjected", "");
-                        style.innerText = \`${css}\`;
-                        document.body.appendChild(style);
-                    }
-                })();`
+            const webviews = Array.from(document.querySelectorAll(`webview[src="${page}"]`));
+            webviews.forEach(webview => {
+                webview.executeScript({
+                    code: `(function(){
+                        "use strict";
+                        const alreadyAddedStyles = document.querySelector('style[vStyleInjected]');
+                        if(alreadyAddedStyles){
+                            alreadyAddedStyles.innerText = \`${css}\`;
+                        } else {
+                            const style = document.createElement("style");
+                            style.setAttribute("vStyleInjected", "");
+                            style.innerText = \`${css}\`;
+                            document.body.appendChild(style);
+                        }
+                    })();`
+                });
             });
         });
     }
@@ -65,7 +66,7 @@
      * Initialise the mod.
      */
     function initMod(){
-        if($("#main")){
+        if(document.querySelector("#main")){
             observeThemes();
             updatePages();
         } else {
