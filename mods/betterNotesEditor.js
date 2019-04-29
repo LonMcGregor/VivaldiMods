@@ -446,6 +446,7 @@ function initFormatting(){
     document.querySelector("#link").addEventListener("click", doFormatLink);
     document.querySelector("#bullet").addEventListener("click", doFormatBullet);
     document.querySelector("#number").addEventListener("click", doFormatNumber);
+	document.querySelector("#image").addEventListener("click", doFormatImage);
 }
 
 /**
@@ -552,6 +553,9 @@ function doFormatBullet(){
 function doFormatNumber(){
     doListFormat(true);
 }
+function doFormatImage(){
+    doFormat('![alt text', '](image.jpg "tooltip")');
+}
 /**
  * Determine and format if simple code or multi-line code should be used
  */
@@ -586,6 +590,7 @@ function blockEventUnlessModifierKey(event){
 function initExport(){
     document.querySelector("#exportTxt").addEventListener("click", blockEventUnlessModifierKey);
     document.querySelector("#exportHtml").addEventListener("click", blockEventUnlessModifierKey);
+	document.querySelector("#exportMd").addEventListener("click", blockEventUnlessModifierKey);
 }
 
 /**
@@ -609,12 +614,14 @@ function setExportEnabled(isEnabled){
 function setExportTitle(newtitle){
     document.querySelector("#exportTxt").setAttribute("download", newtitle+".txt");
     document.querySelector("#exportHtml").setAttribute("download", newtitle+".html");
+	document.querySelector("#exportMd").setAttribute("download", newtitle+".md");
 }
 
 /**
  * Set the export content according to current source text and markdown preview
  */
 function setExportContent(){
+	/* .txt export */
     const textfile = new File(
         [document.querySelector("textarea").value],
         document.querySelector("#title").value+".txt",
@@ -624,6 +631,7 @@ function setExportContent(){
     const textobj = window.URL.createObjectURL(textfile);
     document.querySelector("#exportTxt").setAttribute("href", textobj);
 
+	/* .html export */
     const htmldoc = `<html>
     <head>
     <meta charset="utf-8" />
@@ -639,6 +647,16 @@ function setExportContent(){
     window.URL.revokeObjectURL(document.querySelector("#exportHtml").getAttribute("href"));
     const htmlobj = window.URL.createObjectURL(htmlfile);
     document.querySelector("#exportHtml").setAttribute("href", htmlobj);
+	
+	/* .md export */
+	const mdfile = new File(
+		[document.querySelector("textarea").value],
+		document.querySelector("#title").value+".md",
+		{type: "text/plain"}
+    );
+    window.URL.revokeObjectURL(document.querySelector("#exportMd").getAttribute("href"));
+    const mdobj = window.URL.createObjectURL(mdfile);
+    document.querySelector("#exportMd").setAttribute("href", mdobj);
 }
 
 
