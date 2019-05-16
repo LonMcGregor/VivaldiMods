@@ -1,33 +1,33 @@
 /* Use the following to hide the site info text*/
-button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
+button.button-addressfield.SiteInfoButton.certified .siteinfo-text {
     display: none
 }
 /* Include the following to display the full name on hovering */
-button.button-addressfield.addressfield-siteinfo.certified:hover .siteinfo-text {
+button.button-addressfield.SiteInfoButton.certified:hover .siteinfo-text {
     display: block
 }
 
 /* change colours so that secure uses default style, not green */
-.addressfield .addressfield-siteinfo.secure,
-.addressfield .addressfield-siteinfo.certified,
-.addressfield .addressfield-siteinfo.secure .siteinfo-symbol,
-.addressfield .addressfield-siteinfo.certified .siteinfo-symbol {
+button.button-addressfield.SiteInfoButton.secure,
+button.button-addressfield.SiteInfoButton.certified,
+button.button-addressfield.SiteInfoButton.secure .siteinfo-symbol,
+button.button-addressfield.SiteInfoButton.certified .siteinfo-symbol {
     background-color: transparent;
 }
 
-.addressfield .addressfield-siteinfo.secure .siteinfo-symbol svg,
-.addressfield .addressfield-siteinfo.certified .siteinfo-symbol svg {
+button.button-addressfield.SiteInfoButton.secure svg,
+button.button-addressfield.SiteInfoButton.certified svg {
     fill: var(--colorFgFaded);
 }
 
-.addressfield .addressfield-siteinfo.secure:hover,
-.addressfield .addressfield-siteinfo.certified:hover,
-.addressfield .addressfield-siteinfo.secure:focus:not([tabindex='-1']),
-.addressfield .addressfield-siteinfo.certified:focus:not([tabindex='-1']) {
+button.button-addressfield.SiteInfoButton.secure:hover,
+button.button-addressfield.SiteInfoButton.certified:hover,
+button.button-addressfield.SiteInfoButton.secure:focus:not([tabindex='-1']),
+button.button-addressfield.SiteInfoButton.certified:focus:not([tabindex='-1']) {
     border-color: var(--colorBorder);
     background-color: var(--colorBgLight);
 }
 
-button.button-addressfield.addressfield-siteinfo.certified .siteinfo-text {
+button.button-addressfield.SiteInfoButton.certified .siteinfo-text {
     color: var(--colorFg);
 }
