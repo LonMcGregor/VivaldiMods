@@ -159,8 +159,8 @@ ${download}
     vivaldi.sync.onCycleCompleted.addListener(updateSyncIcon);
 
     /* add listeners for debug */
-    vivaldi.sync.onEngineStateChanged.addListener(console.log);
-    vivaldi.sync.onCycleCompleted.addListener(console.log);
+    /*vivaldi.sync.onEngineStateChanged.addListener(console.log);
+    vivaldi.sync.onCycleCompleted.addListener(console.log);*/
 
     /* update the icon for the first time */
     function initMod(){
