@@ -1,0 +1,171 @@
+/*
+ * Mask for the address bar
+ * Written by Tam710562 (https://forum.vivaldi.net/topic/37609/mask-for-the-address-bar/6)
+ * With modifications by LonM
+ */
+
+.addressfield-mask {
+  cursor: text;
+  padding: 0;
+  padding-left: var(--padding);
+  width: 100%;
+  height: 22px;
+  line-height: 22px;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.addressfield-mask:empty:before {
+  content: attr(placeholder);
+  opacity: 0.45;
+}
+
+.addressfield-mask div {
+  display: inline-flex;
+  position: relative;
+  white-space: pre;
+}
+
+input.vivaldi-addressfield {
+  opacity: 0;
+}
+
+.urlfield {
+  position: relative;
+}
+
+#browser:not(.isblurred) .addressfield > form input.vivaldi-addressfield:focus + .addressfield-mask,
+#browser:not(.isblurred) .addressfield > form input.vivaldi-addressfield:first-child:nth-last-child(3) + .addressfield-mask {
+  display: none;
+}
+
+#browser:not(.isblurred) .addressfield > form input.vivaldi-addressfield:focus,
+#browser:not(.isblurred) .addressfield > form input.vivaldi-addressfield:first-child:nth-last-child(3) {
+  opacity: 1;
+}
+
+/* Theme 2 */
+.theme-2.addressfield-mask .protocol-sub,
+.theme-2.addressfield-mask .protocol,
+.theme-2.addressfield-mask .host,
+.theme-2.addressfield-mask .search-engine .search-nickname,
+.theme-2.addressfield-mask .search-engine .search-query:not(:empty),
+.theme-2.addressfield-mask .search-engine.default:before,
+.theme-2.addressfield-mask .post:not(:empty),
+.theme-2.addressfield-mask .path-item:not(:empty),
+.theme-2.addressfield-mask .hash {
+  background-color: var(--colorBg);
+  color: var(--colorFg);
+  margin-right: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: var(--radiusHalf);
+}
+
+.theme-2.addressfield-mask .post:not(:empty):before {
+  content: ':';
+}
+
+.theme-2.addressfield-mask .search .search-item {
+  margin-right: 5px;
+}
+
+.addressfield > .secure + form .theme-2.addressfield-mask .protocol,
+.addressfield > .certified + form .theme-2.addressfield-mask .protocol {
+  color: var(--colorFg);
+  background-color: var(--colorBg);
+}
+
+.theme-2.addressfield-mask .host,
+.theme-2.addressfield-mask .search-engine .search-nickname,
+.theme-2.addressfield-mask .search-engine.default:before {
+  background-color: var(--colorBg);
+  color: var(--colorFg);
+  font-weight: 700;
+}
+
+.theme-2.addressfield-mask .host .host-sub {
+  opacity: 0.7;
+}
+
+.theme-2.addressfield-mask .host .host-sub:after {
+  content: '.';
+}
+
+.theme-2.addressfield-mask .search-engine .search-nickname {
+  text-indent: -9999px;
+}
+
+.theme-2.addressfield-mask .search-engine .search-nickname:after {
+  text-indent: 0;
+  content: attr(data-search-name);
+}
+
+.theme-2.addressfield-mask .search-engine.default:before {
+  content: attr(data-search-name-default);
+}
+
+.theme-2.addressfield-mask .hash:before {
+  content: '#';
+}
+
+.theme-2.addressfield-mask .search .search-item .search-key,
+.theme-2.addressfield-mask .hash:before {
+  background-color: var(--colorBg);
+  color: var(--colorFg);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-top-left-radius: var(--radiusHalf);
+  border-bottom-left-radius: var(--radiusHalf);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-key:last-child {
+  border-top-right-radius: var(--radiusHalf);
+  border-bottom-right-radius: var(--radiusHalf);
+}
+
+.theme-2.addressfield-mask .search .search-item .search-value,
+.theme-2.addressfield-mask .hash {
+  background-color: var(--colorBgAlphaHeavy);
+  color: var(--colorFg);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-top-right-radius: var(--radiusHalf);
+  border-bottom-right-radius: var(--radiusHalf);
+  border: 1px solid var(--colorBg);
+  height: 22px;
+  border-left: 0px;
+  border-top: 0px;
+  border-right: 0px;
+}
+
+.theme-2.addressfield-mask .search .search-item .search-value:first-child {
+  border-top-left-radius: var(--radiusHalf);
+  border-bottom-left-radius: var(--radiusHalf);
+}
+
+.private .theme-2.addressfield-mask .path-full > div:not(:empty):before {
+  background-color: var(--colorBg);
+}
+
+.private .theme-2.addressfield-mask .protocol-sub,
+.private .theme-2.addressfield-mask .protocol,
+.private .theme-2.addressfield-mask .search-engine .search-nickname,
+.private .theme-2.addressfield-mask .search-engine .search-query:not(:empty),
+.private .theme-2.addressfield-mask .post:not(:empty),
+.private .theme-2.addressfield-mask .path-item:not(:empty),
+.private .theme-2.addressfield-mask .hash,
+.private .theme-2.addressfield-mask .search .search-item .search-value {
+  background-color: var(--colorBg);
+  color: var(--colorFg);
+}
