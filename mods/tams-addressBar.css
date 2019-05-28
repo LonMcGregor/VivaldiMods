@@ -169,3 +169,11 @@ input.vivaldi-addressfield {
   background-color: var(--colorBg);
   color: var(--colorFg);
 }
+
+/* hide protocols I don't care to benotified about */
+.protocol[data-protocol=https],
+.protocol[data-protocol=vivaldi],
+.protocol[data-protocol=chrome-extension],
+.protocol[data-protocol=file] {
+    display: none;
+}
