@@ -136,7 +136,7 @@ ${download}
         syncTitle.title = title;
 
         /* update icon according to tooltip */
-        if(title.indexOf("▼") > 0 && title.indexOf("▲") > 0){
+        if((title.indexOf("▼") > 0 || (title.indexOf("▽") > 0 && title.indexOf("Download: Idle") > 0)) && title.indexOf("▲") > 0){
             /* everything is fine */
             syncIcon.innerHTML = ICON_NORM;
             return;
