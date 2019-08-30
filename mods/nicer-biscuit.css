@@ -1,0 +1,16 @@
+
+.biscuit-setting-version {
+    max-width: 78px;
+    overflow: hidden;
+    padding-left: 5px !important;
+}
+
+.biscuit-setting-version input{
+    position: relative;
+    left: -40px;
+    -webkit-mask-image: -webkit-linear-gradient(0deg, transparent 40px, #fff 40px);
+}
+
+.biscuit-setting-version span{
+    z-index: 1;
+}
