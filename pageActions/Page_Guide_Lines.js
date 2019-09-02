@@ -5,15 +5,16 @@
 */
 "use strict";
 
-// New buttons will be added as children of these elements
-const BUTTON_QUERY = "#footer > div.status-toolbar > span.captureactions";
+const COLOUR = "red";
 
 const GUIDELINES_CSS = `
 .browser-guide {
     display: block;
-    background: var(--colorAccentBg);
+    background: ${COLOUR};
     position: fixed;
+    user-select: none;
 }
+
 .browser-guide-vertical {
     height: 100vh;
     width: 3px;
@@ -27,8 +28,17 @@ const GUIDELINES_CSS = `
     cursor: ns-resize;
     left: 0px !important;
 }
-#footer > div.status-toolbar > span.captureactions {
+
+#browser-guide-container {
     display: flex;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    opacity: 0.1;
+}
+
+#browser-guide-container:hover {
+    opacity: 1;
 }
 `;
 
@@ -38,20 +48,18 @@ let CURRENTLY_DRAGGING = [];
 // Following - a guide will move with the cursor until the mouse is clicked
 let CURRENTLY_FOLLOWING = [];
 
-// Initialiser on browser load
-setTimeout(function waitForBrowser(){
-    const button_loc = document.querySelector(BUTTON_QUERY);
-    if (button_loc) {
-        create_buttons();
-        inject_css();
-        document.addEventListener("mousemove", browser_cursor_move);
-    } else {
-        setTimeout(waitForBrowser, 500);
-    }
-}, 500)
+/// start the mod
+function init(){
+    create_buttons();
+    inject_css();
+    document.addEventListener("mousemove", browser_cursor_move);
+}
 
 // Add the "create guide" buttons to browser
 function create_buttons(){
+    const container = document.createElement("div");
+    container.id = "browser-guide-container";
+
     const new_button_h = document.createElement("button");
     new_button_h.innerHTML = "—";
     new_button_h.className = "button-toolbar-small";
@@ -66,13 +74,14 @@ function create_buttons(){
         new_guide_clicked(e, "browser-guide-vertical");
     });
 
-    document.querySelector(BUTTON_QUERY).appendChild(new_button_h);
-    document.querySelector(BUTTON_QUERY).appendChild(new_button_v);
+    container.appendChild(new_button_h);
+    container.appendChild(new_button_v);
+    document.body.appendChild(container);
 }
 
-// Inject css so a separate modfile is not required
+// Inject css
 function inject_css(){
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = GUIDELINES_CSS;
     document.body.appendChild(style);
 }
@@ -105,7 +114,7 @@ function guide_drag_start(e){
         selected_guide.parentElement.removeChild(selected_guide);
         // Clean up any drag references to the guide
         if(cm_index >= 0){
-            delete CURRENTLY_DRAGGING[index];
+            delete CURRENTLY_DRAGGING[cm_index];
         }
         return;
     }
@@ -135,6 +144,8 @@ function browser_cursor_move(e){
 }
 
 // Mouse let go - Any currently dragged guides should be dropped
-function guide_drop(e){
+function guide_drop(){
     CURRENTLY_DRAGGING = [];
 }
+
+init();
