@@ -13,6 +13,7 @@ const GUIDELINES_CSS = `
     background: ${COLOUR};
     position: fixed;
     user-select: none;
+    z-index: 999999;
 }
 
 .browser-guide-vertical {
@@ -29,6 +30,20 @@ const GUIDELINES_CSS = `
     left: 0px !important;
 }
 
+#browser-guide-pdf-compat {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+#browser-guide-pdf-compat.dragging {
+    pointer-events: all;
+    z-index: 0;
+}
+
 #browser-guide-container {
     display: flex;
     position: fixed;
@@ -40,6 +55,22 @@ const GUIDELINES_CSS = `
 #browser-guide-container:hover {
     opacity: 1;
 }
+
+#browser-guide-container button {
+    width: 30px;
+    height: 20px;
+    background: #ccc;
+    color:  #000;
+    border:  1px solid #000;
+}
+
+#browser-guide-container button:hover {
+    width: 30px;
+    height: 20px;
+    background: #fff;
+    color:  #000;
+    border:  1px solid #000;
+}
 `;
 
 let GUIDE_COUNT = 0;
@@ -50,8 +81,9 @@ let CURRENTLY_FOLLOWING = [];
 
 /// start the mod
 function init(){
-    create_buttons();
     inject_css();
+    create_buttons();
+    pdf_compat();
     document.addEventListener("mousemove", browser_cursor_move);
 }
 
@@ -62,14 +94,12 @@ function create_buttons(){
 
     const new_button_h = document.createElement("button");
     new_button_h.innerHTML = "—";
-    new_button_h.className = "button-toolbar-small";
     new_button_h.addEventListener("click", function(e){
         new_guide_clicked(e, "browser-guide-horizontal");
     });
 
     const new_button_v = document.createElement("button");
     new_button_v.innerHTML = "|";
-    new_button_v.className = "button-toolbar-small";
     new_button_v.addEventListener("click", function(e){
         new_guide_clicked(e, "browser-guide-vertical");
     });
@@ -77,6 +107,18 @@ function create_buttons(){
     container.appendChild(new_button_h);
     container.appendChild(new_button_v);
     document.body.appendChild(container);
+}
+
+let PDF_COMPAT;
+// add pdf compatibility layer
+// for some reason the embedded chrome pdf viewer steals the mouse focus
+function pdf_compat(){
+    const pdf = document.querySelector("embed[type='application/pdf']");
+    if(pdf){
+        PDF_COMPAT = document.createElement("div");
+        PDF_COMPAT.id = "browser-guide-pdf-compat";
+        document.body.appendChild(PDF_COMPAT);
+    }
 }
 
 // Inject css
@@ -141,6 +183,10 @@ function browser_cursor_move(e){
             selected_guide.style.top = e.clientY + "px";
         });
     });
+    if(PDF_COMPAT){ // need to count excluding empties
+        const count = CURRENTLY_DRAGGING.filter(x => x).length + CURRENTLY_FOLLOWING.filter(x => x).length;
+        PDF_COMPAT.className = count > 0 ? "dragging" : "";
+    }
 }
 
 // Mouse let go - Any currently dragged guides should be dropped
