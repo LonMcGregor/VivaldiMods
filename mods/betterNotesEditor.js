@@ -10,6 +10,7 @@
 * also scroll sync adapted from https://jonschlinkert.github.io/remarkable/demo/
 *
 * fr_FR by Cqoicebordel
+* de_DE by tbengel
 */
 (function betterNotesEditor(){
 "use strict";
@@ -46,7 +47,22 @@ const SELECTED_LANGUAGE = {
         Lines: "Linges",
         SyncScroll: "Défilement synchronisé",
         ShowPreview: "Afficher MarkDown"
-    }
+    },
+    de_DE: {
+        Select: "# Selektiere eine Notiz zum Editieren",
+        NotesTitle: "Vivaldi Notizen",
+        Title: "Titel",
+        Format: "Formatierung",
+        Export: "Export",
+        ExportPrompt: "Rechts-Klick, Link speichern unter...",
+        Loading: "Lade...",
+        LoadingPrompt: "Wenn Du diese Nachricht für mehr als ein paar Sekunde siehst, klick den '<em>Öffne Better Notes Editor</em>' Button nochmal.",
+        Stats: "Notiz Statistik",
+        Chars: "Zeichen",
+        Words: "Wörter",
+        Lines: "Zeilen",
+        SyncScroll: "Scrollverhalten angleichen",
+        ShowPreview: "Markdown Ansicht"
 }.en_GB;
 
 /**
