@@ -11,6 +11,7 @@
 *
 * fr_FR by Cqoicebordel
 * de_DE by tbengel
+* es_TU by MasterVivaldin
 */
 (function betterNotesEditor(){
 "use strict";
@@ -63,6 +64,23 @@ const SELECTED_LANGUAGE = {
         Lines: "Zeilen",
         SyncScroll: "Scrollverhalten angleichen",
         ShowPreview: "Markdown Ansicht"
+    },
+    es_TU: {
+        Select: "# Seleccione la nota a editar",
+        NotesTitle: "Notas Vivaldi",
+        Title: "Título",
+        Format: "Formato",
+        Export: "Exportar",
+        ExportPrompt: "Click Con El Botón Derecho, Guardar Como",
+        Loading: "Cargando...",
+        LoadingPrompt: "Si ves este mensaje por más de unos pocos segundos, haz click en el botón <em>Abrir El Editor Completo</em> de nuevo.",
+        Stats: "Estadísticas de Nota",
+        Chars: "Caracteres",
+        Words: "Palabras",
+        Lines: "Líneas",
+        SyncScroll: "Sincronizar Dezplazamiento",
+        ShowPreview: "Mostrar MarkDown"
+    }
 }.en_GB;
 
 /**

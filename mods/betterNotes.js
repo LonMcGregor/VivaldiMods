@@ -13,7 +13,8 @@
     const EDITOR_TOOLTIP = {
         en_GB: "Open Notes Editor",
         fr_FR: "Ouvrir l'éditeur de notes",
-        de_DE: "Öffne 'Better Notes Editor'"
+        de_DE: "Öffne 'Better Notes Editor'",
+        es_TU: "Abrir Editor de Notas"
     }.en_GB;
 
     const EDITOR_URI = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/mods/betterNotesEditor.html";
