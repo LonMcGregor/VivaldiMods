@@ -7,57 +7,21 @@
 (function autoSaveSessionsMod(){
     "use strict";
 
-    /*
-    * Autosave Prefix must be a unique name
-    *   don't use it in your mnually saved sessions!
-    *   It has to be a compatible file name,
-    *   so avoid space, brackets, special characters etc.
-    *   also, it can't be blank!
-    */
-    const SESSION_AUTOSAVE_PREFIX = "VSESAUTOSAVE_";
-
-    /*
-    * Delay (Minutes) defines how frequently an autosave should happen
-    *     delay should be greater than 0
-    *     Just change the first value (the MINUTES value)
-    */
-    const SESSION_AUTOSAVE_DELAY_MINUTES = 5;
-    const SESSION_AUTOSAVE_DELAY = SESSION_AUTOSAVE_DELAY_MINUTES * 1000 * 60;
-
-    /*
-    *  Max old sessions says how many old sessions to keep
-    *     Oldest sessions are deleted if there are too many
-    *     Set to Infinity to keep all sessions
-    */
-    const SESSION_AUTOSAVE_MAX_OLD_SESSIONS = 5;
-
-    /**
-     * Variable validations
-     */
-    if(SESSION_AUTOSAVE_DELAY <= 30 * 1000){
-        console.error("Session autosave delay must be greater than 30 seconds");
-        return;
-    }
-    if(SESSION_AUTOSAVE_PREFIX === ""){
-        console.error("Session autosave premix must not be empty string");
-        return;
-    }
-    if(SESSION_AUTOSAVE_MAX_OLD_SESSIONS <= 0){
-        console.error("Session autosave must keep at least 1 old session");
-        return;
-    }
+    let CURRENT_SETTINGS = {};
 
     /**
      * Enable Autosaving sessions
      */
     function autoSaveSession(){
         vivaldi.sessionsPrivate.getAll(allSessions => {
+            const prefix = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_PREFIX"];
+            const maxOld = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS"];
             const now = new Date();
-            const autosavesOnly = allSessions.filter(x => x.name.indexOf(SESSION_AUTOSAVE_PREFIX)===0);
+            const autosavesOnly = allSessions.filter(x => x.name.indexOf(prefix)===0);
             const oldestFirst = autosavesOnly.sort((a,b) => {return a.createDateJS - b.createDateJS;});
 
             /* create the new session */
-            const name = SESSION_AUTOSAVE_PREFIX + now.toISOString().replace(":",".").replace(":",".");
+            const name = prefix + now.toISOString().replace(":",".").replace(":",".");
             const options = {
                 saveOnlyWindowId: 0
             };
@@ -66,7 +30,7 @@
             /* delete older sessions */
             let numberOfSessions = oldestFirst.length + 1; /* length + 1 as we have just added a new one */
             let oldestIndex = 0;
-            while(numberOfSessions > SESSION_AUTOSAVE_MAX_OLD_SESSIONS){
+            while(numberOfSessions > maxOld){
                 vivaldi.sessionsPrivate.delete(oldestFirst[oldestIndex].name,() => {});
                 oldestIndex++;
                 numberOfSessions--;
@@ -103,6 +67,123 @@
     }
 
     /**
+     * Mod the settings page to show settings there
+     * Wait a little bit after a settings page has been opened and add settings in
+     */
+    function modSettingsPageListener(newTab){
+        if(newTab.url==="chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html?path=general"){
+            setTimeout(modSettingsPage, 1000);
+        }
+    }
+    function modSettingsPage(){
+        const settingsHTML = document.createElement("section");
+        settingsHTML.className = "setting-section";
+        settingsHTML.id = "lonmAutosaveSessionsSettings";
+        const settingsDiv = document.createElement("div");
+        settingsDiv.insertAdjacentHTML("beforeend", "<h2>Autosave Sessions Mod</h2>");
+        MOD_SETTINGS.forEach(setting => {
+            settingsDiv.appendChild(makeSettingElement(setting));
+        });
+        settingsHTML.appendChild(settingsDiv);
+        document.querySelector(".vivaldi-settings .settings-content").insertAdjacentElement("afterbegin", settingsHTML);
+    }
+
+    /**
+     * For a mod setting you need:
+     *
+     * A) Load it when the mod starts
+     * B) Make an option for it when settings is opened
+     * C) Change the saved and current state with new value when setting is changed
+     *
+     * Mod setting has:
+     * Key: string
+     * Default Value: string|int
+     * Description: string
+     */
+    const MOD_SETTINGS = [
+        {
+            id: "LONM_SESSION_AUTOSAVE_DELAY_MINUTES",
+            type: Number,
+            min: 1,
+            max: undefined,
+            default: 5,
+            title: "Period (minutes)",
+            description: "This setting requires a restart to take full effect."
+        },
+        {
+            id: "LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS",
+            type: Number,
+            min: 1,
+            max: undefined,
+            default: 5,
+            title: "Old Sessions Count"
+        },
+        {
+            id: "LONM_SESSION_AUTOSAVE_PREFIX",
+            type: String,
+            pattern: "[\\w_]{0,20}",
+            default: "VSESAUTOSAVE_",
+            title: "Prefix",
+            description: "A unique prefix made up of the following characters: A-Z 0-9 _"
+        }
+    ];
+
+    /**
+     * Handle a change to a setting input
+     *   Should be bound in a listener to the setting object
+     * @param {InputEvent} input
+     */
+    function settingUpdated(input){
+        input.target.checkValidity();
+        if(input.target.reportValidity() && input.target.value !== ""){
+            CURRENT_SETTINGS[this.id] = input.target.value;
+            chrome.storage.local.set(CURRENT_SETTINGS);
+        }
+    }
+
+    /**
+     * Create an element for the current setting
+     * @param modSetting
+     */
+    function makeSettingElement(modSetting) {
+        const currentSettingValue = CURRENT_SETTINGS[modSetting.id];
+        const div = document.createElement("div");
+        div.className = "setting-single";
+        const title = document.createElement("h3");
+        title.innerText = modSetting.title;
+        div.appendChild(title);
+        if(modSetting.description){
+            const info = document.createElement("p");
+            info.className = "info";
+            info.innerText = modSetting.description;
+            div.appendChild(info);
+        }
+        const input = document.createElement("input");
+        input.id = modSetting.id;
+        input.value = currentSettingValue;
+        input.autocomplete = "off";
+        input.autocapitalize = "off";
+        input.autocorrect = "off";
+        input.spellcheck = "off";
+        switch (modSetting.type) {
+        case Number:
+            input.type = "number";
+            break;
+        case String:
+            input.type = "text";
+            break;
+        default:
+            throw Error("Unknown setting type!");
+        }
+        if(modSetting.max){input.max = modSetting.max;}
+        if(modSetting.min){input.min = modSetting.min;}
+        if(modSetting.pattern){input.pattern = modSetting.pattern;}
+        input.addEventListener("input", settingUpdated.bind(modSetting));
+        div.appendChild(input);
+        return div;
+    }
+
+    /**
      * Init the mod, but only if we are not incognito, to maintain privacy.
      * Save the window id in storage, and only use the most recent window to save sessions
      */
@@ -113,7 +194,8 @@
                     chrome.storage.local.set({
                         "lonm.autosave.lastOpenedWindow": window.vivaldiWindowId
                     }, () => {
-                        setInterval(triggerAutosave, SESSION_AUTOSAVE_DELAY);
+                        setInterval(triggerAutosave, CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_DELAY_MINUTES"]*60*1000);
+                        chrome.tabs.onCreated.addListener(modSettingsPageListener);
                     });
                 }
             });
@@ -122,6 +204,19 @@
         }
     }
 
-    init();
+    /**
+     * Load the settings and call the initialiser function
+     */
+    function loadSettingsAndInit(){
+        const keys = MOD_SETTINGS.reduce((prev, current) => {
+            prev[current.id] = current.default;
+            return prev;
+        }, {});
+        chrome.storage.local.get(keys, value => {
+            CURRENT_SETTINGS = value;
+            setTimeout(init, 500);
+        });
+    }
 
+    loadSettingsAndInit();
 })();
