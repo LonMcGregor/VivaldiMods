@@ -1,7 +1,7 @@
 /*
 * Autosave Sessions (a mod for Vivaldi)
 * Written by LonM
-* v3 : Has own settings section
+* v3 : Has own settings section & support private windows again
 * v2 : Better handling of multiple windows
 */
 
@@ -15,15 +15,15 @@
      */
     function autoSaveSession(isPrivate){
         vivaldi.sessionsPrivate.getAll(allSessions => {
-            const prefix = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_PREFIX"];
+            const priv = isPrivate ? "PRIV" : "";
+            const prefix = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_PREFIX"] + priv;
             const maxOld = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS"];
             const now = new Date();
             const autosavesOnly = allSessions.filter(x => x.name.indexOf(prefix)===0);
             const oldestFirst = autosavesOnly.sort((a,b) => {return a.createDateJS - b.createDateJS;});
 
             /* create the new session */
-            const priv = isPrivate ? "PRIV_" : "";
-            const name = prefix + priv + now.toISOString().replace(":",".").replace(":",".");
+            const name = prefix + now.toISOString().replace(":",".").replace(":",".");
             const options = {
                 saveOnlyWindowId: 0
             };
