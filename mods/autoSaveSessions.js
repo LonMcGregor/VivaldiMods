@@ -1,6 +1,7 @@
 /*
 * Autosave Sessions (a mod for Vivaldi)
 * Written by LonM
+* v3 : Has own settings section
 * v2 : Better handling of multiple windows
 */
 
