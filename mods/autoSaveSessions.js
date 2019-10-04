@@ -86,7 +86,7 @@
             settingsDiv.appendChild(makeSettingElement(setting));
         });
         settingsHTML.appendChild(settingsDiv);
-        document.querySelector(".vivaldi-settings .settings-content").insertAdjacentElement("afterbegin", settingsHTML);
+        document.querySelector(".vivaldi-settings .settings-content section").insertAdjacentElement("afterbegin", settingsHTML);
     }
 
     /**
