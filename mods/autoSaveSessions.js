@@ -135,9 +135,14 @@
      * @param {InputEvent} input
      */
     function settingUpdated(input){
+        if(input.target.type === "checkbox"){
+            CURRENT_SETTINGS[this.id] = input.target.checked;
+        } else {
         input.target.checkValidity();
         if(input.target.reportValidity() && input.target.value !== ""){
             CURRENT_SETTINGS[this.id] = input.target.value;
+            }
+        }
             chrome.storage.local.set(CURRENT_SETTINGS);
         }
     }
@@ -172,6 +177,9 @@
             break;
         case String:
             input.type = "text";
+            break;
+        case Boolean:
+            input.type = "checkbox";
             break;
         default:
             throw Error("Unknown setting type!");
