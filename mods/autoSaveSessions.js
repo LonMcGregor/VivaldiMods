@@ -13,7 +13,7 @@
     /**
      * Enable Autosaving sessions
      */
-    function autoSaveSession(){
+    function autoSaveSession(isPrivate){
         vivaldi.sessionsPrivate.getAll(allSessions => {
             const prefix = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_PREFIX"];
             const maxOld = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS"];
@@ -22,7 +22,8 @@
             const oldestFirst = autosavesOnly.sort((a,b) => {return a.createDateJS - b.createDateJS;});
 
             /* create the new session */
-            const name = prefix + now.toISOString().replace(":",".").replace(":",".");
+            const priv = isPrivate ? "PRIV_" : "";
+            const name = prefix + priv + now.toISOString().replace(":",".").replace(":",".");
             const options = {
                 saveOnlyWindowId: 0
             };
@@ -44,8 +45,8 @@
      * if not, then stop saving the sessions
      */
     function triggerAutosave(){
-        chrome.storage.local.get("lonm.autosave.lastOpenedWindow", data => {
-            const lastOpenedWindow = data["lonm.autosave.lastOpenedWindow"];
+        chrome.storage.local.get("LONM_SESSION_AUTOSAVE_LAST_WINDOW", data => {
+            const lastOpenedWindow = data["LONM_SESSION_AUTOSAVE_LAST_WINDOW"];
             if(window.vivaldiWindowId===lastOpenedWindow){
                 /* We know this window is correct, skip the checks */
                 autoSaveSession();
@@ -58,9 +59,32 @@
                 } else {
                     /*Most recent window was closed, revert to this one*/
                     chrome.storage.local.set({
-                        "lonm.autosave.lastOpenedWindow": window.vivaldiWindowId
+                        "LONM_SESSION_AUTOSAVE_LAST_WINDOW": window.vivaldiWindowId
                     }, () => {
                         autoSaveSession();
+                    });
+                }
+            });
+        });
+    }
+    function triggerAutosavePrivate(){
+        chrome.storage.local.get("LONM_SESSION_AUTOSAVE_LAST_PRIV_WINDOW", data => {
+            const lastOpenedWindow = data["LONM_SESSION_AUTOSAVE_LAST_PRIV_WINDOW"];
+            if(window.vivaldiWindowId===lastOpenedWindow){
+                /* We know this window is correct, skip the checks */
+                autoSaveSession(true);
+                return;
+            }
+            chrome.windows.getAll(openWindows => {
+                const foundLastOpen = openWindows.find(window => window.id===lastOpenedWindow);
+                if(foundLastOpen){
+                    /*Most recent window still active, use that one instead*/
+                } else {
+                    /*Most recent window was closed, revert to this one*/
+                    chrome.storage.local.set({
+                        "LONM_SESSION_AUTOSAVE_LAST_PRIV_WINDOW": window.vivaldiWindowId
+                    }, () => {
+                        autoSaveSession(true);
                     });
                 }
             });
@@ -126,6 +150,13 @@
             default: "VSESAUTOSAVE_",
             title: "Prefix",
             description: "A unique prefix made up of the following characters: A-Z 0-9 _"
+        },
+        {
+            id: "LONM_SESSION_SAVE_PRIVATE_WINDOWS",
+            type: Boolean,
+            default: false,
+            title: "Save Private Windows",
+            description: "This setting requires a restart to take full effect"
         }
     ];
 
@@ -138,13 +169,12 @@
         if(input.target.type === "checkbox"){
             CURRENT_SETTINGS[this.id] = input.target.checked;
         } else {
-        input.target.checkValidity();
-        if(input.target.reportValidity() && input.target.value !== ""){
-            CURRENT_SETTINGS[this.id] = input.target.value;
+            input.target.checkValidity();
+            if(input.target.reportValidity() && input.target.value !== ""){
+                CURRENT_SETTINGS[this.id] = input.target.value;
             }
         }
-            chrome.storage.local.set(CURRENT_SETTINGS);
-        }
+        chrome.storage.local.set(CURRENT_SETTINGS);
     }
 
     /**
@@ -180,6 +210,7 @@
             break;
         case Boolean:
             input.type = "checkbox";
+            if(currentSettingValue){input.checked = "checked";}
             break;
         default:
             throw Error("Unknown setting type!");
@@ -201,12 +232,19 @@
             chrome.windows.getCurrent(window => {
                 if(!window.incognito){
                     chrome.storage.local.set({
-                        "lonm.autosave.lastOpenedWindow": window.vivaldiWindowId
+                        "LONM_SESSION_AUTOSAVE_LAST_WINDOW": window.vivaldiWindowId
                     }, () => {
                         setInterval(triggerAutosave, CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_DELAY_MINUTES"]*60*1000);
-                        chrome.tabs.onCreated.addListener(modSettingsPageListener);
                     });
                 }
+                if(CURRENT_SETTINGS["LONM_SESSION_SAVE_PRIVATE_WINDOWS"] && window.incognito){
+                    chrome.storage.local.set({
+                        "LONM_SESSION_AUTOSAVE_LAST_PRIV_WINDOW": window.vivaldiWindowId
+                    }, () => {
+                        setInterval(triggerAutosavePrivate, CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_DELAY_MINUTES"]*60*1000);
+                    });
+                }
+                chrome.tabs.onCreated.addListener(modSettingsPageListener);
             });
         } else {
             setTimeout(init, 500);
