@@ -95,8 +95,9 @@
      * Mod the settings page to show settings there
      * Wait a little bit after a settings page has been opened and add settings in
      */
+    const SETTINGSPAGE = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html?path=general";
     function modSettingsPageListener(newTab){
-        if(newTab.url==="chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html?path=general"){
+        if(newTab.url === SETTINGSPAGE || newTab.pendingUrl === SETTINGSPAGE){
             setTimeout(modSettingsPage, 1000);
         }
     }
