@@ -1,0 +1,3 @@
+.toggle-trash:hover .trashicon-lid {
+    transform: rotateZ(30deg) translate(-1px, -1px);
+}
