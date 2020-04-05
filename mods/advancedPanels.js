@@ -93,8 +93,8 @@
                  * @returns string array of names
                  */
                 function getSelectedSessionNames(){
-                    const selections = Array.from(document.querySelectorAll("#sessions_lonm li.selected h3"));
-                    return selections.map(x => x.innerText);
+                    const selections = Array.from(document.querySelectorAll("#sessions_lonm li.selected"));
+                    return selections.map(x => x.getAttribute("data-session-name"));
                 }
 
                 /**
@@ -261,6 +261,7 @@
                     el.querySelector(".open_new").addEventListener("click", oneInNewWindowClick);
                     el.querySelector(".open_current").addEventListener("click", openInCurrentWindowClick);
                     el.querySelector(".delete").addEventListener("click", deleteClick);
+                    el.querySelector("li").setAttribute("data-session-name", session.name);
                     return el;
                 }
 
@@ -304,7 +305,9 @@
                 function updateList(){
                     document.querySelector("#sessions_lonm .modal-container").classList.remove("show");
                     const existingList = document.querySelector("#sessions_lonm .sessionslist ul");
-                    existingList.parentElement.removeChild(existingList);
+                    if(existingList){
+                        existingList.parentElement.removeChild(existingList);
+                    }
                     vivaldi.sessionsPrivate.getAll(items => {
                         const sorted = sortSessions(items);
                         const newList = createList(sorted);
