@@ -2,6 +2,7 @@
 * Panel Actions (A Mod for Vivaldi)
 * LonM.vivaldi.net
 * Search actions by tam710562 and joao.rossa on vivaldi.net
+* Default zoom figured out by belh4wk on vivaldi.net
 * https://forum.vivaldi.net/topic/26623/zoom-other-page-actions-in-web-panels/
 * No Copyright Reserved
 */
@@ -10,6 +11,7 @@
     "use strict";
 
     const ZOOM_STEP = 0.1; /*Step amount. 0.1 is 10%*/
+    const DEFAULT_ZOOM = 1; /* what should the default zoom be for panels */
 
     /*
     Dictionary of panel actions.
@@ -330,6 +332,9 @@
         });
         webview.addEventListener("loadcommit", () => {
             updateZoomLabel(webview);
+        });
+        webview.addEventListener("loadstop", () => {
+            changeZoom(webview, DEFAULT_ZOOM);
         });
     }
 
