@@ -10,8 +10,9 @@
 (function panel_actions(){
     "use strict";
 
-    const ZOOM_STEP = 0.1; /*Step amount. 0.1 is 10%*/
-    const DEFAULT_ZOOM = 1; /* what should the default zoom be for panels */
+    const ZOOM_STEP = 0.05; /*Step amount. 0.05 is 5%*/
+    const DEFAULT_ZOOM = 0.7; /* the default zoom % for webpanels; 0.7 equates to 70%, 1 to 100% */
+	const DEFAULT_ZOOM_LBL = DEFAULT_ZOOM * 100; /* the default zoom label based on the default zoom */
 
     /*
     Dictionary of panel actions.
@@ -107,11 +108,11 @@
         },
 
         zoom_reset: {
-            title: "Set zoom to 100%",
+            title: "Set zoom to " + DEFAULT_ZOOM_LBL + "%",
             script: function(target, webview){
-                changeZoom(webview, 1);
+                changeZoom(webview, DEFAULT_ZOOM);
             },
-            display: "100%",
+            display: DEFAULT_ZOOM_LBL + "%",
             display_class: "zoom-reset"
         },
 
@@ -335,6 +336,7 @@
         });
         webview.addEventListener("loadstop", () => {
             changeZoom(webview, DEFAULT_ZOOM);
+	    	updateZoomLabel(webview);
         });
     }
 
@@ -390,3 +392,4 @@
     /* Start 500ms after the browser is opened */
     setTimeout(initMod, 500);
 })();
+
