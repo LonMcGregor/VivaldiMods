@@ -28,7 +28,9 @@ Stuff for Vivaldi Browser, Bringing together various gists into a repo
 ```
 
 2. Make sure to set the values as you require them:
-    * **application_path** should point to where your vivaldi is installed
+    * **application_path** should point to where your vivaldi is installed.
+        * **Windows Users** Point to the folder with all the versions in it, start with drive label and use back slashes: `X:\\Path\\To\\Vivaldi`. the modder script will auto-detect the numbered folder so you don't need to type it out
+        * **Linux Users** Point to the folder where vivaldi is installed, start with root dir and use forward slashes: `/path/to/vivaldi`
     * **mods** is a list of css or js files that need to be added to `browser.html`. These will be added in the order that you specify, which is important for CSS mods that have cascading rules
     * **mod_dependencies** is a list of any additional files you need to add in order to use your mods, but that you don't want to add to the actual browser. You won't need these except for very complex mods
     * **page_actions** is a list of page actions you want to add

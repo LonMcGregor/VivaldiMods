@@ -29,11 +29,15 @@ with args.configfile as configfile:
 def get_app_resource_dir():
     '''Get the vivaldi resource directory.
     This assumes that the installer has already removed any older versions'''
-    dir = os.listdir(CONFIG['application_path'])
-    matches = [item for item in dir if re.match(r'([0-9]+\.){3}[0-9]+', item)]
-    newest_vivaldi = os.path.join(CONFIG['application_path'], matches[0], 'resources', 'vivaldi')
-    log.info('Using Vivaldi %s' % newest_vivaldi)
-    return newest_vivaldi
+    if CONFIG['application_path'][0] == '/':
+        # linux user, with / as root directory, so don't try and find the version
+        return os.path.join(CONFIG['application_path'], 'resources', 'vivaldi')
+    else:
+        dir = os.listdir(CONFIG['application_path'])
+        matches = [item for item in dir if re.match(r'([0-9]+\.){3}[0-9]+', item)]
+        newest_vivaldi = os.path.join(CONFIG['application_path'], matches[0], 'resources', 'vivaldi')
+        log.info('Using Vivaldi %s' % newest_vivaldi)
+        return newest_vivaldi
 
 RESOURCE_DIRECTORY = get_app_resource_dir()
 BROWSER_HTML = os.path.join(RESOURCE_DIRECTORY, 'browser.html')
