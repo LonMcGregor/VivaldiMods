@@ -85,6 +85,10 @@
     pointer-events: none;
 }
 
+.betterNotesEditor #image {
+  display: block;
+}
+
 .betterNotesEditor header {
     padding: 5px;
 }
