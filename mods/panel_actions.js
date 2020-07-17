@@ -151,6 +151,7 @@
             title: "Double-click kills the panel to free memory. WARNING! This will also kill any tabs using the same process.",
             doubleclick: function(target, webview){
                 webview.terminate();
+                document.querySelector("#switch .webviewbtn.active").click();
             },
             display: "x",
             display_class: "panel-action-terminate"
@@ -392,4 +393,3 @@
     /* Start 500ms after the browser is opened */
     setTimeout(initMod, 500);
 })();
-
