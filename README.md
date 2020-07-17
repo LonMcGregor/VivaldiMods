@@ -1,6 +1,13 @@
 # VivaldiMods
 Stuff for Vivaldi Browser, Bringing together various gists into a repo
 
+## IMPORTANT
+Vivaldi now has built-in support for CSS mods, so you can install them more easily.
+
+1. Turn on the option at `vivaldi://experiments`
+2. Select a folder in Settings > Appearance
+3. Drop all your css mods into that folder
+
 ## Installing Mods or Page Actions
 1. Find the file called `config.json`, with the following inside it:
 ```
