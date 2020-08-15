@@ -2,10 +2,58 @@
 * Advanced Panels (a mod for Vivaldi)
 * Written by LonM
 * No Copyright Reserved
+* ko translation by @dencion
 */
 
 (function advancedPanels(){
 "use strict";
+
+const LANGUAGE = 'en_gb'; // en_gb or ko
+
+const l10n = {
+    en_gb: {
+        title: 'Sessions',
+        new_session: 'New Session',
+        session_name_placeholder: 'Session Name',
+        all_windows: 'All Windows',
+        only_selected: 'Only Selected Tabs',
+        add_session_btn: 'Add Session',
+        sort_title: 'Sort by...',
+        sort_date: 'Sort by Date',
+        sort_name: 'Sort by Name',
+        sort_asc: 'Sort Ascending',
+        sort_desc: 'Sort Descending',
+        delete_button: 'Delete this session',
+        delete_prompt: 'Are you sure you want to delete $T?',
+        delete_number_sessions: 'Are you sure you want to delete $N selected sessions?',
+        delete_confirm: '⚠ Yes, Delete',
+        delete_abscond: 'No, don\'t.',
+        time_created_label: 'Created <time></time>',
+        open_new_window: 'Open in new window',
+        open_current: 'Open in current window'
+    },
+    ko: {
+        title: '세션',
+        new_session: '새로운 세션',
+        session_name_placeholder: '세션 이름',
+        all_windows: '모든 창',
+        only_selected: '선택한 탭만',
+        add_session_btn: '세션 추가',
+        sort_title: '정렬',
+        sort_date: '날짜순 정렬',
+        sort_name: '이름순 정렬',
+        sort_asc: '오름차순 정렬',
+        sort_desc: '내림차순 정렬',
+        delete_button: '이 세션을 지우기',
+        delete_prompt: '$T 세션을 지우시겠습니까?',
+        delete_number_sessions: '선택한 $N개의 세션을 삭제하시겠습니까?',
+        delete_confirm: '⚠네',
+        delete_abscond: '아니오',
+        time_created_label: '만든 시각  <time></time>',
+        open_new_window: '새 창에서 열기',
+        open_current: '현재 창에서 열기'
+    },
+}[LANGUAGE];
 
     /**
      * Key is the ID of your advanced panel. This must be UNIQUE (across the whole vivaldi UI). If in doubt, append your name to ensure it is unique
@@ -20,7 +68,7 @@
      */
     const CUSTOM_PANELS = {
         sessions_lonm: {
-            title: "Sessions",
+            title: l10n.title,
             url: "vivaldi://sessions",
             switch: `<span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="5 0 10 10">
@@ -29,23 +77,23 @@
                 </span>`,
             initialHTML: `
                 <div class="newSession">
-                    <h2>New Session</h2>
-                    <input type="text" placeholder="Session Name" class="session-name">
-                    <label><input type="checkbox" class="all-windows"><span>All Windows</span></label>
-                    <label><input type="checkbox" class="selected-tabs"><span>Only Selected Tabs</span></label>
-                    <input type="button" class="add-session" value="Add Session"></input>
+                    <h2>${l10n.new_session}</h2>
+                    <input type="text" placeholder="${l10n.session_name_placeholder}" class="session-name">
+                    <label><input type="checkbox" class="all-windows"><span>${l10n.all_windows}</span></label>
+                    <label><input type="checkbox" class="selected-tabs"><span>${l10n.only_selected}</span></label>
+                    <input type="button" class="add-session" value="${l10n.add_session_btn}"></input>
                 </div>
                 <div class="sortselector sortselector-compact">
-                    <select class="sortselector-dropdown" title="Sort by..." tabindex="-1">
-                        <option value="visitTime">Sort by Date</option>
-                        <option value="title">Sort by Name</option>
+                    <select class="sortselector-dropdown" title="${l10n.sort_title}" tabindex="-1">
+                        <option value="visitTime">${l10n.sort_date}</option>
+                        <option value="title">${l10n.sort_name}</option>
                     </select>
-                    <button class="sortselector-button direction-descending" title="Sort Ascending" tabindex="-1">
+                    <button class="sortselector-button direction-descending" title="${l10n.sort_asc}" tabindex="-1">
                         <svg width="11" height="6" viewBox="0 0 11 6" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5.133l.11-.11 4.456 4.456-1.498 1.497L5.5 2.91 2.432 5.976.934 4.48 5.39.022l.11.11z"></path>
                         </svg>
                     </button>
-                    <button class="sortselector-button direction-ascending selected" title="Sort Descending" tabindex="-1">
+                    <button class="sortselector-button direction-ascending selected" title="${l10n.sort_desc}" tabindex="-1">
                         <svg width="11" height="6" viewBox="0 0 11 6" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5.133l.11-.11 4.456 4.456-1.498 1.497L5.5 2.91 2.432 5.976.934 4.48 5.39.022l.11.11z"></path>
                         </svg>
@@ -57,29 +105,29 @@
                 </section>
                 <div class="modal-container">
                     <div class="confirm">
-                        <p>Are you sure you want to delete <span class="title"></span>?</p>
-                        <button class="yes">⚠ Yes, Delete</button>
-                        <button class="no">No, don't.</button>
+                        <p>${l10n.delete_prompt}</p>
+                        <button class="yes">${l10n.delete_confirm}</button>
+                        <button class="no">${l10n.delete_abscond}</button>
                     </div>
                 </div>
                 <template class="session_item">
                     <li>
                         <div>
                             <h3></h3>
-                            <span>Created <time></time></span>
+                            <span>${l10n.time_created_label}</span>
                         </div>
-                        <button class="open_new" title="Open in new window">
+                        <button class="open_new" title="${l10n.open_new_window}">
                             <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 6h-16v14h16v-14zm-11 2h2v2h-2v-2zm-3 0h2v2h-2v-2zm12 10h-12v-7h12v7zm0-8h-6v-2h6v2z"></path>
                             </svg>
                         </button>
-                        <button class="open_current" title="Open in current window">
+                        <button class="open_current" title="${l10n.open_current}">
                             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 9h16v2h-16v-2zm0-4h8v4h-8v-4z"></path>
                             <path opacity=".5" d="M9 5h7v3h-7z"></path>
                             </svg>
                         </button>
-                        <button class="delete" title="Delete this session">
+                        <button class="delete" title="${l10n.delete_button}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
                             <path d="M10.2.5l-.7-.7L5 4.3.5-.2l-.7.7L4.3 5-.2 9.5l.7.7L5 5.7l4.5 4.5.7-.7L5.7 5"></path>
                             </svg>
@@ -180,9 +228,11 @@
                 function deleteClick(e){
                     const selectedSessions = getSelectedSessionNames();
                     if(selectedSessions.length === 1){
-                        confirmMsg(selectedSessions[0]);
+                        const delete_t = l10n.delete_prompt.replace('$T', selectedSessions[0]);
+                        confirmMsg(delete_t);
                     } else {
-                        confirmMsg(selectedSessions.length + " selected sessions");
+                        const delete_n = l10n.delete_number_sessions.replace('$N', selectedSessions.length);
+                        confirmMsg(delete_n);
                     }
                 }
 
@@ -191,7 +241,7 @@
                  * @param msg string to use
                  */
                 function confirmMsg(msg){
-                    document.querySelector("#sessions_lonm .confirm .title").innerText = msg;
+                    document.querySelector("#sessions_lonm .confirm p").innerText = msg;
                     document.querySelector("#sessions_lonm .modal-container").classList.add("show");
                 }
 
