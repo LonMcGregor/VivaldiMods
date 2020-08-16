@@ -3,6 +3,7 @@
 * Written by LonM
 * No Copyright Reserved
 * ko translation by @dencion
+* it by @folgore101
 */
 
 (function advancedPanels(){
@@ -46,12 +47,33 @@ const l10n = {
         sort_desc: '내림차순 정렬',
         delete_button: '이 세션을 지우기',
         delete_prompt: '$T 세션을 지우시겠습니까?',
-        delete_number_sessions: '선택한 $N개의 세션을 삭제하시겠습니까?',
+        delete_number_sessions: '선택한 $N개의 세션을 지우시겠습니까?',
         delete_confirm: '⚠네',
         delete_abscond: '아니오',
         time_created_label: '만든 시각  <time></time>',
         open_new_window: '새 창에서 열기',
         open_current: '현재 창에서 열기'
+    },
+    it: {
+        title: 'Sessioni',
+        new_session: 'Nuova sessione',
+        session_name_placeholder: 'Nome sessione',
+        all_windows: 'Tutte le finestre',
+        only_selected: 'Solo schede selezionate',
+        add_session_btn: 'Aggiungi sessione',
+        sort_title: 'Ordina per...',
+        sort_date: 'Ordina per data',
+        sort_name: 'Ordina per nome',
+        sort_asc: 'Ordine crescente',
+        sort_desc: 'Ordine decrescente',
+        delete_button: 'Elimina questa sessione',
+        delete_prompt: 'Sei sicuro di voler eliminare $T?',
+        delete_number_sessions: 'Sei sicuro di voler eliminare $N sessioni selezionate?',
+        delete_confirm: '⚠ Sì, Elimina',
+        delete_abscond: 'No, non farlo.',
+        time_created_label: 'Creata <time></time>',
+        open_new_window: 'Apri in una nuova finestra',
+        open_current: 'Apri nella finestra corrente'
     },
 }[LANGUAGE];
 
