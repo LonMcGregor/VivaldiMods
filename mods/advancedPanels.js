@@ -4,6 +4,7 @@
 * No Copyright Reserved
 * ko translation by @dencion
 * it by @folgore101
+* de by @knoelli
 */
 
 (function advancedPanels(){
@@ -74,6 +75,27 @@ const l10n = {
         time_created_label: 'Creata <time></time>',
         open_new_window: 'Apri in una nuova finestra',
         open_current: 'Apri nella finestra corrente'
+    },
+    de: {
+        title: 'Sitzungen',
+        new_session: 'Neue Sitzung',
+        session_name_placeholder: 'Name der Sitzung',
+        all_windows: 'Alle Fenster',
+        only_selected: 'Nur ausgewählte Tabs',
+        add_session_btn: 'Sitzung hinzufügen',
+        sort_title: 'Sortieren nach...',
+        sort_date: 'Sortieren nach Datum',
+        sort_name: 'Sortieren nach Namen',
+        sort_asc: 'Aufsteigend sortieren',
+        sort_desc: 'Absteigend sortieren',
+        delete_button: 'Diese Sitzung löschen',
+        delete_prompt: 'Wollen Sie $T wirklich löschen?',
+        delete_number_sessions: 'Wollen Sie die $N ausgewählten Sitzungen wirklich löschen?',
+        delete_confirm: '⚠ Ja, löschen',
+        delete_abscond: 'Nein',
+        time_created_label: 'Erstellt <time></time>',
+        open_new_window: 'In neuem Fenster öffnen',
+        open_current: 'Im aktuellen Fenster öffnen'
     },
 }[LANGUAGE];
 
