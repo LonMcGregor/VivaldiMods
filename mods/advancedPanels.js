@@ -5,6 +5,7 @@
 * ko translation by @dencion
 * it by @folgore101
 * de by @knoelli
+* nl by @Vistaus
 */
 
 (function advancedPanels(){
@@ -97,6 +98,28 @@ const l10n = {
         open_new_window: 'In neuem Fenster öffnen',
         open_current: 'Im aktuellen Fenster öffnen'
     },
+        nl: {
+        title: 'Sessies',
+        new_session: 'Nieuwe sessie',
+        session_name_placeholder: 'Sessienaam',
+        all_windows: 'Alle vensters',
+        only_selected: 'Alleen geselecteerde tabbladen',
+        add_session_btn: 'Sessie toevoegen',
+        sort_title: 'Sorteren op...',
+        sort_date: 'Sorteren op datum',
+        sort_name: 'Sorteren op naam',
+        sort_asc: 'Oplopend sorteren',
+        sort_desc: 'Aflopend sorteren',
+        delete_button: 'Sessie verwijderen',
+        delete_prompt: 'Weet u zeker dat u $T wilt verwijderen?',
+        delete_number_sessions: 'Weet u zeker dat u $N geselecteerde sessies wilt verwijderen?',
+        delete_confirm: '⚠ Ja, verwijderen',
+        delete_abscond: 'Nee, behouden',
+        time_created_label: 'Toegevoegd om <time></time>',
+        open_new_window: 'Openen in nieuw venster',
+        open_current: 'Openen in huidig venster'
+    },
+    
 }[LANGUAGE];
 
     /**
