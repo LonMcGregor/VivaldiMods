@@ -11,6 +11,24 @@
     let CURRENT_SETTINGS = {};
 
     /**
+     * Copied from bundle.js © Vivaldi - Check if a filename is valid
+     * @param {string} s
+     */
+    function isValidName(e){
+        return /^[^\\/:\*\?"<>\|]+$/.test(e) && !/^\./.test(e) && !/^(nul|prn|con|lpt[0-9]|com[0-9])(\.|$)/i.test(e);
+    }
+
+    /**
+     * Turns a date into a string that can be used in a file name
+     * Locale string seems to be the best at getting the correct time for any given timezone
+     * @param {Date} date object
+     */
+    function dateToFileSafeString(date){
+        const badChars = /[\\/:\*\?"<>\|]/gi;
+        return date.toLocaleString().replace(badChars, '.');
+    }
+
+    /**
      * Enable Autosaving sessions
      */
     function autoSaveSession(isPrivate){
@@ -23,11 +41,15 @@
             const oldestFirst = autosavesOnly.sort((a,b) => {return a.createDateJS - b.createDateJS;});
 
             /* create the new session */
-            const name = prefix + now.toISOString().replace(":",".").replace(":",".");
+            const name = prefix + dateToFileSafeString(now);
+            /* final sanity check */
+            if (!isValidName(name)){
+                throw new Error("[Autosave Sessions] Cannot name a session as " + name);
+            }
             const options = {
                 saveOnlyWindowId: 0
             };
-            vivaldi.sessionsPrivate.saveOpenTabs(name, options, () => {});
+            vivaldi.sessionsPrivate.saveOpenTabs(name, options, () => {}); /* there is no way to tell if it failed */
 
             /* delete older sessions */
             let numberOfSessions = oldestFirst.length + 1; /* length + 1 as we have just added a new one */

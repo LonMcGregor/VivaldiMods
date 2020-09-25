@@ -242,6 +242,16 @@ const l10n = {
                 }
 
                 /**
+                 * Turns a date into a string that can be used in a file name
+                 * Locale string seems to be the best at getting the correct time for any given timezone
+                 * @param {Date} date object
+                 */
+                function dateToFileSafeString(date){
+                    const badChars = /[\\/:\*\?"<>\|]/gi;
+                    return date.toLocaleString().replace(badChars, '.');
+                }
+
+                /**
                  * Add a new session
                  * @param e button click event
                  */
@@ -251,7 +261,7 @@ const l10n = {
                     const selectedTabs = document.querySelector('#sessions_lonm .newSession input.selected-tabs').checked;
                     const markedTabs = document.querySelectorAll(".tab.marked");
                     if(name===""){
-                        name = new Date().toISOString().replace(":",".").replace(":",".");
+                        name = dateToFileSafeString(new Date());
                     }
                     vivaldi.windowPrivate.getCurrentId(window => {
                         const options = {
@@ -364,6 +374,14 @@ const l10n = {
                 }
 
                 /**
+                 * Turn a date into a string to show underneath each session
+                 * @param {Date} date
+                 */
+                function dateToString(date){
+                    return date.toLocaleString();
+                }
+
+                /**
                  * Generate a list item for a session object
                  * @returns DOM list item
                  */
@@ -371,8 +389,9 @@ const l10n = {
                     const template = document.querySelector("#sessions_lonm template.session_item");
                     const el = document.importNode(template.content, true);
                     el.querySelector("h3").innerText = session.name;
+                    el.querySelector("h3").setAttribute("title", session.name);
                     const date = new Date(session.createDateJS);
-                    el.querySelector("time").innerText = date.toLocaleString();
+                    el.querySelector("time").innerText = dateToString(date);
                     el.querySelector("time").setAttribute("datetime", date.toISOString());
                     el.querySelector("li").addEventListener("click", listItemClick);
                     el.querySelector(".open_new").addEventListener("click", oneInNewWindowClick);
