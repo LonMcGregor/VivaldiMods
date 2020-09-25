@@ -1,12 +1,26 @@
 /*
 * Autosave Sessions (a mod for Vivaldi)
 * Written by LonM
+* v4 : Localise to current timezone, l10n
 * v3 : Has own settings section & support private windows again
 * v2 : Better handling of multiple windows
 */
 
 (function autoSaveSessionsMod(){
     "use strict";
+
+    const LANGUAGE = 'en_gb'; // en_gb or ko
+
+    const l10n = {
+        en_gb: {
+            delay: 'Period (minutes)',
+            restart: 'This setting requires a restart to take full effect.',
+            maxoldsessions: 'Old Sessions Count',
+            prefix: 'Prefix',
+            prefixdesc: 'A unique prefix made up of the following characters: A-Z 0-9 _',
+            saveprivate: 'Save Private Windows'
+        },
+    }[LANGUAGE];
 
     let CURRENT_SETTINGS = {};
 
@@ -155,8 +169,8 @@
             min: 1,
             max: undefined,
             default: 5,
-            title: "Period (minutes)",
-            description: "This setting requires a restart to take full effect."
+            title: l10n.delay,
+            description: l10n.restart
         },
         {
             id: "LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS",
@@ -164,22 +178,22 @@
             min: 1,
             max: undefined,
             default: 5,
-            title: "Old Sessions Count"
+            title: l10n.maxoldsessions
         },
         {
             id: "LONM_SESSION_AUTOSAVE_PREFIX",
             type: String,
             pattern: "[\\w_]{0,20}",
             default: "VSESAUTOSAVE_",
-            title: "Prefix",
-            description: "A unique prefix made up of the following characters: A-Z 0-9 _"
+            title: l10n.prefix,
+            description: l10n.prefixdesc
         },
         {
             id: "LONM_SESSION_SAVE_PRIVATE_WINDOWS",
             type: Boolean,
             default: false,
-            title: "Save Private Windows",
-            description: "This setting requires a restart to take full effect"
+            title: l10n.saveprivate,
+            description: l10n.restart
         }
     ];
 
