@@ -1,0 +1,10 @@
+button:after {
+    content: 'No TITLE';
+    color: red;
+    visibility: visible;
+    opacity: 1;
+    z-index: 9999999999999;
+}
+button[title]:after {
+    display: none;
+}

@@ -1,0 +1,22 @@
+/*
+@keyframes boo {
+    100% {
+      width: 200px;
+      height: 30px;
+      filter: blur(20px);
+    }
+}
+
+.tab:not(.active) .favicon img {
+    animation: boo 1s linear infinite;
+    animation-duration: 1s !important;
+}*/
+
+.tab:not(.active) .favicon img {
+    width: 180px;
+    height: 30px;
+    filter: blur(20px);
+    position: relative;
+    left: -8px;
+    top: -8px;
+}

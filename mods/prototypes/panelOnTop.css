@@ -1,0 +1,21 @@
+.inner {
+    overflow: visible !important;
+    z-index: 2;
+}
+
+div#panels-container {
+    position: absolute;
+    right: 1px;
+    top: -29px;
+    height: 500px;
+    z-index: 1;
+}
+
+div#switch {
+    flex-direction: row;
+    position: absolute;
+    top: 63px;
+    width: 500px;
+    height: 32px;
+    z-index: 3;
+}

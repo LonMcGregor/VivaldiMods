@@ -1,0 +1,14 @@
+button.button-addressfield[title="Go to address"] div:after {
+    content: '▶';
+    position:  absolute;
+    right: calc(375px - 100vw);
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+    border-radius: var(--radiusFifth);
+    border: 1px solid transparent;
+}
+button.button-addressfield[title="Go to address"] div:hover:after {
+    color: var(--colorHighlightBg);
+    border-color: var(--colorBorder);
+}

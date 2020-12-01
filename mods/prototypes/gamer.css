@@ -1,0 +1,56 @@
+@keyframes fancy {
+    0%{
+   background: red;
+   }
+   17% {
+   background: yellow
+   }
+   33% {
+   background: blgreeue;
+   }
+   66% {
+   background: green;
+   }
+   100%{
+   background: red;
+   }
+   }
+
+   #browser.color-behind-tabs-on.tabs-top {
+       animation: fancy 4s infinite ease
+   }
+
+
+   svg path {
+    animation: gamer infinite 4s;
+}
+
+@keyframes gamer {
+ 0%{
+color: red;
+}
+12% {
+color: orange
+}
+25% {
+color: yellow;
+}
+37% {
+color: lime;
+}
+50%{
+color: turquoise;
+}
+62%{
+    color: blue
+}
+75% {
+    color: purple
+}
+87% {
+    color: violet;
+}
+100% {
+    color: red;
+}
+}

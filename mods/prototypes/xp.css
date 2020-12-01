@@ -1,0 +1,38 @@
+#titlebar button.vivaldi, #tabs-container {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAgCAYAAADT5RIaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfgBRkLGSJ9VCFaAAAAZElEQVQYV12MOwqAQAxEJ9NYWAkewCt4Ky/sGRQsLERYdjUx2ULQFI/5JME4zcZm6MGuvcFlNTDtCbyODNrl1tQBH4e4DYhrwkmRn/IWFhehaiY1e/eg+rH1c10JZdFqLmA5NzyEESBwbhG4LQAAAABJRU5ErkJggg==') !important;
+}
+
+#titlebar button.vivaldi {
+    filter: hue-rotate(275deg);
+}
+#tabs-container {
+    background-color: unset;
+    background-repeat: repeat-x;
+    background-position: 0;
+    background-size: contain
+}
+
+#titlebar .window-buttongroup {
+    right: 6px !important;
+    top: 3px !important;
+}
+
+#titlebar .window-buttongroup button {
+    border: 1px solid rgba(255,255,255,0.5) !important;
+    border-radius: 4px !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-left: 4px !important;
+}
+#titlebar .window-buttongroup button:hover {
+    background: rgba(255,255,255,0.2) !important
+}
+#titlebar .window-buttongroup button.window-close {
+    background: #c94f4d !important;
+}
+#titlebar .window-buttongroup button.window-close:hover {
+    background: #ec504d !important;
+}
+.win10 #tabs-container.top {
+    padding-right: 100px;
+}

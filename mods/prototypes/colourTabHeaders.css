@@ -1,0 +1,9 @@
+.tab-header {
+    border-top: 2px solid transparent;
+    padding-top: 4px !important;
+  }
+
+  .active .tab-header {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to right, #3f8e21, #c76310);
+  }

@@ -1,0 +1,9 @@
+.profile-popup > button > img {display: none;}
+.profile-popup > button:after {content: '';
+width : 24px;
+ height: 24px;
+ background: url('chrome://theme/IDR_PROFILE_VIVALDI_AVATAR_13');
+ background-size: cover;
+ background-repeat: no-repeat;
+border-color: transparent !important;
+}

@@ -1,0 +1,22 @@
+/* css scanlines */
+
+#app:after {
+    display: block;
+    pointer-events: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    animation: scanlines 1s steps(60) infinite;
+  }
+
+  @keyframes scanlines {
+    0% {
+      background-position: 0 50%;
+    }
+  }

@@ -1,0 +1,18 @@
+/* dunno what this was */
+.isblurred #tabs-container {
+    background-color: var(--colorBgLight);
+}
+
+.isblurred * {
+    fill: var(--colorFg);
+    color: var(--colorFg);
+}
+
+#browser.address-off.tabs-off.bookmark-bar-off.minimal-ui:not(.fullscreen).isblurred #header {
+    background-color: var(--colorBgLight);
+}
+
+.isblurred .tabless * {
+    color: var(--colorFg);
+    fill: var(--colorFg);
+}
