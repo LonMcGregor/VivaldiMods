@@ -1,0 +1,9 @@
+abbr:hover:before {
+    content: attr(title);
+    position: absolute;
+    font-size: small;
+    background: #c79191;
+    padding: 5px;
+    color: white;
+    border-radius: 8px;
+}

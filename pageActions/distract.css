@@ -1,0 +1,4 @@
+img {
+    filter: invert();
+    transform: rotate(180deg);
+}
