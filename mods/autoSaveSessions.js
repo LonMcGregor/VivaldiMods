@@ -142,6 +142,7 @@
         const settingSection = document.querySelector(".vivaldi-settings .settings-content section");
         if(!settingSection){
             setTimeout(modSettingsPage, 1000);
+            return;
         }
         const settingsHTML = document.createElement("section");
         settingsHTML.className = "setting-section";
