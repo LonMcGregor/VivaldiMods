@@ -1,6 +1,7 @@
 /*
 * Autosave Sessions (a mod for Vivaldi)
 * Written by LonM
+* V4.1: Attempt to retry if settings is not ready
 * v4 : Localise to current timezone, l10n
 * v3 : Has own settings section & support private windows again
 * v2 : Better handling of multiple windows
@@ -138,6 +139,10 @@
         }
     }
     function modSettingsPage(){
+        const settingSection = document.querySelector(".vivaldi-settings .settings-content section");
+        if(!settingSection){
+            setTimeout(modSettingsPage, 1000);
+        }
         const settingsHTML = document.createElement("section");
         settingsHTML.className = "setting-section";
         settingsHTML.id = "lonmAutosaveSessionsSettings";
@@ -147,7 +152,7 @@
             settingsDiv.appendChild(makeSettingElement(setting));
         });
         settingsHTML.appendChild(settingsDiv);
-        document.querySelector(".vivaldi-settings .settings-content section").insertAdjacentElement("afterbegin", settingsHTML);
+        settingSection.insertAdjacentElement("afterbegin", settingsHTML);
     }
 
     /**
