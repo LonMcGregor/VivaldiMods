@@ -1,6 +1,7 @@
 /*
 * Autosave Sessions (a mod for Vivaldi)
 * Written by LonM
+* V4.2: Luetage always init on setting general tab
 * V4.1: Attempt to retry if settings is not ready
 * v4 : Localise to current timezone, l10n
 * v3 : Has own settings section & support private windows again
@@ -287,7 +288,11 @@
                         setInterval(triggerAutosavePrivate, CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_DELAY_MINUTES"]*60*1000);
                     });
                 }
-                chrome.tabs.onCreated.addListener(modSettingsPageListener);
+                chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+                    if (changeInfo.url === SETTINGSPAGE) {
+                        modSettingsPage();
+                    }
+                })
             });
         } else {
             setTimeout(init, 500);
