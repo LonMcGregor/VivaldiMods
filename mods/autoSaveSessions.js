@@ -134,27 +134,25 @@
      * Wait a little bit after a settings page has been opened and add settings in
      */
     const SETTINGSPAGE = "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html?path=general";
-    function modSettingsPageListener(newTab){
-        if(newTab.url === SETTINGSPAGE || newTab.pendingUrl === SETTINGSPAGE){
-            setTimeout(modSettingsPage, 1000);
-        }
-    }
     function modSettingsPage(){
         const settingSection = document.querySelector(".vivaldi-settings .settings-content section");
+        const check = document.getElementById("lonmAutosaveSessionsSettings");
         if(!settingSection){
             setTimeout(modSettingsPage, 1000);
             return;
         }
-        const settingsHTML = document.createElement("section");
-        settingsHTML.className = "setting-section";
-        settingsHTML.id = "lonmAutosaveSessionsSettings";
-        const settingsDiv = document.createElement("div");
-        settingsDiv.insertAdjacentHTML("beforeend", "<h2>Autosave Sessions Mod</h2>");
-        MOD_SETTINGS.forEach(setting => {
-            settingsDiv.appendChild(makeSettingElement(setting));
-        });
-        settingsHTML.appendChild(settingsDiv);
-        settingSection.insertAdjacentElement("afterbegin", settingsHTML);
+        if(!check){
+            const settingsHTML = document.createElement("section");
+            settingsHTML.className = "setting-section";
+            settingsHTML.id = "lonmAutosaveSessionsSettings";
+            const settingsDiv = document.createElement("div");
+            settingsDiv.insertAdjacentHTML("beforeend", "<h2>Autosave Sessions Mod</h2>");
+            MOD_SETTINGS.forEach(setting => {
+                settingsDiv.appendChild(makeSettingElement(setting));
+            });
+            settingsHTML.appendChild(settingsDiv);
+            settingSection.insertAdjacentElement("afterbegin", settingsHTML);
+        }
     }
 
     /**
