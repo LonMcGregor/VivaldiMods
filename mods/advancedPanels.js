@@ -6,6 +6,7 @@
 * it by @folgore101
 * de by @knoelli
 * nl by @Vistaus
+* jp by @nkay1005
 */
 
 (function advancedPanels(){
@@ -119,7 +120,28 @@ const l10n = {
         open_new_window: 'Openen in nieuw venster',
         open_current: 'Openen in huidig venster'
     },
-    
+    ja: {
+        title: 'セッション',
+        new_session: '新しいセッション',
+        session_name_placeholder: 'セッション名',
+        all_windows: '全てのウィンドウ',
+        only_selected: '選択したタブのみ',
+        add_session_btn: 'セッションを保存',
+        sort_title: '並べ替え...',
+        sort_date: '日付で並べ替え',
+        sort_name: 'セッション名で並べ替え',
+        sort_asc: '昇順に並べ替え',
+        sort_desc: '降順に並べ替え',
+        delete_button: 'セッションを削除',
+        delete_prompt: '$T を削除しますか？',
+        delete_number_sessions: '選択した$N個のセッションを削除しますか？',
+        delete_confirm: '⚠ 削除',
+        delete_abscond: 'キャンセル',
+        time_created_label: '作成日 <time></time>',
+        open_new_window: '新しいウィンドウで開く',
+        open_current: '現在のウィンドウで開く'
+    },
+
 }[LANGUAGE];
 
     /**
