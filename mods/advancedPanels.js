@@ -7,6 +7,7 @@
 * de by @knoelli
 * nl by @Vistaus
 * jp by @nkay1005
+* pt-br by @oinconquistado
 */
 
 (function advancedPanels(){
