@@ -141,6 +141,27 @@ const l10n = {
         open_new_window: '新しいウィンドウで開く',
         open_current: '現在のウィンドウで開く'
     },
+    pt_br: {
+        title: 'Sessões',
+        new_session: 'Nova sessão',
+        session_name_placeholder: 'Nome da sessão',
+        all_windows: 'Todas as janelas',
+        only_selected: 'Apenas abas selecionadas',
+        add_session_btn: 'Adicionar sessão',
+        sort_title: 'Organizar por...',
+        sort_date: 'Organizar por data',
+        sort_name: 'Organizar por nome',
+        sort_asc: 'Organizar por ordem crescente',
+        sort_desc: 'Organizar por ordem decrescente',
+        delete_button: 'Deletar essa sessão',
+        delete_prompt: 'Você deseja deletar $T?',
+        delete_number_sessions: 'Você deseja deletar $N sessões selecionadas?',
+        delete_confirm: '⚠ Sim, delete',
+        delete_abscond: 'Não, não deletar.',
+        time_created_label: 'Criado em <time></time>',
+        open_new_window: 'Abrir em uma nova janela',
+        open_current: 'Abrir na janela atual'
+    },
 
 }[LANGUAGE];
 
