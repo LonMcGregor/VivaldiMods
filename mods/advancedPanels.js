@@ -8,6 +8,7 @@
 * nl by @Vistaus
 * jp by @nkay1005
 * pt-br by @oinconquistado
+* pl-pl by @supra107
 */
 
 (function advancedPanels(){
