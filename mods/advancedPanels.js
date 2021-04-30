@@ -163,6 +163,27 @@ const l10n = {
         open_new_window: 'Abrir em uma nova janela',
         open_current: 'Abrir na janela atual'
     },
+    pl_pl: {
+        title: 'Sesje',
+        new_session: 'Nowa sesja',
+        session_name_placeholder: 'Nazwa sesji',
+        all_windows: 'Wszystkie okna',
+        only_selected: 'Tylko zaznaczone karty',
+        add_session_btn: 'Dodaj sesję',
+        sort_title: 'Sortuj według...',
+        sort_date: 'Sortuj według daty',
+        sort_name: 'Sortuj według nazwy',
+        sort_asc: 'Sortuj rosnąco',
+        sort_desc: 'Sortuj malejąco',
+        delete_button: 'Usuń tę sesję',
+        delete_prompt: 'Czy jesteś pewien że chcesz usunąć $T?',
+        delete_number_sessions: 'Czy jesteś pewien że chcesz usunąć $N zaznaczonych sesji?',
+        delete_confirm: '⚠ Tak, usuń',
+        delete_abscond: 'Nie, nie usuwaj.',
+        time_created_label: 'Utworzono <time></time>',
+        open_new_window: 'Otwórz w nowym oknie',
+        open_current: 'Otwórz w obecnym oknie'
+    }
 
 }[LANGUAGE];
 
