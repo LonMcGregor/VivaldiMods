@@ -1,0 +1,3 @@
+.folder label[title~=Spam] .item-count {
+    display: none;
+}
