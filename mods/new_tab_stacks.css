@@ -1,0 +1,18 @@
+svg.svg-tab-stack {
+    display: none;
+}
+
+/* following by christoph142 */
+#vivaldi-tooltip .tab-solo { display: none; }
+#vivaldi-tooltip .tooltip { top: 30px !important; transition: none !important; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item { height: auto; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item:first-child { border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item:not(:first-child, :last-child) { border-radius: 0; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item:last-child { border-top-right-radius: 0; border-top-left-radius: 0; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item .thumbnail-image { display: none; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item .thumbnail-caption { position: relative; min-height: 18px; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item .thumbnail-caption .thumbnail-text .info { display: none; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item .thumbnail-caption .thumbnail-text { margin-top: 1px; margin-left: 25px; white-space: nowrap; -webkit-mask-image: -webkit-linear-gradient(180deg, transparent 0, #fff 12px); overflow: hidden; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item:not(:hover) .thumbnail-caption .thumbnail-text { margin-right: -24px; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item .thumbnail-caption .thumbnail-buttons .favicon { position: absolute; left: 0px; }
+#vivaldi-tooltip .tooltip .tab-group .tooltip-item:hover .thumbnail-caption .thumbnail-buttons .favicon { display: inline; }
