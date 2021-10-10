@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Advanced Panels (a mod for Vivaldi)
 * Written by LonM
 * No Copyright Reserved
@@ -419,6 +419,7 @@ const l10n = {
                     const selections = getSelectedSessionNames();
                     selections.forEach(item => {
                         vivaldi.sessionsPrivate.open(
+                            vivaldiWindowId,
                             item,
                             {openInNewWindow: false}
                         );
@@ -433,6 +434,7 @@ const l10n = {
                     const selections = getSelectedSessionNames();
                     selections.forEach(item => {
                         vivaldi.sessionsPrivate.open(
+                            vivaldiWindowId,
                             item,
                             {openInNewWindow: true}
                         );
