@@ -50,11 +50,15 @@
 
     /**
      * Handle a potential keyboard shortcut
+     * @param {int} sourceWindow Id of the browser window this keyboard event originates from.
      * @param {String} combination written in the form (CTRL+SHIFT+ALT+KEY)
-     * @param {boolean} extras I don't know what this does, but it's an extra argument
+     * @param {bool} autoRepeat True if the shortcut is generated as a result of automatic keyboard repeat
      */
-    function keyCombo(combination, extras){
+    function keyCombo(sourceWindow, combination, autoRepeat){
         const customShortcut = SHORTCUTS[combination];
+        if(sourceWindow!=vivaldiWindowId || autoRepeat){
+            return;
+        }
         if(customShortcut){
             customShortcut();
         }
