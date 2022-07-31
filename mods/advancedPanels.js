@@ -524,6 +524,7 @@ const l10n = {
                  */
                 function onActivate(){
                     updateList();
+                    document.activeElement.blur();
                 }
 
                 /**
