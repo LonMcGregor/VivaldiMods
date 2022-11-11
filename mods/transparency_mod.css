@@ -1,9 +1,17 @@
 /* Better Panel Switches */
-#switch button.webviewbtn img{
+#switch button img{
     background-color:transparent !important;
-    -webkit-filter:grayscale(100%)
+    filter:grayscale(100%)
 }
-#switch button.webviewbtn.active img{-webkit-filter:grayscale(0%)}
+#browser.isblurred.dim-blurred #switch button img {
+    filter:grayscale(100%) opacity(0.65);
+}
+#switch .active button img{
+	filter:grayscale(0%)
+}
+#browser.isblurred.dim-blurred #switch .active button img {
+    filter:grayscale(0%) opacity(0.65);
+}
 
 /* Tab Favicon fixes */
 .tab-position .tab.active .tab-header .favicon {background-color: transparent !important}
