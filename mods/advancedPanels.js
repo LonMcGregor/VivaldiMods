@@ -101,7 +101,7 @@ const l10n = {
         open_new_window: 'In neuem Fenster öffnen',
         open_current: 'Im aktuellen Fenster öffnen'
     },
-        nl: {
+    nl: {
         title: 'Sessies',
         new_session: 'Nieuwe sessie',
         session_name_placeholder: 'Sessienaam',
@@ -184,6 +184,27 @@ const l10n = {
         time_created_label: 'Utworzono <time></time>',
         open_new_window: 'Otwórz w nowym oknie',
         open_current: 'Otwórz w obecnym oknie'
+    },
+    es_es: {
+        title: 'Sesiones',
+        new_session: 'Nueva sesión',
+        session_name_placeholder: 'Nombre',
+        all_windows: 'Todas las ventanas',
+        only_selected: 'Solo pestañas seleccionadas',
+        add_session_btn: 'Crrear Sesión',
+        sort_title: 'Ordenar por...',
+        sort_date: 'Ordenar por fecha',
+        sort_name: 'Ordenar por nombre',
+        sort_asc: 'Orden ascendente',
+        sort_desc: 'Orden inverso',
+        delete_button: 'Borrar esta sesión',
+        delete_prompt: '¿Seguro que quiere borrar la sesión $T?',
+        delete_number_sessions: '¿Seguro que quiere borrar las $N sesiones seleccionadas?',
+        delete_confirm: '⚠ Sí, eliminar',
+        delete_abscond: 'Hmm, mejor no.',
+        time_created_label: 'Creada el <time></time>',
+        open_new_window: 'Abrir en una nueva ventana',
+        open_current: 'Abrir en la ventana actual'
     }
 
 }[LANGUAGE];
