@@ -1,0 +1,20 @@
+
+/*Use this CSS to reveal the ID numbers of your workspaces.*/
+#window-panel .tree-item[data-id*=workspace]:after {
+    content: attr(data-id);
+    display: inline-block;
+    background: white;
+    color: black;
+    position: absolute;
+    left: 100px;
+    top: 0px;
+}
+
+/*Then Use this code to change the workspaces icons.
+Needs to be in the main document inspector
+window.VivaldiAppDispatcher.dispatch({
+    actionType:'SET_WORKSPACE_EMOJI',
+    id: 123456,
+    emoji:'S'
+  })
+*/
