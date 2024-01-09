@@ -1,0 +1,5 @@
+/* hide the spam links and location markers in teams meeting invites in agenda view*/
+.calendar-grid-agenda .calendar-event[title*="Microsoft Teams Meeting"] .cal-event-description,
+.calendar-grid-agenda .calendar-event[title*="Microsoft Teams Meeting"] .cal-event-location  {
+    display: none;
+}
