@@ -1,0 +1,7 @@
+.WorkspacePopup-DragArea button {
+    counter-increment: workspacecounter;
+}
+
+.WorkspacePopup-DragArea button::before {
+    content: counter(workspacecounter);
+}
