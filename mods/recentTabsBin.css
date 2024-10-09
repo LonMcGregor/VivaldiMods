@@ -1,3 +1,3 @@
-.toggle-trash button:hover span > svg > path:nth-child(2) {
+.toggle-trash button:hover span > svg > path:nth-child(3) {
     transform: rotateZ(30deg) translate(3px, -12px);
 }
