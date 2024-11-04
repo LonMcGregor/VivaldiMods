@@ -48,7 +48,12 @@
      * Enable Autosaving sessions
      */
     function autoSaveSession(isPrivate){
-        vivaldi.sessionsPrivate.getAll(allSessions => {
+        vivaldi.sessionsPrivate.getAll(allSessionsQuery => {
+            if(allSessionsQuery.loadingFailed){
+                console.error("AutoSaveSessions: Failed to load sessions");
+                return;
+            }
+            allSessions = allSessionsQuery.items;
             const priv = isPrivate ? "PRIV" : "";
             const prefix = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_PREFIX"] + priv;
             const maxOld = CURRENT_SETTINGS["LONM_SESSION_AUTOSAVE_MAX_OLD_SESSIONS"];
@@ -63,9 +68,10 @@
                 throw new Error("[Autosave Sessions] Cannot name a session as " + name);
             }
             const options = {
+                filename: name,
                 saveOnlyWindowId: 0
             };
-            vivaldi.sessionsPrivate.saveOpenTabs(name, options, () => {}); /* there is no way to tell if it failed */
+            vivaldi.sessionsPrivate.add(name, options, () => {}); /* there is no way to tell if it failed */
 
             /* delete older sessions */
             let numberOfSessions = oldestFirst.length + 1; /* length + 1 as we have just added a new one */
