@@ -1,20 +1,31 @@
 /* Fancy Dial */
+/* assumes emoji in first position of each folder title */
+
+.dial {
+    cursor: pointer;
+}
+
+.dials .folder .button-title {
+    text-indent: -1.32em;
+}
+
 .dials .folder .thumbnail-title button:before {
     content: attr(title);
     position: absolute;
-    top: 39px;
-    left: 54px;
+    top: 55px;
+    left: 80px;
     font-size: xxx-large;
     max-width: 1.35em;
     overflow: hidden;
     display: block;
     pointer-events: none;
+    text-indent: 0;
 }
 
 .dial .favicon {
     position: absolute;
-    top: 70px;
-    left:75px;
+    top: 80px;
+    left: 100px;
     transform: scale(3);
     image-rendering: pixelated;
     pointer-events: none;
@@ -24,23 +35,13 @@
     display: none;
 }
 
-.dials .folder .button-title {
-    font-size: 0px;
-}
-
 .dials .folder:hover .thumbnail-title button:before {
     transform: scale(1.5);
     text-indent: 0em;
 }
 
-.dials .folder:hover .button-title {
-    font-size: medium;
-    text-indent: -1.32em;
-}
-
 .dials .dial:hover .favicon{
     transform: scale(4);
-
 }
 
 .dial .thumbnail-image {
