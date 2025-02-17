@@ -47,3 +47,27 @@
 .dial .thumbnail-image {
     filter: blur(6px);
 }
+
+
+.dials-wrapper.icon .folder .thumbnail-title button:before {
+    top: 0px;
+    left: 16px;
+}
+
+.dials-wrapper.icon .folder:hover .thumbnail-title button:before,
+.dials-wrapper.icon .dial:hover .favicon{
+    transform: scale(1.1);
+}
+
+.dials-wrapper.icon .dial .favicon {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    transform: scale(1);
+    pointer-events: none;
+}
+
+
+.dials-wrapper.icon .dial .thumbnail-favicon-folder {
+    filter: blur(6px);
+}
