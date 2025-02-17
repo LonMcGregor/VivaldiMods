@@ -19,7 +19,7 @@ button.button-startpage svg{
 }
 
 .startpage .startpage-navigation, button.button-startpage.active {
-    color: var(--colorAccentBg);
+    color: var(--colorAccentFg);
 }
 
 .startpage .manager {
