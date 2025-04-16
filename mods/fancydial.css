@@ -1,19 +1,19 @@
 /* Fancy Dial */
 /* assumes emoji in first position of each folder title */
 
-.dial {
+.SpeedDial {
     cursor: pointer;
 }
 
-.dials .folder .button-title {
+.SpeedDials .folder .button-title {
     text-indent: -1.32em;
 }
 
-.dials .folder .thumbnail-title button:before {
+.SpeedDials .folder .thumbnail-title button:before {
     content: attr(title);
     position: absolute;
-    top: 55px;
-    left: 80px;
+    top: 0px;
+    left: 14px;
     font-size: xxx-large;
     max-width: 1.35em;
     overflow: hidden;
@@ -22,44 +22,44 @@
     text-indent: 0;
 }
 
-.dial .favicon {
+.SpeedDial:not(.folder) .favicon {
     position: absolute;
-    top: 80px;
-    left: 100px;
-    transform: scale(3);
+    top: 20px;
+    left: 30px;
+    transform: scale(1.5);
     image-rendering: pixelated;
     pointer-events: none;
 }
 
-.dials .folder .thumbnail-title svg {
+.SpeedDials .folder .thumbnail-title svg {
     display: none;
 }
 
-.dials .folder:hover .thumbnail-title button:before {
-    transform: scale(1.5);
+.SpeedDials .folder:hover .thumbnail-title button:before {
+    transform: scale(1.1);
     text-indent: 0em;
 }
 
-.dials .dial:hover .favicon{
-    transform: scale(4);
+.SpeedDials .SpeedDial:hover .favicon{
+    transform: scale(1.7);
 }
 
-.dial .thumbnail-image {
+.SpeedDial .thumbnail-image {
     filter: blur(6px);
 }
 
 
-.dials-wrapper.icon .folder .thumbnail-title button:before {
+.SpeedDials-wrapper.icon .folder .thumbnail-title button:before {
     top: 0px;
     left: 16px;
 }
 
-.dials-wrapper.icon .folder:hover .thumbnail-title button:before,
-.dials-wrapper.icon .dial:hover .favicon{
+.SpeedDials-wrapper.icon .folder:hover .thumbnail-title button:before,
+.SpeedDials-wrapper.icon .SpeedDial:hover .favicon{
     transform: scale(1.1);
 }
 
-.dials-wrapper.icon .dial .favicon {
+.SpeedDials-wrapper.icon .SpeedDial .favicon {
     position: relative;
     top: 0px;
     left: 0px;
@@ -68,6 +68,6 @@
 }
 
 
-.dials-wrapper.icon .dial .thumbnail-favicon-folder {
+.SpeedDial .thumbnail-favicon-folder {
     filter: blur(6px);
 }
